@@ -11,7 +11,7 @@ import com.example.krasiModel.Address;
 @Controller
 public class AddressController {
 
-	@RequestMapping(value="/address", method=RequestMethod.GET)
+	@RequestMapping(value="/adres", method=RequestMethod.GET)
 	public String prepareNewAddress(Model model){
 		model.addAttribute("adresche", new Address());
 		return "address";
