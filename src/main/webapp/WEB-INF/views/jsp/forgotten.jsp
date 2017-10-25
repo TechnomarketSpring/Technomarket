@@ -10,12 +10,12 @@
 <body>
 <h1>Възтоновяване на парола</h1>
 
-        <c:if test="${ requestScope.error != null }">
+        <c:if test="${ emailError != null }">
 			<div>
 			<p>Невалиден потребител</p>
 			</div>
 		 </c:if>
-		 <form action="ForgottenPasswordServlet" method="post">
+		 <form action="login" method="post">
 			Е-мейл <input type="text" name="username"><br>
 			<input type="submit" value="Изпрати"><br>
 		 </form>

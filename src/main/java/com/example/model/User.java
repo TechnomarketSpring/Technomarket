@@ -3,6 +3,7 @@ package com.example.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -37,7 +38,7 @@ public class User {
 	}
 
 	public LinkedHashMap<Product, Integer> getBasket() {
-		return basket;
+		return (LinkedHashMap<Product, Integer>) Collections.unmodifiableMap(basket);
 	}
 	private LinkedHashMap<Product, Integer> basket;
 	private LinkedHashSet<Order> orders;

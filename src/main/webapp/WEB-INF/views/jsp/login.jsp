@@ -20,7 +20,7 @@
 			Е-мейл <input type="text" name="username"><br>
 			Парола <input type="password" name="password"><br>
 			Запомни ме <input type = "checkbox" name = "remember"> 
-			<a href="forgotten_password.jsp">Забравена парола?</a>
+			<a href="forgotten">Забравена парола?</a>
 			<input type="submit" value="Вход"><br>
 		</form>
 		<h1>Нямаш профил?</h1>
