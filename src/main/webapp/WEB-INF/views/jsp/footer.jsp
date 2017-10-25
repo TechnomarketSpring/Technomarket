@@ -15,11 +15,11 @@
 
 <ul>
 <h4>Лесно пазаруване</h4>
-<li> <a href="shoppingConditions">Успловия за пазаруване</a> </li>
-<li> <a href="deliveryInfo">Бърза и безплатна доставка до дома Ви</a> </li>
-<li> <a href="onlinePayInfo">Сигурно Online разплащане</a> </li>
-<li> <a href="tbiCreditInfo">Условия за TBI Bank кредитиране</a> </li>
-<li> <a href="uniCreditInfo">Условия за UniCredit кредитиране</a> </li>
+<li> <a href="${pageContext.request.contextPath}/info/infoForShoppingCon">Успловия за пазаруване</a> </li>
+<li> <a href="${pageContext.request.contextPath}/info/infoForDelivery">Бърза и безплатна доставка до дома Ви</a> </li>
+<li> <a href="${pageContext.request.contextPath}/info/infoForOnlinePay">Сигурно Online разплащане</a> </li>
+<li> <a href="${pageContext.request.contextPath}/info/infoForTBICredit">Условия за TBI Bank кредитиране</a> </li>
+<li> <a href="${pageContext.request.contextPath}/info/infoForUniCredit">Условия за UniCredit кредитиране</a> </li>
 </ul>
 
 <ul>
