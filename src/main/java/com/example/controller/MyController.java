@@ -19,7 +19,7 @@ public class MyController {
 	public String sayHi(Model viewModel) {
 		// talk with model
 		
-		viewModel.addAttribute("Text","Zdr");
+		viewModel.addAttribute("Text","Hello");
 		
 		return "home";
 	}
