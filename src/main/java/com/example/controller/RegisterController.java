@@ -39,7 +39,7 @@ public class RegisterController {
 			@RequestParam("password") String password,
 			@RequestParam("password1") String password1,
 			@RequestParam("gender") String gender,
-			@RequestParam("bday") LocalDate bDay,
+			@RequestParam("bday") String bday,
 			@RequestParam(value = "abonat", defaultValue = "null") String abonat,
 			@RequestParam(value = "submit", defaultValue = "null") String submit) {
 		try {
@@ -53,7 +53,7 @@ public class RegisterController {
 			}
 			User user = new User(firstName, lastName,
 					email, password, gender,
-					bDay,
+					LocalDate.parse(bday),
 					abonat == null ? false : true, false, false);
 			try {
 				userDAO.insertUser(user);
