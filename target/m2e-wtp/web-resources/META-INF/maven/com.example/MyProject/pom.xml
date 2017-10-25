@@ -11,13 +11,6 @@
 	<name>MyProject</name>
 	<description>Demo project for Spring Boot</description>
 
-<repositories>
-    <repository>
-      <id>my-repo1</id>
-      <name>xuggle_repo</name>
-      <url>http://www.dcm4che.org/maven2/</url>
-    </repository>
-  </repositories>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -59,12 +52,13 @@
 			<artifactId>not-yet-commons-ssl</artifactId>
 			<version>0.3.9</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/xuggle/xuggle-xuggler -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-		    <groupId>xuggle</groupId>
-		    <artifactId>xuggle-xuggler</artifactId>
-		    <version>5.4</version>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.6</version>
 		</dependency>
+		
 	
 	</dependencies>
 	
