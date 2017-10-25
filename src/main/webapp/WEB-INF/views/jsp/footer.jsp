@@ -10,16 +10,16 @@
 <ul>
 <h4>Техномаркет</h4>
 <li> <a href="../StoresServlet">Магазини</a> </li>
-<li> <a href="contacts.jsp">Контакти</a> </li>
+<li> <a href="contacts">Контакти</a> </li>
 </ul>
 
 <ul>
 <h4>Лесно пазаруване</h4>
-<li> <a href="shoppingConditions.jsp">Успловия за пазаруване</a> </li>
-<li> <a href="deliveryInfo.jsp">Бърза и безплатна доставка до дома Ви</a> </li>
-<li> <a href="onlinePayInfo.jsp">Сигурно Online разплащане</a> </li>
-<li> <a href="tbiCreditInfo.jsp">Условия за TBI Bank кредитиране</a> </li>
-<li> <a href="uniCreditInfo.jsp">Условия за UniCredit кредитиране</a> </li>
+<li> <a href="shoppingConditions">Успловия за пазаруване</a> </li>
+<li> <a href="deliveryInfo">Бърза и безплатна доставка до дома Ви</a> </li>
+<li> <a href="onlinePayInfo">Сигурно Online разплащане</a> </li>
+<li> <a href="tbiCreditInfo">Условия за TBI Bank кредитиране</a> </li>
+<li> <a href="uniCreditInfo">Условия за UniCredit кредитиране</a> </li>
 </ul>
 
 <ul>

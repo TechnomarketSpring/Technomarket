@@ -24,6 +24,17 @@ public class User {
 	private boolean isAbonat;
 	private boolean isBanned;
 	private LinkedHashSet<Product> favourites;
+	public LinkedHashSet<Product> getFavourites() {
+		return favourites;
+	}
+
+	public void setFavourites(LinkedHashSet<Product> favourites) {
+		this.favourites = favourites;
+	}
+
+	public LinkedHashMap<Product, Integer> getBasket() {
+		return basket;
+	}
 	private LinkedHashMap<Product, Integer> basket;
 	private LinkedHashSet<Order> orders;
 

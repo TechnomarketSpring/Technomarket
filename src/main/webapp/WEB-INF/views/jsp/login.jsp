@@ -11,12 +11,12 @@
 	<body>
 	  <h1>Вход в сайта</h1>	
 	  
-		<c:if test="${ requestScope.error != null }">
+		<c:if test="${ invalidUser != null}">
 			<div>
 			<p>Невалидно удостоверение за автентикация.</p>
 			</div>
 		</c:if>
-		<form action="../LoginServlet" method="post">
+		<form action="login" method="post">
 			Е-мейл <input type="text" name="username"><br>
 			Парола <input type="password" name="password"><br>
 			Запомни ме <input type = "checkbox" name = "remember"> 

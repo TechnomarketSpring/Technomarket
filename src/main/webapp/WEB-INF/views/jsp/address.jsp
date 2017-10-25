@@ -16,11 +16,15 @@
 
 <h1><msg:message code="create_address"/></h1>
 
-<sf:form commandName="adresche">
-	<msg:message code="city"/>:<sf:input path="city"/><br>
-	<msg:message code="street"/>:<sf:input path="street"/><br>
-	<msg:message code="number"/>:<sf:input path="number"/><br>
-	<input type="submit" value="<msg:message code="create_address"/>">
+<sf:form commandName="user">
+	<msg:message code="firstName"/>:<sf:input path="city"/><br>
+	<msg:message code="lastName"/>:<sf:input path="street"/><br>
+	<msg:message code="email"/>:<sf:input path="number"/><br>
+	<msg:message code="password"/>:<sf:input path="number"/><br>
+	<msg:message code="gender"/>:<sf:input path="number"/><br>
+	<msg:message code="birthDay"/>:<sf:input path="number"/><br>
+	<msg:message code="isAbonat"/>:<sf:input path="number"/><br>
+	<input type="submit" value="<msg:message code="register"/>">
 </sf:form>
 
 </body>
