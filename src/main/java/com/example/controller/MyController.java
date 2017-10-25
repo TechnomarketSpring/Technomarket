@@ -19,7 +19,7 @@ public class MyController {
 	public String sayHi(Model viewModel) {
 		// talk with model
 		
-		viewModel.addAttribute("Text","Hello");
+		viewModel.addAttribute("Text","Zdr");
 		
 		return "home";
 	}
@@ -28,7 +28,7 @@ public class MyController {
 	public String sayBye(Model viewModel) {
 		// talk with model
 		Product product = new Product("Kiselo zele", 50);
-		System.out.println("Kiseloto si vaji");
+		
 		List<Product> products = new ArrayList<Product>();
 		products.add(product);
 		products.add(new Product("Kisela krastavica", 13));
