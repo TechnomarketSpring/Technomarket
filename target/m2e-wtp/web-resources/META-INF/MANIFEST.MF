@@ -1,15 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: MyProject
 Implementation-Version: 0.0.1-SNAPSHOT
-<<<<<<< HEAD
-Built-By: LENOVO
+Built-By: user
 Implementation-Vendor-Id: com.example
-Build-Jdk: 1.8.0_131
-=======
-Built-By: Daskalski
-Implementation-Vendor-Id: com.example
-Build-Jdk: 1.8.0_60
->>>>>>> 6c5d61d44f0efd1e65ffecd11fd59868021c9c97
+Build-Jdk: 1.8.0_91
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 
