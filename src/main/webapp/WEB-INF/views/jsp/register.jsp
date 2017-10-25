@@ -9,27 +9,27 @@
 </head>
 <body>
 	<h1>Регистрация</h1>
-	<c:if test="${ requestScope.invalidDateЕrror != null }">
+	<c:if test="${ date != null }">
 		<div>
 			<p>Данните за регистрация не са валидни!</p>
 		</div>
 	</c:if>
-	<c:if test="${ requestScope.invalidPassword != null }">
+	<c:if test="${ passError != null }">
 		<div>
 			<p>Паролите не съвпадат!</p>
 		</div>
 	</c:if>
-	<c:if test="${ requestScope.invalidEmailAddres != null }">
+	<c:if test="${ emailError != null }">
 		<div>
 			<p>Имейл адреса вече съществува!</p>
 		</div>
 	</c:if>
-	<c:if test="${ requestScope.unAccepted != null }">
+	<c:if test="${ submitError != null }">
 		<div>
 			<p>Трябва да приемете условията за да продължите!</p>
 		</div>
 	</c:if>
-	<form action="../RegistrationsServlet" method="post">
+	<form action="register" method="post">
 		Име* <input type="text" name="firstName" required><br>
 		Фамилия* <input type="text" name="lastName" required><br>
 		Имайл* <input type="email" name="email" required><br>
