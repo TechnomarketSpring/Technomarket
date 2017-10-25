@@ -60,8 +60,7 @@ public class LoginCntroller {
 	}
 
 	@RequestMapping(value = "/forgotten", method = RequestMethod.POST)
-	public String forgottenPassword(Model model, @RequestParam("email") String email,
-			@RequestParam(value = "password", defaultValue = "null") String password) {
+	public String forgottenPassword(Model model, @RequestParam("email") String email) {
 		try {
 			boolean exist = userDAO.checkIfUserWithSameEmailExist(email);
 			if (exist) {
@@ -76,5 +75,11 @@ public class LoginCntroller {
 			System.out.println("Ops SQL Exceptions");
 		}
 		return "error";
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "index";
 	}
 }

@@ -63,7 +63,7 @@
     				<c:if test="${sessionScope.user.isAdmin == true}">
 						<a href="admin_panel.jsp">Админ панел</a>
 					</c:if>
-					<form action="../LogoutServlet" method="post">
+					<form action="logout" method="post">
 						<a id="logout_a">Изход</a>
 						<input type="submit" id="logout_submit"/>
 					</form>
