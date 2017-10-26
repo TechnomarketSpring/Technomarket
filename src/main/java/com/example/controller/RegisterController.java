@@ -27,7 +27,8 @@ public class RegisterController {
 	UserDAO userDAO;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String prepareRegistarion() {
+	public String prepareRegistarion(HttpSession s) {
+		s.invalidate();
 		// model.addAttribute("user", new User());
 		return "register";
 	}

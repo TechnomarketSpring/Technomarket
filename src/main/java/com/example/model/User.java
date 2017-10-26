@@ -29,22 +29,11 @@ public class User {
 	private boolean isAbonat;
 	private boolean isBanned;
 	private LinkedHashSet<Product> favourites;
-	public LinkedHashSet<Product> getFavourites() {
-		return favourites;
-	}
-
-	public void setFavourites(LinkedHashSet<Product> favourites) {
-		this.favourites = favourites;
-	}
-
-	public LinkedHashMap<Product, Integer> getBasket() {
-		return (LinkedHashMap<Product, Integer>) Collections.unmodifiableMap(basket);
-	}
 	private LinkedHashMap<Product, Integer> basket;
 	private LinkedHashSet<Order> orders;
 
 	public User() {
-
+		this.basket = new LinkedHashMap<>();
 	}
 
 	public User(String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, boolean isAbonat, boolean isAdmin, boolean isBanned) throws InvalidUserDataException {
@@ -102,10 +91,19 @@ public class User {
 		
 		return sum;
 	}
+	public LinkedHashMap<Product, Integer> getBasket() {
+		return this.basket;
+	}
 
 	public void setId(long id) {
 		this.userId = id;
 
+	}
+	public LinkedHashSet<Product> getFavourites() {
+		return favourites;
+	}
+	public void setFavourites(LinkedHashSet<Product> favourites) {
+		this.favourites = favourites;
 	}
 	
 	public void setOrders(LinkedHashSet<Order> orders) {

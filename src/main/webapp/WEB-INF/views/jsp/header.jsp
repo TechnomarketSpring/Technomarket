@@ -53,8 +53,8 @@
   			<button class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
   			<div class="dropdown_content">
    				<c:if test="${sessionScope.user == null}">
-					<a href="login.jsp">Вход</a>
-   			 		<a href="register.jsp">Регистрация</a>
+					<a href="login">Вход</a>
+   			 		<a href="register">Регистрация</a>
 				</c:if>
    				<c:if test="${sessionScope.user != null}">
 					<a href="profile.jsp">Профил</a>
