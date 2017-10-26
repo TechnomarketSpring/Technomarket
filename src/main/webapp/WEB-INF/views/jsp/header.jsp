@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,33 +12,33 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="contacts.jsp">
-						<img src="D:\technomarket_images\buttons\contacts.jpg" alt="contacts">
+					<a href="<cs:url value='/header/contacts'/>">
+						<img src="img/buttons/contacts.jpg" alt="contacts">
 					</a>
 				</li>
 				<li>
-					<a href="../ProductFIlterServlet?type=home">
-						<img src="D:\technomarket_images\buttons\home.jpg" alt="home">
+					<a href="<cs:url value='/header/home'/>">
+						<img src="/img/buttons/home.jsp" alt="home">
 					</a>
 				</li>
 				<li>
-					<a href="../ProductFIlterServlet?type=apple">
-						<img src="D:\technomarket_images\buttons\apple.jpg" alt="apple">
+					<a href="<cs:url value='/header/apple'/>">
+						<img src="/img/buttons/apple.jpg" alt="apple">
 					</a>
 				</li>
 				<li>
-					<a href="../ProductFIlterServlet?type=promo">
-						<img src="D:\technomarket_images\buttons\prom.jpg" alt="promo">
+					<a href="<cs:url value='/header/promo'/>">
+						<img src="/img/buttons/prom.jpg" alt="promo">
 					</a>
 				</li>
 				<li>
-					<a href="services.jsp">
-						<img src="D:\technomarket_images\buttons\services.jpg" alt="services">
+					<a href="<cs:url value='/header/services'/>">
+						<img src="/img/buttons/services.jpg" alt="services">
 					</a>
 				</li>
 				<li>
-					<a href="stores.jsp">
-						<img src="D:\technomarket_images\buttons\stores.jpg" alt="stores">
+					<a href="<c:url value='/header/stores'/>">
+						<img src="/img/buttons/stores.jpg" alt="stores">
 					</a>
 				</li>
 			</ul>
@@ -45,7 +46,7 @@
 		<a href="index.jsp">
 			<img alt="technomarket_logo" src="D:\technomarket_images\logo\tm-logo.png">
 		</a>
-		<form action="../ProductFIlterServlet" method="get">
+		<form action="<c:url value='/header/search'/>" method="get">
 			<input type="text" name="searched_text" placeholder="Търси...">
 			<input type="submit" id="search_button"><br>
 		</form>
@@ -53,8 +54,8 @@
   			<button class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
   			<div class="dropdown_content">
    				<c:if test="${sessionScope.user == null}">
-					<a href="login">Вход</a>
-   			 		<a href="register">Регистрация</a>
+					<a href="<cs:url value='/header/login'/>">Вход</a>
+   			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
 				</c:if>
    				<c:if test="${sessionScope.user != null}">
 					<a href="profile.jsp">Профил</a>

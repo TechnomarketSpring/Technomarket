@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class InfoController {
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
 	public String infoShopping(){
-		System.out.println("@77777777777777777777777777777777777777777777777777777777777777777777");
+		
        return "shoppingConditions";		
 	}
 	

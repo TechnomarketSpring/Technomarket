@@ -44,9 +44,8 @@ public class StoreDAO {
 	public HashSet<Store> getStoresPerCity(String city) throws SQLException, InvalidStoreDataException{
 		HashSet<Store> stores = new HashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM technomarket.stores WHERE city LIKE '?';");
+		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM technomarket.stores WHERE city LIKE ?;");
 		ps.setString(1, city);
-		ps.executeUpdate();
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			Store s = new Store();
@@ -117,8 +116,8 @@ public class StoreDAO {
 	public void insertNewStore(Store s) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.stores (city, address, phone, working_time, email, gps, store_image_url) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, s.getAddres().getCity());
-		ps.setString(2, s.getAddres().getAddres());
+		ps.setString(1, s.addres().getCity());
+		ps.setString(2, s.addres().getAddres());
 		ps.setString(3, s.getPhoneNumber());
 		ps.setString(4, s.getWorkingTime());
 		ps.setString(5, s.getEmail());
