@@ -230,13 +230,10 @@ public class ProductDAO {
 	public LinkedHashSet searchProductByName(String productName) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(
-				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_name LIKE '%?%'");
-		statement.setString(1, productName);
+				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_name LIKE ?");
+		statement.setString(1, "%"+productName+"%");
 		ResultSet result = statement.executeQuery();
 		LinkedHashSet<Product> searchResult = new LinkedHashSet<>();
-		if(!result.next()){
-			System.out.println("@");
-		}
 		while(result.next()){
 			Product product = new Product();
 			product.setProductId(result.getLong(1));
@@ -329,7 +326,7 @@ public class ProductDAO {
 		LinkedHashSet<Product> products = new LinkedHashSet<>();
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(
-				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price,product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)  WHERE trade_mark_name LIKE 'apple%' or LIKE 'ipad'");
+				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price,product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)  WHERE trade_mark_name LIKE 'apple%' or 'ipad'");
 		ResultSet result = statement.executeQuery();
 		Product product = null;
 		while (result.next()) {
@@ -389,12 +386,9 @@ public class ProductDAO {
 	public Set<Product> searchProductWithCategoryHome() throws SQLException {
 		LinkedHashSet<Product> products = new LinkedHashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement(
-				"SELECT product.product_id, product.product_name, product.price, product.product_number,"
-						+ "trade_marks.trade_mark_name , product.warranty, product.percent_promo , categories.categoy_name"
-						+ "FROM technomarket.product join technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)"
-						+ "JOIN technomarket.categories ON(product.credit_id = categories.category_id)"
-						+ "WHERE categoy_name LIKE 'Home'");
+		String query = "SELECT product.product_id, product.product_name, product.price, product.product_number,trade_marks.trade_mark_name , product.warranty, product.percent_promo , categories.category_name, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) JOIN technomarket.categories ON(product.credit_id = categories.category_id) WHERE category_name = ?";
+		PreparedStatement statement = this.connection.prepareStatement(query);
+		statement.setString(1,"'Home'");
 		ResultSet result = statement.executeQuery();
 		Product product = null;
 		while (result.next()) {
@@ -406,6 +400,7 @@ public class ProductDAO {
 			product.setTradeMark(result.getString(5));
 			product.setWorranty(result.getInt(6));
 			product.setPercentPromo(result.getInt(7));
+			product.setImageUrl(result.getString(8));
 			products.add(product);
 		}
 		result.close();

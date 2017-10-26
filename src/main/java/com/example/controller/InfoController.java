@@ -13,6 +13,10 @@ public class InfoController {
 	
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
 	public String infoShopping(){
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 9d3a2253efb3e549125779804b9e6d92a59584b5
        return "shoppingConditions";		
 	}
 	@RequestMapping(value = "/infoForDelivery", method = RequestMethod.GET)

@@ -18,6 +18,7 @@ public class Store {
 	//�� �� �������� � ������ ���� ������ ��� �������� � ������
 	private long storeId;
 	private Address address;
+	private String adres;
 	private HashMap<Product, Integer> product;
 	private String phoneNumber;
 	private String email;
@@ -68,6 +69,7 @@ public class Store {
 			throw new InvalidStoreDataException();
 		}
 		this.product = new HashMap<>();
+		this.adres = address.getAddres();
 	}
 	
 	public class Address{
@@ -101,8 +103,11 @@ public class Store {
 	public long getStoreId() {
 		return storeId;
 	}
-	public Address getAddres() {
-		return address;
+	public String getAdres() {
+		return address.getAddres();
+	}
+	public Address addres(){
+		return this.address;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
