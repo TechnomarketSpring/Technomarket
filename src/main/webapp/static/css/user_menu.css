@@ -1,18 +1,22 @@
 @CHARSET "UTF-8";
 ul {
+	display: inline-block
    list-style: none;
    margin-left: 0;
    padding-left: 1em;
    text-indent: -1em;
+   width: 10px;
+ 	padding-left: 0;
 }
 
 li {
+	display: inline-block
 	height: 43px;
-	wight: 281px;
+	width: 281px;
 }
 
 #glyphicons-parents { 
-    background:url(img/glyphicons/plyphicons-users.png) left top; 
+    background:url(/img/glyphicons/plyphicons-users.png) left top; 
     width:10px; 
     height:10px;
     display: block;

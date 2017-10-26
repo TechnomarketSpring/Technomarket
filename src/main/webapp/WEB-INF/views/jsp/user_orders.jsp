@@ -14,7 +14,7 @@
 
 <jsp:include page="user_menu.jsp" />
 
-<c:if test="${session.user == null}">
+<c:if test="${sessionScope.user == null}">
 	<p>Само потребителите, влезли в сметката си, имат достъп до тази страница!</p>
 </c:if>
 

@@ -36,6 +36,7 @@ import com.example.model.exceptions.InvalidProductDataException;
 import com.example.model.exceptions.NotAnAdminException;
 
 @Component
+@RequestMapping(value="/product")
 public class ProductController {
 
 	

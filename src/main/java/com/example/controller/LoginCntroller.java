@@ -43,6 +43,7 @@ public class LoginCntroller {
 				} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 					System.out.println("Invalid date exceptions");
 				}
+				user.setAdmin(true);
 				session.setAttribute("user", user);
 				return "index";
 			}
