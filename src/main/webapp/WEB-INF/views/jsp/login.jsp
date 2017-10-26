@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<script type="text/javascript" src="css_and_js/scripts/common_scripts.js"></script>
+		<script type="text/javascript" src="<cs:url value='/js/common_scripts.js'/>"></script>
 		<title>Insert title here</title>
 	</head>
 	<body>

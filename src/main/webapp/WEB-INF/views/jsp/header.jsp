@@ -5,40 +5,40 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link href="<c:url value="/css/header_slyles" />" rel="stylesheet">
-		<script src="<c:url value="/js/header_scripts" />"></script>
+		<link href="<c:url value="/css/header_slyles.css"/>" rel="stylesheet">
+		<script src="<c:url value="/js/header_scripts.js"/>"></script>
 	</head>
 	<body>
 		<nav>
 			<ul>
 				<li>
 					<a href="<cs:url value='/header/contacts'/>">
-						<img src="img/buttons/contacts.jpg" alt="contacts">
+						<img src="<cs:url value='/img/buttons/contacts.jpg'/>" alt="contacts">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/home'/>">
-						<img src="/img/buttons/home.jsp" alt="home">
+						<img src="<cs:url value='/img/buttons/home.jpg'/>" alt="home">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/apple'/>">
-						<img src="/img/buttons/apple.jpg" alt="apple">
+						<img src="<cs:url value='/img/buttons/apple.jpg'/>" alt="apple">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/promo'/>">
-						<img src="/img/buttons/prom.jpg" alt="promo">
+						<img src="<cs:url value='/img/buttons/prom.jpg'/>" alt="promo">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/services'/>">
-						<img src="/img/buttons/services.jpg" alt="services">
+						<img src="<cs:url value='/img/buttons/services.jpg'/>" alt="services">
 					</a>
 				</li>
 				<li>
 					<a href="<c:url value='/header/stores'/>">
-						<img src="/img/buttons/stores.jpg" alt="stores">
+						<img src="<cs:url value='/img/buttons/stores.jpg'/>" alt="stores">
 					</a>
 				</li>
 			</ul>

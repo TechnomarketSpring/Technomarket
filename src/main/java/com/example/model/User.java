@@ -68,6 +68,7 @@ public class User {
 		this.basket = new LinkedHashMap<>();
 		this.orders = new LinkedHashSet<>();
 	}
+	
 
 	private boolean correctDateForNameOfUser(String firstName, String lastName) {
 		if (firstName == null || firstName.isEmpty() || firstName.length() < 2) {
