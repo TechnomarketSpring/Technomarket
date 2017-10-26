@@ -4,8 +4,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link href="<c:url value="/static/css/header_slyles" />" rel="stylesheet">
-		<script src="<c:url value="/static/js/header_scripts" />"></script>
+		<link href="<c:url value="/css/header_slyles" />" rel="stylesheet">
+		<script src="<c:url value="/js/header_scripts" />"></script>
 	</head>
 	<body>
 		<nav>
