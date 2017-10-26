@@ -17,12 +17,15 @@ import com.example.model.Order;
 import com.example.model.Product;
 import com.example.model.Store;
 import com.example.model.User;
+import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.IlligalAdminActionException;
 import com.example.model.exceptions.NotAnAdminException;
 
 
 @Component
 public class AdminDAO {
+	@Autowired
+	DBManager DBManager;
 	@Autowired
 	ProductDAO productDAO;
 	@Autowired

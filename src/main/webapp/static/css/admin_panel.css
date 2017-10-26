@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.btn {
+  display:block;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: #E60000; 
+  margin-right: 20px;
+}
+
+.btn-text {
+	color: #FFFFFF;
+}
+
+#admin-btns {
+	display: flex;
+}

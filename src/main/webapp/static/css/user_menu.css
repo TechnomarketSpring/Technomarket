@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+ul {
+   list-style: none;
+   margin-left: 0;
+   padding-left: 1em;
+   text-indent: -1em;
+}
+
+li {
+	height: 43px;
+	wight: 281px;
+}
+
+#glyphicons-parents { 
+    background:url(img/glyphicons/plyphicons-users.png) left top; 
+    width:10px; 
+    height:10px;
+    display: block;
+    float: left;
+}
+
+#head {
+	 border-top: 1px solid #E60000;
+	 border-bottom: 1px solid #DDDDDD; 
+	 background-color: #FFFFFF;
+}
+
+.menu-button {
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD; 
+	background-color: #F9F9F9;
+}
+
+.menu-button a:hover {
+	color: #EA0000;
+	backgound-olor: #FFFFFF;
+	border-left: 2px solid #E60000;
+}
