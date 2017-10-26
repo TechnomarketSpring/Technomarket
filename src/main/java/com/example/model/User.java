@@ -29,17 +29,11 @@ public class User {
 	private boolean isAbonat;
 	private boolean isBanned;
 	private LinkedHashSet<Product> favourites;
-	
-
-	
-
-	
 	private LinkedHashMap<Product, Integer> basket;
 	private LinkedHashSet<Order> orders;
 
 	public User() {
 		this.basket = new LinkedHashMap<>();
-
 	}
 
 	public User(String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, boolean isAbonat, boolean isAdmin, boolean isBanned) throws InvalidUserDataException {
