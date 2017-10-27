@@ -22,7 +22,7 @@
 		</ul>
 	</c:if>
 	<c:if test="${sessionScope.user == null}">
-	
+	   
 	</c:if>
 </body>
 </html>

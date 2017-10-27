@@ -14,13 +14,12 @@
 	  <c:forEach items="${orders}" var="Orders">
   	 	<c:forEach items = "${orders.product}" var = "product" >
   	 	<tr>
-  	 
   	 	<h2>Продукт*</h2>
             <td>Цена* product.price</td>
             <td>Име* product.name</td>
             <td>Номер на артикул* product.productNumber</td> 
              <td>Гаранция* product.worranty</td> 
-              <td><img sr =product.imageUrl></td>   
+           <td><img sr =product.imageUrl></td>   
         </tr>
         	<hr>
        
