@@ -8,13 +8,14 @@
 <link href="<c:url value="/css/user_menu.css" />" rel="stylesheet">
 </head>
 <body>
+	<div>
 	<c:if test="${sessionScope.user != null}">
 		<ul>
-			<li id="head"><stong><span id="glyphicons-parents"></span>Профил</stong></li>
+			<li id="head"><stong><div style="float: left;"><img src="/img/glyphicons/plyphicons-users.png"></div></span>Профил</stong></li>
 			<li class="menu-button"><a href="${pageContext.request.contextPath}/info/infoUserProfile">> Моят профил</a></li>
 			<li class="menu-button"><a href="${pageContext.request.contextPath}/info/infoUserOrders">> Моите поръчки</a></li>
 			<li class="menu-button"><a href="${pageContext.request.contextPath}/info/infoUserFavourites">> Любими продукти</a></li>
-				<c:if test="${session.user.isAdmin == true}">
+				<c:if test="${sessionScope.user.isAdmin == true}">
 					<li class="menu-button"><a href="${pageContext.request.contextPath}/info/infoAdminPanel">> Админ панел</a></li>
 				</c:if>
 			<li class="menu-button"><a href="logout">> Изход</a></li>
@@ -23,5 +24,6 @@
 	<c:if test="${sessionScope.user == null}">
 	
 	</c:if>
+	</div>
 </body>
 </html>

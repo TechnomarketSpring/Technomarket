@@ -42,7 +42,7 @@ public class ProductDAO {
 	
 	public Product getProduct(long productID)
 			throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
-
+		System.out.println("09327500000077777777777777777777777777777777777777777777777777777777777777777777");
 		String query = "SELECT * FROM technomarket.product WHERE product_id = ?;";
 		this.connection = DBManager.getConnections();
 			PreparedStatement statment = this.connection.prepareStatement(query);
@@ -99,17 +99,14 @@ public class ProductDAO {
 	public void insertNewProduct(Product p) throws SQLException {
 		// inserts Product into product table:
 		this.connection = DBManager.getConnections();
-		this.connection.setAutoCommit(false);
-		try {
 			int tradeMarkId = getTradeMarkId(p.getTradeMark());
 			PreparedStatement ps = this.connection.prepareStatement(
-					"INSERT INTO technomarket.product (trade_mark_id, credit_id, product_name, price, warranty, percent_promo, date_added, product_number, image_url) "
-							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+					"INSERT INTO technomarket.product (trade_mark_id, credit_id, product_name, price, warranty, percent_promo, date_added, product_number, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, tradeMarkId);
 			ps.setString(2, null);
 			ps.setString(3, p.getName());
-			ps.setBigDecimal(4, p.getPrice());
+			ps.setDouble(4, Double.parseDouble(p.getPrice().toString()));
 			ps.setInt(5, p.getWorranty());
 			ps.setInt(6, p.getPercentPromo());
 			ps.setString(7, LocalDate.now().toString());
@@ -126,17 +123,11 @@ public class ProductDAO {
 			// insert new row in characteristics table with the product id and
 			// its
 			// characteristics name and type:
-			insertProductIntoCharacteristics(p);
-			this.connection.commit();
-			rs.close();
+			if(p.getCharacteristics() != null){
+				insertProductIntoCharacteristics(p);
+			}
 			ps.close();
-		} catch (SQLException e) {
-			this.connection.rollback();
-			throw new SQLException();
-		} finally {
-			this.connection.setAutoCommit(true);
-			
-		}
+
 	}
 
 	public String generateProductNumber() throws SQLException {
@@ -145,8 +136,12 @@ public class ProductDAO {
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(query);
 		ResultSet result = statement.executeQuery();
-		result.next();
-		long number = result.getLong("product_id") + 1;
+		long number = 1;
+		if(result.next()){
+			number = result.getLong("product_id") + 1;
+		}else{
+			return String.valueOf(number);
+		}
 		result.close();
 		statement.close();
 		return String.valueOf(number);
@@ -163,14 +158,15 @@ public class ProductDAO {
 	private int getTradeMarkId(String tradeMark) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection
-				.prepareStatement("SELECT trade_mark_id FROM technomarket.trade_marks WHERE trade_mark_name LIKE '?';");
+				.prepareStatement("SELECT trade_mark_id FROM technomarket.trade_marks WHERE trade_mark_name LIKE ?;");
 		ps.setString(1, tradeMark);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
+		int result = rs.getInt("trade_mark_id");
 		rs.close();
 		ps.close();
 		
-		return rs.getInt("trade_mark_id");
+		return result;
 	}
 
 	// remove product module:

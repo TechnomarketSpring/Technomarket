@@ -47,16 +47,6 @@ public class Product {
 		} else {
 			this.price = price;
 		}
-		if (credit != null) {
-			this.credit = credit;
-		}else{
-			throw new InvalidProductDataException();
-		}
-		if(characteristics != null){
-			this.characteristics = characteristics;
-		}else{
-			throw new InvalidProductDataException();
-		}
 		if(worranty >= 0){
 			this.worranty = worranty;
 		}else{
@@ -72,7 +62,11 @@ public class Product {
 		}else{
 			throw new InvalidProductDataException();
 		}
-		
+		if(category != null){
+			this.category = category;
+		}else{
+			throw new InvalidProductDataException();
+		}
 		this.dateAdded = dateAdded;
 		this.isNewProduct = findIfProductIsNew();
 	}
@@ -133,7 +127,7 @@ public class Product {
 	}
 
 	public ArrayList<Characteristics> getCharacteristics() {
-		return (ArrayList<Characteristics>) Collections.unmodifiableList(characteristics);
+		return characteristics;
 	}
 
 		public void setName(String name) {

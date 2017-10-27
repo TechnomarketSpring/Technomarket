@@ -11,12 +11,12 @@ ul {
 
 li {
 	display: inline-block
-	height: 43px;
+	height: 60px;
 	width: 281px;
 }
 
 #glyphicons-parents { 
-    background:url(/img/glyphicons/plyphicons-users.png) left top; 
+    background:url(/img/glyphicons/plyphicons-users.png); 
     width:10px; 
     height:10px;
     display: block;
@@ -37,6 +37,11 @@ li {
 
 .menu-button a:hover {
 	color: #EA0000;
-	backgound-olor: #FFFFFF;
+	backgound-color: #FFFFFF;
 	border-left: 2px solid #E60000;
+}
+
+a {
+	 text-decoration: none;
+	 color: #000000;
 }

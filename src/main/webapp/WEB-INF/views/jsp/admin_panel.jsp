@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="<c:url value="/css/admin_panel.css" />" rel="stylesheet">
+<link href="<c:url value='/css/admin_panel.css' />" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 	<body>
@@ -14,10 +14,10 @@
 				<h1>Администраторски инструменти:</h1>
 				<jsp:include page="user_menu.jsp" />
 				<div id="admin-btns">	
-					<a class="btn" href="${pageContext.request.contextPath}/info/infoAdminInsertProduct"><span class="btn-text"><strong>Нов продукт</strong></span></a>
-					<a class="btn" href="${pageContext.request.contextPath}/info/infoAdminCreateAdmin"><span class="btn-text"><strong>Нов админ</strong></span></a>
-					<a class="btn" href="${pageContext.request.contextPath}/info/infoUserBan"><span class="btn-text"><strong>Бан секира</strong></span></a>
-					<a class="btn" href="${pageContext.request.contextPath}/info/infoAdminOrders"><span class="btn-text"><strong>Поръчки</strong></span></a>
+					<a class="btn" href="<c:url value='/product/insert_product' />"><span class="btn-text"><strong>Нов продукт</strong></span></a>
+					<a class="btn" href="<c:url value='/info/infoAdminCreateAdmin' />"><span class="btn-text"><strong>Нов админ</strong></span></a>
+					<a class="btn" href="<c:url value='/info/infoUserBan' />"><span class="btn-text"><strong>Бан секира</strong></span></a>
+					<a class="btn" href="<c:url value='/info/infoAdminOrders' />"><span class="btn-text"><strong>Поръчки</strong></span></a>
 				</div>
 			</c:if>
 		<jsp:include page="footer.jsp" />
