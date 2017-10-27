@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 ul {
-	display: inline-block
+	display: inline-block;
    list-style: none;
    margin-left: 0;
    padding-left: 1em;

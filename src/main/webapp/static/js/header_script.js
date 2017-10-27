@@ -1,5 +1,17 @@
-window.onload = function() {
-	document.getElementById("logout_a").onclick = function() {
-		document.getElementById("logout_submit").submit();
-	}
-};
+function myFunction() {
+    document.getElementById("dropdown-innert").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.drop_head_button')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown_content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}

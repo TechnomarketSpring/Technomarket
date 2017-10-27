@@ -1,58 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link href="<c:url value="/css/header_slyles.css"/>" rel="stylesheet">
-		<script src="<c:url value="/js/header_scripts.js"/>"></script>
+		<link href="<c:url value="/css/header_styles.css" />" rel="stylesheet">
+		<script src="<c:url value="/js/header_script.js" />"></script>
 	</head>
 	<body>
-		<nav>
-			<ul>
-				<li>
-					<a href="<cs:url value='/header/contacts'/>">
+		<nav id="first-nav">
+			<ul id="buttons">
+				<li class="btn-li">
+					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
 						<img src="<cs:url value='/img/buttons/contacts.jpg'/>" alt="contacts">
 					</a>
 				</li>
-				<li>
-					<a href="<cs:url value='/header/home'/>">
+				<li class="btn-li">
+					<a class="btn-links" href="<cs:url value='/header/home'/>">
 						<img src="<cs:url value='/img/buttons/home.jpg'/>" alt="home">
 					</a>
 				</li>
-				<li>
-					<a href="<cs:url value='/header/apple'/>">
+				<li class="btn-li">
+					<a class="btn-links" href="<cs:url value='/header/apple'/>">
 						<img src="<cs:url value='/img/buttons/apple.jpg'/>" alt="apple">
 					</a>
 				</li>
-				<li>
-					<a href="<cs:url value='/header/promo'/>">
+				<li class="btn-li">
+					<a class="btn-links" href="<cs:url value='/header/promo'/>">
 						<img src="<cs:url value='/img/buttons/prom.jpg'/>" alt="promo">
 					</a>
 				</li>
-				<li>
-					<a href="<cs:url value='/header/services'/>">
+				<li class="btn-li">
+					<a class="btn-links" href="<cs:url value='/header/services'/>">
 						<img src="<cs:url value='/img/buttons/services.jpg'/>" alt="services">
 					</a>
 				</li>
-				<li>
-					<a href="<c:url value='/header/stores'/>">
+				<li class="btn-li">
+					<a class="btn-links" href="<c:url value='/header/stores'/>">
 						<img src="<cs:url value='/img/buttons/stores.jpg'/>" alt="stores">
 					</a>
 				</li>
 			</ul>
 		</nav>
+		
+		<div id="contaner">
+		<div id="logo-search">
 		<a href="index.jsp">
-			<img alt="technomarket_logo" src="D:\technomarket_images\logo\tm-logo.png">
+			<img id="logo" alt="technomarket_logo" src="<cs:url value='/img/logo/tm-logo.png'/>">
 		</a>
-		<form action="<c:url value='/header/search'/>" method="get">
-			<input type="text" name="searched_text" size="40" maxlength="35" placeholder="Търси...">
-			<input type="submit" id="search_button" placeholder="Search"><br>
+		<div id="search-menu">
+		<div id="search-con">
+		<form id="search" action="<c:url value='/header/search'/>" method="get">
+			<input type="text" id="searched-text" name="searched_text" size="40" maxlength="35" placeholder="Търси...">
+			<input type="image" id="search-button" alt="Search" src="<cs:url value='/img/buttons/search.jpg'/>"><br>
 		</form>
+		</div>
+		</div>
+		<div id="menu-container">
 		<div class="user_dropdown">
-  			<button class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
-  			<div class="dropdown_content">
+  			<button onclick="myFunction()" class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
+  			<div id="dropdown-inner" class="dropdown_content">
    				<c:if test="${sessionScope.user == null}">
 					<a href="<cs:url value='/header/login'/>">Вход</a>
    			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
@@ -64,13 +72,14 @@
     				<c:if test="${sessionScope.user.isAdmin == true}">
 						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>
-					<form action="<cs:url value='/info/logouts'/>" method="post">
-						<a id="logout_a">Изход</a>
-						<input type="submit" id="logout_submit"/>
+					<a href="<cs:url value='logout'/>">Изход</a>
 					</form>
 				</c:if>
  			 </div>
+ 			 <button type="button"><c:out value = "${sessionScope.user.basket != null ? sessionScope.user.getBasketPrice() : '0'}"/></button>
 		</div>
-		<button type="button"><c:out value = "${sessionScope.user.basket != null ? sessionScope.user.getBasketPrice() : '0'}"/></button>
+		</div>
+		</div>
+		</div>
 	</body>
 </html>
