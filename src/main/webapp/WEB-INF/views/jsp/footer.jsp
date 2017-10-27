@@ -11,24 +11,24 @@
 <div style="border:1px solid red;">
 <ul>
 <h4>Техномаркет</h4>
-<li> <a href="<c:url value='/header/stores'/>">Магазини</a> </li>
+<li> <a href="<cs:url value='/header/stores'/>">Магазини</a> </li>
 <li> <a href="contacts">Контакти</a> </li>
 </ul>
 
 <ul>
 <h4>Лесно пазаруване</h4>
-<li> <a href="<c:url value='/info/infoForShoppingCon'/>">Успловия за пазаруване</a> </li>
-<li> <a href="<c:url value='/info/infoForDelivery'/>">Бърза и безплатна доставка до дома Ви</a> </li>
-<li> <a href="<c:url value='/info/infoForOnlinePay'/>">Сигурно Online разплащане</a> </li>
-<li> <a href="<c:url value='/info/infoForTBICredit'/>">Условия за TBI Bank кредитиране</a> </li>
-<li> <a href="<c:url value='/info/infoForUniCredit'/>">Условия за UniCredit кредитиране</a> </li>
+<li> <a href="<cs:url value='/info/infoForShoppingCon'/>">Успловия за пазаруване</a> </li>
+<li> <a href="<cs:url value='/info/infoForDelivery'/>">Бърза и безплатна доставка до дома Ви</a> </li>
+<li> <a href="<cs:url value='/info/infoForOnlinePay'/>/">Сигурно Online разплащане</a> </li>
+<li> <a href="<cs:url value='/info/infoForTBICredit'/>">Условия за TBI Bank кредитиране</a> </li>
+<li> <a href="<cs:url value='/info/infoForUniCredit'/>">Условия за UniCredit кредитиране</a> </li>
 </ul>
 
 <ul>
 <h4>Контакти</h4><br>
-<h4>Национален телефон на клиента</h4>
-<h4 >0700 10 800<h4><br>
-<h5>на цената на един градски разговор<h5>
+<h3>Национален телефон на клиента</h3>
+<h3 >0700 10 800<h3><br>
+<h1>на цената на един градски разговор<h1>
 </ul>
 </div>
 </body>

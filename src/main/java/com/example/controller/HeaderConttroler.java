@@ -108,7 +108,6 @@ public class HeaderConttroler {
 	public String searchProduct(@RequestParam("searched_text") String searched_text, Model model){
 		try {
 			Set<Product> products = productDAO.searchProductByName(searched_text);
-			
 			model.addAttribute("filtredProducts", products);
 		} catch (SQLException e) {
 			e.printStackTrace();

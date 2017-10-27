@@ -47,8 +47,8 @@
 			<img alt="technomarket_logo" src="D:\technomarket_images\logo\tm-logo.png">
 		</a>
 		<form action="<c:url value='/header/search'/>" method="get">
-			<input type="text" name="searched_text" placeholder="Търси...">
-			<input type="submit" id="search_button"><br>
+			<input type="text" name="searched_text" size="40" maxlength="35" placeholder="Търси...">
+			<input type="submit" id="search_button" placeholder="Search"><br>
 		</form>
 		<div class="user_dropdown">
   			<button class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
@@ -58,13 +58,13 @@
    			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
 				</c:if>
    				<c:if test="${sessionScope.user != null}">
-					<a href="profile.jsp">Профил</a>
-    				<a href="orders.jsp">Поръчки</a>
-    				<a href="favourites.jsp">Любими</a>
+					<a href="<cs:url value='/info/infoUserProfile'/>">Профил</a>
+    				<a href="<cs:url value='/info/infoUserOrders'/>">Поръчки</a>
+    				<a href="<cs:url value='/info/infoUserFavourites'/>">Любими</a>
     				<c:if test="${sessionScope.user.isAdmin == true}">
-						<a href="admin_panel.jsp">Админ панел</a>
+						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>
-					<form action="logout" method="post">
+					<form action="<cs:url value='/info/logouts'/>" method="post">
 						<a id="logout_a">Изход</a>
 						<input type="submit" id="logout_submit"/>
 					</form>

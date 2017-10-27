@@ -185,5 +185,8 @@ public class User {
 	public long getUserId() {
 		return userId;
 	}
+	public LinkedHashSet<Order> getOrders() {
+		return orders;
+	}
 
 }

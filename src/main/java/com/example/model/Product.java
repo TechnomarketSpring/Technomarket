@@ -26,7 +26,7 @@ public class Product {
 	private String imageUrl;
 	public enum campareEnum{ defaultt,price,markName };
 	
-	public Product(String name, String tradeMark, String price, String productNumber, Credit credit, Category category, int worranty,
+	public Product(String name, String tradeMark, BigDecimal price, Credit credit, Category category, int worranty,
 			int percentPromo, LocalDate dateAdded, String imageUrl) throws InvalidProductDataException {
 
 		if (correctName(name)) {
@@ -39,11 +39,13 @@ public class Product {
 		} else {
 			throw new InvalidProductDataException();
 		}
-		BigDecimal big = new BigDecimal(price);
-		if (big.compareTo(new BigDecimal("0")) < 0) {
+		
+	//	BigDecimal big = new BigDecimal(price);
+		
+		if (price.compareTo(new BigDecimal("0")) < 0) {
 			throw new InvalidProductDataException();
 		} else {
-			this.price = big;
+			this.price = price;
 		}
 		if (credit != null) {
 			this.credit = credit;
@@ -73,6 +75,10 @@ public class Product {
 		
 		this.dateAdded = dateAdded;
 		this.isNewProduct = findIfProductIsNew();
+	}
+
+	public Product() {
+		// TODO Auto-generated constructor stub
 	}
 
 	private boolean findIfProductIsNew() {
@@ -129,10 +135,7 @@ public class Product {
 	public ArrayList<Characteristics> getCharacteristics() {
 		return (ArrayList<Characteristics>) Collections.unmodifiableList(characteristics);
 	}
-	
-	 public Product() {
-			// TODO Auto-generated constructor stub
-		}
+
 		public void setName(String name) {
 			this.name = name;
 		}

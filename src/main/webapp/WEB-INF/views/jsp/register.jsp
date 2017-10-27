@@ -31,19 +31,18 @@
 			<p>Трябва да приемете условията за да продължите!</p>
 		</div>
 	</c:if>
-	<form action="<cs:url value='/register'/>" method="post">
-		Име* <input type="text" name="firstName" required><br>
-		Фамилия* <input type="text" name="lastName" required><br>
-		Имайл* <input type="email" name="email" required><br>
-		Парола* <input type="password" name="password" required></input><br>
-		Парола(отново)* <input type="password" name="password1" required></input><br>
-		Пол* <input type="radio" name="gender" value="male">Мъж <input
-			type="radio" name="gender" value="female">Жена<br> Дата
-		на раждане* <input type="date" name="bday" required><br>
-		<input type="checkbox" name="abonat" value="1">Искам да
-		получавам ингормация за промоционални и нови продукти.<br> <input
-			type="checkbox" name="submit" value="1">Приемам условията за
-		позлване<br> <input type="submit" value="Регистация">
+	<form action="register" method="post">
+				Име* <input type="text" name="firstName" required><br>
+				Фамилия* <input type="text" name="lastName" required><br>
+				Имайл* <input type="email" name="email" required><br>
+				Парола* <input type="password" name="password" required></input><br>
+				Парола(отново)* <input type="password" name="password1" required></input><br>
+				Пол* <input type="radio" name="gender" value="male">Мъж <input
+				type="radio" name="gender" value="female">Жена<br>
+				Датa на раждане* <input type="date" name="bday" required><br>
+				<input type="checkbox" name="abonat" value="1">Искам да получавам ингормация за промоционални и нови продукти.<br> 
+				<input type="checkbox" name="submit" value="1">Приемам условията за позлване<br> 
+				<input type="submit" value="Регистация">
 	</form>
 	<jsp:include page="footer.jsp" />
 </body>

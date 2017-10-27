@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,5 +68,20 @@ public class CategoryDAO {
 		Category category = new Category(name);
 		return category;
 	}
+	
+	public TreeSet<String> getAllInnerCategories() throws SQLException{
+		TreeSet<String> innerCategories = new TreeSet<>();
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT category_name FROM technomarket.categories WHERE parent_category_id IS NOT NULL;");
+		ps.executeUpdate();
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String categoryName = rs.getString("category_name");
+			innerCategories.add(categoryName);
+		}
+		ps.close();
+		rs.close();
+		return innerCategories;
+	}	
 
 }

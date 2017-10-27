@@ -38,6 +38,7 @@ public class StoreDAO {
 		while(result.next()){
 			cityNames.add(result.getString("stores.city"));
 		}
+		result.close();
 		return cityNames;
 	}
 	
@@ -59,6 +60,7 @@ public class StoreDAO {
 			stores.add(s);
 		}
 		ps.close();
+		rs.close();
 		return stores;
 		
 	}

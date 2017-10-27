@@ -113,7 +113,7 @@ public class ProductDAO {
 			ps.setInt(5, p.getWorranty());
 			ps.setInt(6, p.getPercentPromo());
 			ps.setString(7, LocalDate.now().toString());
-			ps.setString(8, p.getProductNumber());
+			ps.setString(8, generateProductNumber());
 			ps.setString(9, p.getImageUrl());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -137,6 +137,19 @@ public class ProductDAO {
 			this.connection.setAutoCommit(true);
 			
 		}
+	}
+
+	public String generateProductNumber() throws SQLException {
+		
+		String query = "SELECT product_id FROM technomarket.product ORDER BY product_id DESC LIMIT 1;";
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement(query);
+		ResultSet result = statement.executeQuery();
+		result.next();
+		long number = result.getLong("product_id") + 1;
+		result.close();
+		statement.close();
+		return String.valueOf(number);
 	}
 
 	private void insertProductIntoCharacteristics(Product p) throws SQLException {

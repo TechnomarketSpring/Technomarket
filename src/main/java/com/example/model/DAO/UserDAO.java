@@ -32,6 +32,7 @@ public class UserDAO {
 	ProductDAO productDAO;
 	@Autowired
 	OrderDAO orderDAO;
+	
 	private Connection connection;
 	
 	public void insertUser(User user) throws SQLException, EmailAlreadyInUseException {
