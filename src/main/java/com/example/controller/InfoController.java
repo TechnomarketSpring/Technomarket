@@ -1,10 +1,15 @@
 package com.example.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.model.Order;
 @Controller
 @RequestMapping(value = "/info")
 public class InfoController {
@@ -39,8 +44,14 @@ public class InfoController {
 	public String infoUserProfile(){
 		return "user_profile";
 	}
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String log(HttpSession session){
+		session.invalidate();
+		return "/index";
+	}
 	@RequestMapping(value = "/infoUserOrders", method = RequestMethod.GET)
-	public String infoUserOrders(){
+	public String infoUserOrders(HttpSession sesion){
+		
 		return "user_orders";
 	}
 	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)
@@ -69,6 +80,11 @@ public class InfoController {
 	@RequestMapping(value = "/infoAdminInsertProduct", method = RequestMethod.GET)
 	public String infoAdminInsertProduct(){
 		return "admin_insert_product";
+	}
+	@RequestMapping(value = "/infoFoCuurentOrder", method = RequestMethod.GET )
+	public String infoForCurrentOrder(@RequestParam("value") Order order,Model model){
+		model.addAttribute("orders", order);
+		return "pageForCurrentOrders";
 	}
 	
 	

@@ -8,7 +8,6 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
-<h5>Успешно влизане</h5>
 <jsp:include page="footer.jsp" />
 </body>
 </html>

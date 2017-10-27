@@ -9,20 +9,22 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
-
-
-
-<jsp:include page="user_menu.jsp" />
-  <c:if test = "${sessinScope.user.orders == null }">
-    <div style = "border:1px solid green">
-    <h3>"${user.firstName}" няма направени поръчки!</h3>
-  </div >
-  </c:if>
-
-  <c:if test="${user.orders != null}">
+ <c:if test="${orders != null}">
 	 <tbody>
-	  <c:forEach items="${sessinScope.user.orders}" var="userOrders">
-  	 	
+	  <c:forEach items="${orders}" var="Orders">
+  	 	<c:forEach items = "${orders.product}" var = "product" >
+  	 	<tr>
+  	 
+  	 	<h2>Продукт*</h2>
+            <td>Цена* product.price</td>
+            <td>Име* product.name</td>
+            <td>Номер на артикул* product.productNumber</td> 
+             <td>Гаранция* product.worranty</td> 
+              <td><img sr =product.imageUrl></td>   
+        </tr>
+        	<hr>
+       
+  	 	</c:forEach>
        <tr>
             <td>Цена* userOrders.price</td>
             <td>Дата* userOrders.time</td>
@@ -34,6 +36,12 @@
            				
 </c:forEach>
   </c:if>
+
+
+
+
+
 <jsp:include page="footer.jsp" />
+
 </body>
 </html>

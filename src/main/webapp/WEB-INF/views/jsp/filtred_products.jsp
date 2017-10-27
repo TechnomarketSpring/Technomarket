@@ -9,6 +9,7 @@
 	</head>
 	<body>
 		<jsp:include page="header.jsp"></jsp:include>
+		 
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div style="border:1px solid black;">
@@ -24,6 +25,11 @@
 				<input type="button" value="Купи сега" name="${ filtredProduct.productId}">
 				</div>			
 			</c:forEach>
+		</c:if>
+		<c:if test = "${filtredProducts.size() == 0}">
+		      <div style = "border:1px solid red">
+		     <h3>Няма намерен резутат от търсенето</h3>
+		     </div>
 		</c:if>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</body>

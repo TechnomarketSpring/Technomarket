@@ -5,40 +5,40 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link href="<c:url value="/css/header_slyles" />" rel="stylesheet">
-		<script src="<c:url value="/js/header_scripts" />"></script>
+		<link href="<c:url value="/css/header_slyles.css"/>" rel="stylesheet">
+		<script src="<c:url value="/js/header_scripts.js"/>"></script>
 	</head>
 	<body>
 		<nav>
 			<ul>
 				<li>
 					<a href="<cs:url value='/header/contacts'/>">
-						<img src="img/buttons/contacts.jpg" alt="contacts">
+						<img src="<cs:url value='/img/buttons/contacts.jpg'/>" alt="contacts">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/home'/>">
-						<img src="/img/buttons/home.jsp" alt="home">
+						<img src="<cs:url value='/img/buttons/home.jpg'/>" alt="home">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/apple'/>">
-						<img src="/img/buttons/apple.jpg" alt="apple">
+						<img src="<cs:url value='/img/buttons/apple.jpg'/>" alt="apple">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/promo'/>">
-						<img src="/img/buttons/prom.jpg" alt="promo">
+						<img src="<cs:url value='/img/buttons/prom.jpg'/>" alt="promo">
 					</a>
 				</li>
 				<li>
 					<a href="<cs:url value='/header/services'/>">
-						<img src="/img/buttons/services.jpg" alt="services">
+						<img src="<cs:url value='/img/buttons/services.jpg'/>" alt="services">
 					</a>
 				</li>
 				<li>
 					<a href="<c:url value='/header/stores'/>">
-						<img src="/img/buttons/stores.jpg" alt="stores">
+						<img src="<cs:url value='/img/buttons/stores.jpg'/>" alt="stores">
 					</a>
 				</li>
 			</ul>
@@ -47,8 +47,8 @@
 			<img alt="technomarket_logo" src="D:\technomarket_images\logo\tm-logo.png">
 		</a>
 		<form action="<c:url value='/header/search'/>" method="get">
-			<input type="text" name="searched_text" placeholder="Търси...">
-			<input type="submit" id="search_button"><br>
+			<input type="text" name="searched_text" size="40" maxlength="35" placeholder="Търси...">
+			<input type="submit" id="search_button" placeholder="Search"><br>
 		</form>
 		<div class="user_dropdown">
   			<button class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
@@ -58,13 +58,13 @@
    			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
 				</c:if>
    				<c:if test="${sessionScope.user != null}">
-					<a href="profile.jsp">Профил</a>
-    				<a href="orders.jsp">Поръчки</a>
-    				<a href="favourites.jsp">Любими</a>
+					<a href="<cs:url value='/info/infoUserProfile'/>">Профил</a>
+    				<a href="<cs:url value='/info/infoUserOrders'/>">Поръчки</a>
+    				<a href="<cs:url value='/info/infoUserFavourites'/>">Любими</a>
     				<c:if test="${sessionScope.user.isAdmin == true}">
-						<a href="admin_panel.jsp">Админ панел</a>
+						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>
-					<form action="logout" method="post">
+					<form action="<cs:url value='/info/logouts'/>" method="post">
 						<a id="logout_a">Изход</a>
 						<input type="submit" id="logout_submit"/>
 					</form>

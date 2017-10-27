@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -10,17 +10,17 @@
 <div style="border:1px solid red;">
 <ul>
 <h4>Техномаркет</h4>
-<li> <a href="<c:url value='/header/stores'/>">Магазини</a> </li>
+<li> <a href="<cs:url value='/header/stores'/>">Магазини</a> </li>
 <li> <a href="contacts">Контакти</a> </li>
 </ul>
 
 <ul>
 <h4>Лесно пазаруване</h4>
-<li> <a href="<c:url value='/info/infoForShoppingCon'/>">Успловия за пазаруване</a> </li>
-<li> <a href="<c:url value='/info/infoForDelivery'/>">Бърза и безплатна доставка до дома Ви</a> </li>
-<li> <a href="<c:url value='/info/infoForOnlinePay'/>">Сигурно Online разплащане</a> </li>
-<li> <a href="<c:url value='/info/infoForTBICredit'/>">Условия за TBI Bank кредитиране</a> </li>
-<li> <a href="<c:url value='/info/infoForUniCredit'/>">Условия за UniCredit кредитиране</a> </li>
+<li> <a href="<cs:url value='/info/infoForShoppingCon'/>">Успловия за пазаруване</a> </li>
+<li> <a href="<cs:url value='/info/infoForDelivery'/>">Бърза и безплатна доставка до дома Ви</a> </li>
+<li> <a href="<cs:url value='/info/infoForOnlinePay'/>/">Сигурно Online разплащане</a> </li>
+<li> <a href="<cs:url value='/info/infoForTBICredit'/>">Условия за TBI Bank кредитиране</a> </li>
+<li> <a href="<cs:url value='/info/infoForUniCredit'/>">Условия за UniCredit кредитиране</a> </li>
 </ul>
 
 <ul>
