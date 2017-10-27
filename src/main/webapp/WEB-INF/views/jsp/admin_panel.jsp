@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="<c:url value="/css/admin_panel.css" />" rel="stylesheet">
+<link href="<c:url value='/css/admin_panel.css' />" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 	<body>
@@ -19,6 +19,7 @@
 					<a class="btn" href="<cs:url value='/info/infoAdminCreateAdmin'/>"><span class="btn-text"><strong>Нов админ</strong></span></a>
 					<a class="btn" href="<cs:url value='/info/infoUserBan'/>"><span class="btn-text"><strong>Бан секира</strong></span></a>
 					<a class="btn" href="<cs:url value='/info/infoAdminOrders'/>"><span class="btn-text"><strong>Поръчки</strong></span></a>
+					<a class="btn" href="<cs:url value='/info/infoAdminOrders'/>"><span class="btn-text"><strong>Задаване на отстъпка на продукт</strong></span></a>
 				</div>
 			</c:if>
 		<jsp:include page="footer.jsp" />

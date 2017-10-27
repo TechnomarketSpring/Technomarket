@@ -21,11 +21,31 @@ public class TradeMarkDAO {
 	
 	private Connection connection;
 	
+	public boolean tradeMarkExist(String tradeMark) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT trade_mark_name FROM technomarket.trade_marks WHERE trade_mark_name = ?;");
+		ps.setString(1, tradeMark);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			rs.close();
+			return true;
+		}else{
+			rs.close();
+			return false;
+		}
+	}
+	
+	public void insertTradeMark(String tradeMark) throws SQLException {
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.trade_marks (trade_mark_name) VALUES (?)");
+		ps.setString(1, tradeMark);
+		ps.executeUpdate();
+	}
+	
 	public TreeSet<String> getAllTradeMarks() throws SQLException{
 		TreeSet<String> tradeMarks = new TreeSet<>();
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection.prepareStatement("SELECT trade_mark_name FROM technomarket.trade_marks;");
-		ps.executeUpdate();
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			String tradeMark = rs.getString("trade_mark_name");
@@ -34,5 +54,8 @@ public class TradeMarkDAO {
 		ps.close();
 		rs.close();
 		return tradeMarks;
-	}	
+	}
+
+
+	
 }

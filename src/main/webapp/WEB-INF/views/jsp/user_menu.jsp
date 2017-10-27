@@ -9,6 +9,7 @@
 <link href="<c:url value="/css/user_menu.css" />" rel="stylesheet">
 </head>
 <body>
+	<div>
 	<c:if test="${sessionScope.user != null}">
 		<ul>
 			<li id="head"><stong><span id="glyphicons-parents"></span>Профил</stong></li>
@@ -22,7 +23,12 @@
 		</ul>
 	</c:if>
 	<c:if test="${sessionScope.user == null}">
+<<<<<<< HEAD
 	   
+=======
+
+>>>>>>> 13629dad8b9e62eea60c11f18fb2df9ee7f1ba9e
 	</c:if>
+	</div>
 </body>
 </html>

@@ -29,7 +29,7 @@ public class CategoryDAO {
 		this.connection = DBManager.getConnections();
 		this.connection.setAutoCommit(false);
 		try {
-			long categoryId = getCategoryId(p.getCategory());
+			long categoryId = getCategoryId(p.getCategory().getName());
 			PreparedStatement ps = this.connection.prepareStatement(
 					"INSERT INTO technomarket.product_has_category (category_id, product_id) VALUES (?, ?);",
 					Statement.RETURN_GENERATED_KEYS);
@@ -43,15 +43,17 @@ public class CategoryDAO {
 			throw new SQLException();
 		} finally {
 			this.connection.setAutoCommit(true);
-			this.connection.close();
 		}
 	}
 
-	private long getCategoryId(Category category) throws SQLException {
+	private long getCategoryId(String category) throws SQLException {
+		System.out.println("====================================================================================");
+		System.out.println("=================================================================" + category);
 		Connection con = DBManager.getConnections();
 		PreparedStatement ps = con
-				.prepareStatement("SELECT category_id FROM technomarket.categories WHERE category_name LIKE '?';");
-		ps.setString(1, category.getName());
+				.prepareStatement("SELECT category_id FROM technomarket.categories WHERE category_name LIKE ?;");
+
+		ps.setString(1, category);
 		ResultSet rs = ps.executeQuery();
 		rs.next();
 		return rs.getLong("category_id");
@@ -69,11 +71,32 @@ public class CategoryDAO {
 		return category;
 	}
 	
+	
+	public boolean categoryExist(String category) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT category_name FROM technomarket.categories WHERE category_name = ?;");
+		ps.setString(1, category);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			rs.close();
+			return true;
+		}else{
+			rs.close();
+			return false;
+		}
+	}
+	
+	public void insertCategory(String category) throws SQLException {
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.categories (category_name) VALUES (?)");
+		ps.setString(1, category);
+		ps.executeUpdate();
+	}
+	
 	public TreeSet<String> getAllInnerCategories() throws SQLException{
 		TreeSet<String> innerCategories = new TreeSet<>();
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection.prepareStatement("SELECT category_name FROM technomarket.categories WHERE parent_category_id IS NOT NULL;");
-		ps.executeUpdate();
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			String categoryName = rs.getString("category_name");

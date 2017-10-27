@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
@@ -52,25 +53,14 @@ public class ProductController {
 	AdminDAO adminDAO;
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.GET)
-	public String prepareRegistarion(Model model) {
-		TreeSet<String> tradeMarks = null;
-		TreeSet<String> innerCategories = null;
-		try {
-			tradeMarks = tradeMarkDAO.getAllTradeMarks();
-			innerCategories = categoryDAO.getAllInnerCategories();
-		} catch (SQLException e) {
-			// TODO error page
-			e.printStackTrace();
-		}
-		model.addAttribute(tradeMarks);
-		model.addAllAttributes(innerCategories);
+	public String prepareRegistarion() {
 		return "admin_insert_product";
 	}
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.POST)
 	public String insertNewProduct(Model model, HttpSession session, @RequestParam("productName") String productName,
 			@RequestParam("tradeMark") String tradeMark,
-			@RequestParam("category") String categoryName,
+			@RequestParam("categoryName") String categoryName,
 			@RequestParam("price") BigDecimal price,
 			@RequestParam("warranty") int warranty,
 			@RequestParam("promoPercent") int promoPercent,
@@ -78,6 +68,12 @@ public class ProductController {
 
 		String imageName = null;
 		try {
+			if(!tradeMarkDAO.tradeMarkExist(tradeMark)){
+				tradeMarkDAO.insertTradeMark(tradeMark);
+			}
+			if(!categoryDAO.categoryExist(categoryName)){
+				categoryDAO.insertCategory(categoryName);
+			}
 		MimeTypes allTypes = MimeTypes.getDefaultMimeTypes();
 		MimeType type = allTypes.forName(image.getContentType());
 		String extention = type.getExtension(); // .extention (dot included)
@@ -92,24 +88,27 @@ public class ProductController {
 		model.addAttribute("added", "New product added");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (MimeTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (InvalidCategoryDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (InvalidProductDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (NotAnAdminException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		}
 		return "admin_insert_product";
 	}

@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<jsp:include page="header.jsp"></jsp:include>
-		 
+		 <form <c:url value='/header/search'/>" method="get">
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div style="border:1px solid black;">
@@ -22,10 +22,13 @@
 				</c:if>
 				 <span>Номер на продукт* ${filtredProduct.productNumber}</span>
 				<h5>Цена*${filtredProduct.price}</h5>
+				
 				<input type="button" value="Купи сега" name="${ filtredProduct.productId}">
+			
 				</div>			
 			</c:forEach>
 		</c:if>
+		</form>
 		<c:if test = "${filtredProducts.size() == 0}">
 		      <div style = "border:1px solid red">
 		     <h3>Няма намерен резутат от търсенето</h3>
