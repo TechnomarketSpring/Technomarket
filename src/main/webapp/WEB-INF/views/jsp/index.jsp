@@ -8,6 +8,12 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
+<div id="index">
+
+
+
+
+</div>
 <jsp:include page="footer.jsp" />
 </body>
 </html>
