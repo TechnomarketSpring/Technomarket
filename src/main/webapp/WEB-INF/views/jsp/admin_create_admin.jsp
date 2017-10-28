@@ -6,7 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
+	<body>
+			<jsp:include page="header.jsp" />
+			<p>Направи потребител админ:</p>
+			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
+				<label for="name">Име</label>
+				<input type="text" name="productName" value="name" required><br>
+				<input type="submit" value="Добави">
+			</form>
 
-</body>
+
+
+
+			<jsp:include page="footer.jsp" />
+	</body>
 </html>

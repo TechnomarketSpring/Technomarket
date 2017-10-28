@@ -46,7 +46,7 @@
 		
 		<div id="contaner">
 		<div id="logo-search">
-		<a href="index.jsp">
+		<a href="<cs:url value='/header/goIndex'/>">     
 			<img id="logo" alt="technomarket_logo" src="<cs:url value='/img/logo/tm-logo.png'/>">
 		</a>
 		<div id="search-menu">

@@ -15,7 +15,7 @@ import com.example.model.Order;
 public class InfoController {
 	
 	//site conditions info gets:
-	
+
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
 	public String infoShopping(){
        return "shoppingConditions";		
@@ -58,6 +58,11 @@ public class InfoController {
 	public String infoUserFavourites(){
 		return "user_favourites";
 	}
+	@RequestMapping(value = "/infoFoCuurentOrder", method = RequestMethod.GET )
+	public String infoForCurrentOrder(@RequestParam("value") Order order,Model model){
+		model.addAttribute("orders", order);
+		return "pageForCurrentOrders";
+	}
 	
 	//admin info gets:
 	
@@ -80,11 +85,6 @@ public class InfoController {
 	@RequestMapping(value = "/infoAdminInsertProduct", method = RequestMethod.GET)
 	public String infoAdminInsertProduct(){
 		return "admin_insert_product";
-	}
-	@RequestMapping(value = "/infoFoCuurentOrder", method = RequestMethod.GET )
-	public String infoForCurrentOrder(@RequestParam("value") Order order,Model model){
-		model.addAttribute("orders", order);
-		return "pageForCurrentOrders";
 	}
 	
 	

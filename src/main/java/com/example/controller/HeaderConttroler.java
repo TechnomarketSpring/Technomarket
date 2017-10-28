@@ -124,5 +124,8 @@ public class HeaderConttroler {
 	public String getRegisterPage(){
 		return "register";
 	}
-    
+	@RequestMapping(value = "/goIndex", method = RequestMethod.GET)
+	public String goIndex(){
+       return "index";		
+	}
 }

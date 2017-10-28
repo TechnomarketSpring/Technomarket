@@ -28,7 +28,7 @@
 				<label for="image">Снимка на продукта<sup><a href="#fn1" id="ref1">*</a></sup></label>
 				<input type="file" name="image" value="image" accept=".jpg,.png,.gif,.bmp,.jpeg" required>
 				<input type="submit" value="Добави">
-	</form>
+			</form>
 	<sup id="fn1">1. Допустимите формати са: .jpg,.png,.gif,.bmp,.jpeg<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
 	<jsp:include page="footer.jsp" />
 	</body>
