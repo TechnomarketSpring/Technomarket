@@ -15,7 +15,7 @@
 </ul>
 
 <ul>
-<h4>Лесно пазаруване</h4>
+<h4>Лесно пазаруване</h4>      
 <li> <a href="<cs:url value='/info/infoForShoppingCon'/>">Успловия за пазаруване</a> </li>
 <li> <a href="<cs:url value='/info/infoForDelivery'/>">Бърза и безплатна доставка до дома Ви</a> </li>
 <li> <a href="<cs:url value='/info/infoForOnlinePay'/>/">Сигурно Online разплащане</a> </li>

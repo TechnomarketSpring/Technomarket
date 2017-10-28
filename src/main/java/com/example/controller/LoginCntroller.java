@@ -27,6 +27,7 @@ public class LoginCntroller {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpSession ses, Model model) {
+		ses.removeAttribute("user");
 		model.addAttribute("notLog", false);
 		return "login";
 	}

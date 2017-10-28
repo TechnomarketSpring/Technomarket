@@ -1,6 +1,6 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -9,11 +9,16 @@
 	</head>
 	<body>
 		<jsp:include page="header.jsp"></jsp:include>
-		 <form <c:url value='/header/search'/>" method="get">
+		
+		<form <c:url value='/header/search'/>" method="get">
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
-				<div style="border:1px solid black;">
-				<img src="${filtredProduct.imageUrl} "  width="120" height="auto">
+				<div id="product-box" style="border:1px solid black;">
+					<div>
+					
+					<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${filtredProduct.productId}'/>">
+						<img src="<c:url value='/product/product_pic?value=${filtredProduct.productId}'/>" alt="product-image" width="120" height="auto">
+					</a>
 				 <h5>Име на продукта* ${filtredProduct.name}</h5><br>
 				 <h5>Гаранция* ${filtredProduct.worranty}</h5><br>
 				<c:if test="${ filtredProduct.percentPromo > 1}">
@@ -21,7 +26,9 @@
 				</c:if>
 				 <span>Номер на продукт* ${filtredProduct.productNumber}</span>
 				<h5>Цена*${filtredProduct.price}</h5>
-				<bitton><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</bitton>
+				</div>
+
+				<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button>
 				</div>			
 			</c:forEach>
 		</c:if>

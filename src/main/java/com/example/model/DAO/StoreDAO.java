@@ -65,7 +65,7 @@ public class StoreDAO {
 		
 	}
 	
-	//change quantity of product in store with int change, where int change can be positive or negative:
+	//change quantity of product in store with int change, where int is the new quantity:
 	
 	public void changeQuantityInStore(Store s, Product p, int change) throws SQLException{
 		this.connection = DBManager.getConnections();

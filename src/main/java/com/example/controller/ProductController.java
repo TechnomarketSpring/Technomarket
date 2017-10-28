@@ -3,11 +3,13 @@ package com.example.controller;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tika.mime.MimeType;
@@ -33,6 +35,7 @@ import com.example.model.DAO.TradeMarkDAO;
 import com.example.model.DAO.UserDAO;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.InvalidCategoryDataException;
+import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidProductDataException;
 import com.example.model.exceptions.NotAnAdminException;
 
@@ -79,7 +82,7 @@ public class ProductController {
 		String extention = type.getExtension(); // .extention (dot included)
 		String productNumber = productDAO.generateProductNumber();
 		imageName = "product" + "-" + productNumber + extention;
-		File imageFile = new File(WebInitializer.LOCATION + imageName);
+		File imageFile = new File(imageName);
 		image.transferTo(imageFile);
 		Category category = new Category(categoryName);
 		Product newProduct = new Product(productName, tradeMark, price, null, category, warranty,
@@ -97,7 +100,6 @@ public class ProductController {
 			e.printStackTrace();
 			return "admin_insert_product";
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
 			return "admin_insert_product";
 		} catch (InvalidCategoryDataException e) {
@@ -113,6 +115,22 @@ public class ProductController {
 		return "admin_insert_product";
 	}
 	
+	@RequestMapping(value="/product_pic", method = RequestMethod.GET)
+	public void productPic(HttpServletResponse resp, @RequestParam(value = "value") String productId){
+		Product p;
+		try {
+			p = productDAO.searchProductById(productId);
+		String url = p.getImageUrl();
+		System.out.println("=================================================================================");
+		System.out.println(p.getImageUrl());
+		File pic = new File(WebInitializer.LOCATION + url);
+		Files.copy(pic.toPath(), resp.getOutputStream());
+		resp.getOutputStream().flush();
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -135,9 +153,26 @@ public class ProductController {
 //			}
 //		}
 
-		
-		
-		
+//		
+//	<%@ page language="java" contentType="text/html; charset=UTF-8"
+//		    pageEncoding="UTF-8"%>
+//		<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+//		<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+//		<html>
+//		<head>
+//		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+//		<title>Insert title here</title>
+//		</head>
+//			<body>
+//				<form action="kachi" method="post" enctype="multipart/form-data">
+//					<input type="file" name="failche">
+//					<input type="submit">
+//				</form>
+//				<%-- <img src='daiSnimka.${ product.id }'> --%>
+//				<img src='daiSnimka'>
+//			</body>
+//		</html>
+//		
 		
 		
 		

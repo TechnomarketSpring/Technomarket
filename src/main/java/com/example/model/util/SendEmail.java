@@ -43,7 +43,7 @@ public class SendEmail {
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
 			msg.setSubject(subject);
 			
-			String emailText = String.format("%s, wellcome to <strong>www.itvideo.com</strong><br>"
+			String emailText = String.format("%s, wellcome to <strong>www.technomarket.com</strong><br>"
 					+ "Your email is <strong>%s</strong><br>"
 					+ "Your hashed password is <strong>%s</strong>",
 					u.getFirstName(),u.getEmail(), u.getPassword());

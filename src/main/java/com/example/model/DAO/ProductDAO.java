@@ -15,6 +15,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.WebInitializer;
 import com.example.model.Category;
 import com.example.model.Characteristics;
 import com.example.model.Product;
@@ -42,13 +43,11 @@ public class ProductDAO {
 	
 	public Product getProduct(long productID)
 			throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
-		System.out.println("09327500000077777777777777777777777777777777777777777777777777777777777777777777");
 		String query = "SELECT * FROM technomarket.product WHERE product_id = ?;";
 		this.connection = DBManager.getConnections();
-			PreparedStatement statment = this.connection.prepareStatement(query);
-			statment.setLong(1, productID);
-			this.connection.commit();
-			ResultSet result = statment.executeQuery();
+			PreparedStatement statement = this.connection.prepareStatement(query);
+			statement.setLong(1, productID);
+			ResultSet result = statement.executeQuery();
 			Product pro = new Product();
 			result.next();
 			pro.setName(result.getString("product_name"));
@@ -59,13 +58,13 @@ public class ProductDAO {
 			pro.setProductNumber(result.getString("product_number"));
 			pro.setProductId(result.getLong("product_id"));
 			pro.setTradeMark(getTradeMark(pro.getProductId()));
-			pro.setImageUrl(result.getString("image_url"));
+			pro.setImageUrl(WebInitializer.LOCATION + result.getString("image_url"));
 			ArrayList<Characteristics> characteristics = characterisicsDAO
 					.getProducsCharacteristics(pro.getProductId());
 			pro.setCharacteristics(characteristics);
 			pro.setCategory(categoryDAO.getProductsCategory(pro.getProductId()));
 			result.close();
-			statment.close();
+			statement.close();
 			return pro;
 	}
 
@@ -81,6 +80,7 @@ public class ProductDAO {
 		
 		return resut.getString("trade_mark_name");
 	}
+	
 	public Product searchProductById(String id) throws SQLException{
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_id = ?");

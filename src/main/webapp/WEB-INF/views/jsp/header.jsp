@@ -59,20 +59,20 @@
 		</div>
 		<div id="menu-container">
 		<div class="user_dropdown">
-  			<button onclick="myFunction()" class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
+  			<button onclick="myFunction()" class="drop_head_button"><c:out value = "${sessionScope.log != null ? user.firstName : 'Вход'}"/></button>
   			<div id="dropdown-inner" class="dropdown_content">
-   				<c:if test="${sessionScope.user == null}">
+   				<c:if test="${sessionScope.log == null}">
 					<a href="<cs:url value='/header/login'/>">Вход</a>
    			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
 				</c:if>
-   				<c:if test="${sessionScope.user != null}">
+   				<c:if test="${sessionScope.log != null}">
 					<a href="<cs:url value='/info/infoUserProfile'/>">Профил</a>
     				<a href="<cs:url value='/info/infoUserOrders'/>">Поръчки</a>
     				<a href="<cs:url value='/info/infoUserFavourites'/>">Любими</a>
     				<c:if test="${sessionScope.user.isAdmin == true}">
 						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>
-					<a href="<cs:url value='logout'/>">Изход</a>
+					<a href="<cs:url value='/logout'/>">Изход</a>
 					</form>
 				</c:if>
  			 </div>

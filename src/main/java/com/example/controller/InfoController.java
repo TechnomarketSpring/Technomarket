@@ -1,7 +1,10 @@
 package com.example.controller;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,9 +13,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.Order;
+import com.example.model.Product;
+import com.example.model.User;
+import com.example.model.DAO.ProductDAO;
 @Controller
 @RequestMapping(value = "/info")
 public class InfoController {
+	
+	@Autowired
+	ProductDAO productDAO;
+	
+	//product info gets:
+	
+	@RequestMapping(value = "/infoForProduct", method = RequestMethod.GET)
+	public String infoForProduct(@RequestParam(value = "value") String id, Model model){
+		try {
+			Product product = productDAO.searchProductById(id);
+			model.addAttribute("product", product);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+       return "productInfo";		
+	}
 	
 	//site conditions info gets:
 

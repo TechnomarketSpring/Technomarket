@@ -105,7 +105,6 @@ public class HeaderConttroler {
 		return "pageForCities";
 	}
 	
-	
 	@RequestMapping(value = "/search" , method = RequestMethod.GET)
 	public String searchProduct(@RequestParam("searched_text") String searched_text, Model model){
 		try {
