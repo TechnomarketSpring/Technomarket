@@ -15,19 +15,19 @@
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div id="product-box" style="border:1px solid black;">
 					<div>
-					
 					<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${filtredProduct.productId}'/>">
 						<img src="<c:url value='/product/product_pic?value=${filtredProduct.productId}'/>" alt="product-image" width="120" height="auto">
 					</a>
-				 <h5>Име на продукта* ${filtredProduct.name}</h5><br>
-				 <h5>Гаранция* ${filtredProduct.worranty}</h5><br>
-				<c:if test="${ filtredProduct.percentPromo > 1}">
-				 <h5>Промоция* ${filtredProduct.percentPromo}</h5>
+				 <h5>${filtredProduct.name}</h5><br>
+				<c:if test="${ filtredProduct.percentPromo > 0}">
+				 <img alt="promo-sticker" src="<c:url value='/img/stickers/promo.jpg'/>">
 				</c:if>
-				 <span>Номер на продукт* ${filtredProduct.productNumber}</span>
-				<h5>Цена*${filtredProduct.price}</h5>
+				<c:if test="${ filtredProduct.isNewProduct == true}">
+				 <img alt="new-sticker" src="<c:url value='/img/stickers/new.jpg'/>">
+				</c:if>
+				 <span>Арт. Nº: ${filtredProduct.productNumber}</span>
+				<h5>${filtredProduct.price} лв.</h5>
 				</div>
-
 				<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button>
 				</div>			
 			</c:forEach>

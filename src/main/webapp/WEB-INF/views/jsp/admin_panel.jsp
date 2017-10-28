@@ -19,7 +19,6 @@
 					<a class="btn" href="<cs:url value='/info/infoAdminCreateAdmin'/>"><span class="btn-text"><strong>Нов админ</strong></span></a>
 					<a class="btn" href="<cs:url value='/info/infoUserBan'/>"><span class="btn-text"><strong>Бан секира</strong></span></a>
 					<a class="btn" href="<cs:url value='/info/infoAdminOrders'/>"><span class="btn-text"><strong>Поръчки</strong></span></a>
-					<a class="btn" href="<cs:url value='/info/infoAdminOrders'/>"><span class="btn-text"><strong>Задаване на отстъпка на продукт</strong></span></a>
 				</div>
 			</c:if>
 		<jsp:include page="footer.jsp" />

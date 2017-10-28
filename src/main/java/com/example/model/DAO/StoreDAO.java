@@ -33,7 +33,7 @@ public class StoreDAO {
 	public List<String> getAllCities() throws SQLException{
 		LinkedList<String> cityNames = new LinkedList<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("select distinct(stores.city) from technomarket.stores order by stores.city desc");
+		PreparedStatement statement = this.connection.prepareStatement("SELECT distinct(stores.city) FROM technomarket.stores ORDER BY stores.city ASC");
 		ResultSet result = statement.executeQuery();
 		while(result.next()){
 			cityNames.add(result.getString("stores.city"));
@@ -51,7 +51,8 @@ public class StoreDAO {
 		while (rs.next()) {
 			Store s = new Store();
 			s.setStoreId(rs.getLong("store_id"));
-			s.setAddress(s.new Address(rs.getString("city"), rs.getString("address")));
+			s.setAddress(rs.getString("address"));
+			s.setCity(rs.getString("city"));
 			s.setPhoneNumber(rs.getString("phone"));
 			s.setWorkingTime(rs.getString("working_time"));
 			s.setEmail(rs.getString("email"));
@@ -118,8 +119,8 @@ public class StoreDAO {
 	public void insertNewStore(Store s) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.stores (city, address, phone, working_time, email, gps, store_image_url) VALUES (?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		ps.setString(1, s.addres().getCity());
-		ps.setString(2, s.addres().getAddres());
+		ps.setString(1, s.getCity());
+		ps.setString(2, s.getAddress());
 		ps.setString(3, s.getPhoneNumber());
 		ps.setString(4, s.getWorkingTime());
 		ps.setString(5, s.getEmail());

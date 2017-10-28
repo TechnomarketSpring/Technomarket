@@ -14,19 +14,57 @@
 			<h6>${product.productNumber}</h6>
 			<img src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="120" height="auto">
 		</div>
+		
+		<c:if test="${sessionScope.user.isAdmin == true}">
+		<ul id="admin-buttons">
+				<li class="admin-btn">
+					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
+						<img src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>" alt="grant-promo">
+					</a>
+				</li>
+				<li class="admin-btn">
+					<a class="btn-links" href="<c:url value='/product/changeQuantityPerStore'/>">
+						<img src="<c:url value='/img/buttons/admin-buttons/change-quantity.png'/>" alt="change-quantity">
+					</a>
+				</li>
+				<li class="admin-btn">
+					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
+						<img src="<c:url value='/img/buttons/admin-buttons/delete.png'/>" alt="delete">
+					</a>
+				</li>
+		</ul>		
+		</c:if>
+		
 		<div id="product-info">
 		<p>${product.name}</p>
 		<p>${product.tradeMark}</p>
+		<!-- TODO add description of product here!!! -->
 		</div>
+		
+		
 		<div id="buy-table">
+		<c:if test="${product.percentPromo > 0}">
+			<img alt="promo-sticker" src="<c:url value='/img/stickers/promo.jpg'/>">
+		</c:if>
+		<c:if test="${product.isNewProduct == true}">
+			<img alt="new-sticker" src="<c:url value='/img/stickers/new.jpg'/>">
+		</c:if>
 		<tr>
 			<td><h1>${product.price}</h1></td>
 			<td><div>${product.worranty}</div></td>
-			<td><bitton><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></bitton></td>
+			<td><button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button></td>
 		</tr>
 		</div>
-		<div id="stores">
 		
+		
+		
+		<div id="stores">
+			
+			
+			
+			
+			
+			
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</body>

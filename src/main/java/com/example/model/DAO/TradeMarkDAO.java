@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.model.Store;
 import com.example.model.DBM.DBManager;
-import com.example.model.Store.Address;
 
 @Component
 public class TradeMarkDAO {

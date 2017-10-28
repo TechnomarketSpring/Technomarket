@@ -10,15 +10,9 @@ import com.example.model.util.RegexValidator;
 
 
 public class Store {
-	//Exceptions ����� �� � ����� �������� �� store � �� ����� ������ ��� ������ ������
-//	private String city;
-//	private String address;
-	//��������� ����� ������ ����� ������� ����� ������ �� �������� 
-	//� ���� ����������� ����� �� ����� � �����
-	//�� �� �������� � ������ ���� ������ ��� �������� � ������
+	private String city;
+	private String address;
 	private long storeId;
-	private Address address;
-	private String adres;
 	private HashMap<Product, Integer> product;
 	private String phoneNumber;
 	private String email;
@@ -31,11 +25,14 @@ public class Store {
 	}
 	
 	public Store(String phoneNumber, String email,
-			String workingTime, String gps, Address address, String storeImageUrl) throws InvalidStoreDataException {
+			String workingTime, String gps, String city, String address, String storeImageUrl) throws InvalidStoreDataException {
 		
-//		this.city = city;
-//		this.address = address;
-		if(address != null){
+		if(city != null && !city.isEmpty()){
+			this.city  = city;
+		}else{
+			throw new InvalidStoreDataException();
+		}
+		if(address != null && !address.isEmpty()){
 			this.address = address;
 		}else{
 			throw new InvalidStoreDataException();
@@ -69,32 +66,6 @@ public class Store {
 			throw new InvalidStoreDataException();
 		}
 		this.product = new HashMap<>();
-		this.adres = address.getAddres();
-	}
-	
-	public class Address{
-		private String city;
-		private String address;
-		
-		public Address(String city, String address) throws InvalidStoreDataException {
-			if(city != null && !city.isEmpty()){
-				this.city  = city;
-			}else{
-				throw new InvalidStoreDataException();
-			}
-			if(address != null && !address.isEmpty()){
-				this.address = address;
-			}else{
-				throw new InvalidStoreDataException();
-			}
-		}
-		
-		public String getCity() {
-			return city;
-		}
-		public String getAddres() {
-			return address;
-		}
 	}
 	
 	public void setStoreId(long storeId) {
@@ -103,11 +74,8 @@ public class Store {
 	public long getStoreId() {
 		return storeId;
 	}
-	public String getAdres() {
-		return address.getAddres();
-	}
-	public Address addres(){
-		return this.address;
+	public String getAddress() {
+		return address;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -127,15 +95,6 @@ public class Store {
 	public void setStoreImageUrl(String storeImageUrl) {
 		this.storeImageUrl = storeImageUrl;
 	}
-	
-	
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
@@ -151,6 +110,20 @@ public class Store {
 
 	public void setGps(String gps) {
 		this.gps = gps;
+	}
+	
+	
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	@Override

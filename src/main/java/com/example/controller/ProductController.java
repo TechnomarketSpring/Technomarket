@@ -7,6 +7,9 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,16 +30,19 @@ import com.example.WebInitializer;
 import com.example.model.Category;
 import com.example.model.Credit;
 import com.example.model.Product;
+import com.example.model.Store;
 import com.example.model.User;
 import com.example.model.DAO.AdminDAO;
 import com.example.model.DAO.CategoryDAO;
 import com.example.model.DAO.ProductDAO;
+import com.example.model.DAO.StoreDAO;
 import com.example.model.DAO.TradeMarkDAO;
 import com.example.model.DAO.UserDAO;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidProductDataException;
+import com.example.model.exceptions.InvalidStoreDataException;
 import com.example.model.exceptions.NotAnAdminException;
 
 @Component
@@ -54,6 +60,8 @@ public class ProductController {
 	ProductDAO productDAO;
 	@Autowired
 	AdminDAO adminDAO;
+	@Autowired
+	StoreDAO storeDAO;
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.GET)
 	public String prepareRegistarion() {
@@ -89,6 +97,7 @@ public class ProductController {
 				promoPercent, LocalDate.now(), imageName);
 		adminDAO.insertNewProduct(newProduct, (User) session.getAttribute("user"));
 		model.addAttribute("added", "New product added");
+		model.addAttribute("productId", newProduct.getProductId());
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return "admin_insert_product";
@@ -121,8 +130,6 @@ public class ProductController {
 		try {
 			p = productDAO.searchProductById(productId);
 		String url = p.getImageUrl();
-		System.out.println("=================================================================================");
-		System.out.println(p.getImageUrl());
 		File pic = new File(WebInitializer.LOCATION + url);
 		Files.copy(pic.toPath(), resp.getOutputStream());
 		resp.getOutputStream().flush();
@@ -194,5 +201,39 @@ public class ProductController {
 //		}
 //		return "error";
 //	}
+	
+	//change quantity per store:
+	
+	@RequestMapping(value = "/changeQuantityPerStore", method = RequestMethod.GET)
+	public String selectAllStores(Model model){
+		LinkedHashMap<String, String> storesPerCity = new LinkedHashMap<>();
+		try {
+			List<String> cities = storeDAO.getAllCities();
+		for (Iterator<String> iterator = cities.iterator(); iterator.hasNext();) {
+			String cityName = iterator.next();
+			Set<Store> stores = storeDAO.getStoresPerCity(cityName);
+			for (Iterator<Store> iterator2 = stores.iterator(); iterator2.hasNext();) {
+				String storeName = iterator2.next().getAddress();
+				storesPerCity.put(cityName, storeName);
+			}
+		}
+		} catch (SQLException | InvalidStoreDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("storesPerCity", storesPerCity);
+		return "admin_change_quantity";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
