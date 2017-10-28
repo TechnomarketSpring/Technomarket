@@ -55,9 +55,9 @@ public class AdminDAO {
 		}
 	}
 	
-	public void changeQuantityInStore(Store s, Product p, int change, User admin) throws SQLException, NotAnAdminException{
+	public void changeQuantityInStore(int storeId, int productId, int quantity, User admin) throws SQLException, NotAnAdminException{
 		if(admin.getIsAdmin()){
-			storeDAO.changeQuantityInStore(s, p, change);
+			storeDAO.insertProductInStore(storeId, productId, quantity);
 		}else{
 			throw new NotAnAdminException();
 		}

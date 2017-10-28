@@ -98,29 +98,10 @@ public class ProductController {
 		adminDAO.insertNewProduct(newProduct, (User) session.getAttribute("user"));
 		model.addAttribute("added", "New product added");
 		model.addAttribute("productId", newProduct.getProductId());
-		} catch (IllegalStateException e) {
+		} catch (IllegalStateException | IOException | MimeTypeException | InvalidCategoryDataException | SQLException | NotAnAdminException | InvalidProductDataException e) {
 			e.printStackTrace();
 			return "admin_insert_product";
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "admin_insert_product";
-		} catch (MimeTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "admin_insert_product";
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "admin_insert_product";
-		} catch (InvalidCategoryDataException e) {
-			e.printStackTrace();
-			return "admin_insert_product";
-		} catch (InvalidProductDataException e) {
-			e.printStackTrace();
-			return "admin_insert_product";
-		} catch (NotAnAdminException e) {
-			e.printStackTrace();
-			return "admin_insert_product";
-		}
+		} 
 		return "admin_insert_product";
 	}
 	
@@ -134,7 +115,6 @@ public class ProductController {
 		Files.copy(pic.toPath(), resp.getOutputStream());
 		resp.getOutputStream().flush();
 		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -204,26 +184,16 @@ public class ProductController {
 	
 	//change quantity per store:
 	
-	@RequestMapping(value = "/changeQuantityPerStore", method = RequestMethod.GET)
-	public String selectAllStores(Model model){
-		LinkedHashMap<String, String> storesPerCity = new LinkedHashMap<>();
-		try {
-			List<String> cities = storeDAO.getAllCities();
-		for (Iterator<String> iterator = cities.iterator(); iterator.hasNext();) {
-			String cityName = iterator.next();
-			Set<Store> stores = storeDAO.getStoresPerCity(cityName);
-			for (Iterator<Store> iterator2 = stores.iterator(); iterator2.hasNext();) {
-				String storeName = iterator2.next().getAddress();
-				storesPerCity.put(cityName, storeName);
-			}
-		}
-		} catch (SQLException | InvalidStoreDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		model.addAttribute("storesPerCity", storesPerCity);
-		return "admin_change_quantity";
-	}
+//	@RequestMapping(value = "/changeQuantityPerStore", method = RequestMethod.POST)
+//	public String selectAllStores(Model model){
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//	}
 	
 	
 	

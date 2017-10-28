@@ -15,7 +15,7 @@
 <div style="border:1px solid green;">
 			<c:forEach items="${stores}" var="store">
 				<div>
-				<h5>Адрес* ${store.adres}</h5>
+				<h5>Адрес* ${store.address}</h5>
 				<h5>Тел. номер* ${store.phoneNumber}</h5>
 				<h5>Имейл* ${store.email}</h5>
 				<h5>Работно време* ${store.workingTime}</h5>

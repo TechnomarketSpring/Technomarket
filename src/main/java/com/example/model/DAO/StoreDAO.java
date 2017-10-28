@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import com.example.model.exceptions.InvalidStoreDataException;
 public class StoreDAO {
 	@Autowired
 	DBManager DBManager;
-	private enum Status {NO_STATUS, RED_STATUS, YELLOW_STATUS, GREEN_STATUS};
+	public enum Status {NO_STATUS, RED_STATUS, YELLOW_STATUS, GREEN_STATUS};
 	
 	private Connection connection;
 	
@@ -66,17 +67,39 @@ public class StoreDAO {
 		
 	}
 	
-	//change quantity of product in store with int change, where int is the new quantity:
-	
-	public void changeQuantityInStore(Store s, Product p, int change) throws SQLException{
+	public LinkedHashSet<Store> getAllStores() throws SQLException, InvalidStoreDataException{
+		LinkedHashSet<Store> stores = new LinkedHashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.store_has_product SET amount=? WHERE store_id = ? AND product_id = ?;", Statement.RETURN_GENERATED_KEYS);
-		ps.setInt(1, change);
-		ps.setLong(2, s.getStoreId());
-		ps.setLong(3, p.getProductId());
-		ps.executeUpdate();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM technomarket.stores;");
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Store s = new Store();
+			s.setStoreId(rs.getLong("store_id"));
+			s.setAddress(rs.getString("address"));
+			s.setCity(rs.getString("city"));
+			s.setPhoneNumber(rs.getString("phone"));
+			s.setWorkingTime(rs.getString("working_time"));
+			s.setEmail(rs.getString("email"));
+			s.setGps(rs.getString("gps"));
+			s.setStoreImageUrl(rs.getString("store_image_url"));
+			stores.add(s);
+		}
 		ps.close();
+		rs.close();
+		return stores;
 	}
+//	
+//	//change quantity of product in store with int change, where int is the new quantity:
+//	
+//	public void changeQuantityInStore(Store s, Product p, int change) throws SQLException{
+//		this.connection = DBManager.getConnections();
+//		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.store_has_product SET amount=? WHERE store_id = ? AND product_id = ?;", Statement.RETURN_GENERATED_KEYS);
+//		ps.setInt(1, change);
+//		ps.setLong(2, s.getStoreId());
+//		ps.setLong(3, p.getProductId());
+//		ps.executeUpdate();
+//		ps.close();
+//	}
 
 	//returns status of product amount in specific store:
 	
@@ -86,12 +109,16 @@ public class StoreDAO {
 		ps.setLong(1, p.getProductId());
 		ps.setLong(2, s.getStoreId());
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int amount = rs.getInt("amount");
+		Integer amount = null;
+		if(!rs.next()){
+			amount = null;
+		}else{
+			amount = rs.getInt("amount");
+		}
+		System.out.println(amount);
 		ps.close();
-		
 		rs.close();
-		if(amount == 0){
+		if(amount == null || amount == 0){
 			return Status.NO_STATUS;
 		}else if(amount > 0 && amount < 10){
 			return Status.RED_STATUS;
@@ -105,15 +132,38 @@ public class StoreDAO {
 	
 	//Admin panel in Stores: 
 	
-	public void insertProductInStore(Store s, Product p, int amount) throws SQLException{
-		this.connection = DBManager.getConnections();
+	public void insertProductInStore(int storeId, int productId, int amount) throws SQLException{
+		if(rowAlreadyExist(storeId, productId)){
+				deleteUnneededRow(storeId, productId);
+		}
+		this.connection = DBManager.getConnections();		
 		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.store_has_product (store_id, product_id, amount) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-		ps.setLong(1, s.getStoreId());
-		ps.setLong(2, p.getProductId());
+		ps.setInt(1, storeId);
+		ps.setInt(2, productId);
 		ps.setInt(3, amount);
 		ps.executeUpdate();
 		ps.close();
 		
+	}
+
+	private void deleteUnneededRow(int storeId, int productId) throws SQLException {
+		this.connection = DBManager.getConnections();		
+		PreparedStatement ps = this.connection.prepareStatement("DELETE FROM technomarket.store_has_product WHERE store_id = ? AND product_id = ?;", Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, storeId);
+		ps.setInt(2, productId);
+		ps.executeUpdate();
+		ps.close();
+	}
+
+	private boolean rowAlreadyExist(int storeId, int productId) throws SQLException {
+		PreparedStatement ps = this.connection.prepareStatement("SELECT store_id, product_id FROM technomarket.store_has_product WHERE store_id = ? AND product_id = ?");
+		ps.setInt(1, storeId);
+		ps.setInt(2, productId);
+		ResultSet rs = ps.executeQuery();
+		boolean result = rs.next();
+		ps.close();
+		rs.close();
+		return result;
 	}
 
 	public void insertNewStore(Store s) throws SQLException {

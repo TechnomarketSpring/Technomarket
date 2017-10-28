@@ -1,6 +1,11 @@
 package com.example.controller;
 
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,14 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.Order;
 import com.example.model.Product;
+import com.example.model.Store;
 import com.example.model.User;
 import com.example.model.DAO.ProductDAO;
+import com.example.model.DAO.StoreDAO;
+import com.example.model.exceptions.InvalidStoreDataException;
 @Controller
 @RequestMapping(value = "/info")
 public class InfoController {
 	
 	@Autowired
 	ProductDAO productDAO;
+	@Autowired
+	StoreDAO storeDAO;
 	
 	//product info gets:
 	
@@ -30,13 +40,46 @@ public class InfoController {
 		try {
 			Product product = productDAO.searchProductById(id);
 			model.addAttribute("product", product);
-		} catch (SQLException e) {
+			
+			LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
+			HashSet<Store> cities = storeDAO.getAllStores();
+			for (Iterator<Store> iterator = cities.iterator(); iterator.hasNext();) {
+				Store store = iterator.next();
+				StoreDAO.Status status = storeDAO.checkQuantity(store, product);
+				String statusImgLink = null;
+				if(status == StoreDAO.Status.NO_STATUS){
+					statusImgLink = null;
+				}else if(status == StoreDAO.Status.RED_STATUS){
+					statusImgLink = "/img/store_statuses/red.png";
+				}else if(status == StoreDAO.Status.YELLOW_STATUS){
+					statusImgLink = "/img/store_statuses/yellow.png";
+				}else if(status == StoreDAO.Status.GREEN_STATUS){
+					statusImgLink = "/img/store_statuses/green.png";
+				}
+				statusPerStore.put(store, statusImgLink);
+				System.out.println(statusImgLink);
+			}
+			model.addAttribute("statusPerStore", statusPerStore);
+		} catch (SQLException | InvalidStoreDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
        return "productInfo";		
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//site conditions info gets:
 

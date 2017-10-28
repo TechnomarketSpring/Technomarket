@@ -4,8 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="<c:url value="/js/product_script.js" />"></script>
 </head>
 	<body>
 		<jsp:include page="header.jsp" />
@@ -20,11 +21,6 @@
 				<li class="admin-btn">
 					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
 						<img src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>" alt="grant-promo">
-					</a>
-				</li>
-				<li class="admin-btn">
-					<a class="btn-links" href="<c:url value='/product/changeQuantityPerStore'/>">
-						<img src="<c:url value='/img/buttons/admin-buttons/change-quantity.png'/>" alt="change-quantity">
 					</a>
 				</li>
 				<li class="admin-btn">
@@ -59,12 +55,26 @@
 		
 		
 		<div id="stores">
-			
-			
-			
-			
-			
-			
+			<c:forEach items="${statusPerStore}" var="entry">
+				<ul>
+					<c:if test="${(sessionScope.user.isAdmin == false && entry.value != null) || (sessionScope.user.isAdmin == true) || (sessionScope.user == null)}">
+						<li><strong>${entry.key.city}</strong>, ${entry.key.address} 
+							<c:if test="${entry.value != null }">
+								<img alt="status" src="<c:url value='${entry.value}'/>">
+							</c:if>
+							<c:if test="${sessionScope.user.isAdmin == true}">
+							<!-- 	<form action="/product/changeQuantityPerStore" method="post"">  -->
+									<label for="quantity">Смени количество: </label>
+									<input type="hidden" name="productId" id="product" value="${product.productId}">
+									<input type="hidden" name="storeId" id="store${entry.key.storeId}" value="${entry.key.storeId}">
+									<input type="number" class="quantity" id="amount${entry.key.storeId}" name="quantity" min="0" required>
+									<input type="submit" id="ajax-submit" onclick="submitQuery(${entry.key.storeId})" value="Запиши">
+							<!-- </form> --><br>
+							</c:if>
+						</li>
+					</c:if>
+				</ul>
+        	    </c:forEach>		
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</body>
