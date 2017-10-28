@@ -26,8 +26,8 @@ public class LoginCntroller {
 	UserDAO userDAO;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginPage(HttpSession ses) {
-		ses.removeAttribute("user");
+	public String loginPage(HttpSession ses, Model model) {
+		model.addAttribute("notLog", false);
 		return "login";
 	}
 
@@ -45,6 +45,7 @@ public class LoginCntroller {
 				}
 				user.setAdmin(true);
 				session.setAttribute("user", user);
+				session.setAttribute("log", true);
 				return "index";
 			}
 		} catch (SQLException e) {

@@ -9,11 +9,10 @@
 	</head>
 	<body>
 		<jsp:include page="header.jsp"></jsp:include>
-		 
+		 <form <c:url value='/header/search'/>" method="get">
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div style="border:1px solid black;">
-				
 				<img src="${filtredProduct.imageUrl} "  width="120" height="auto">
 				 <h5>Име на продукта* ${filtredProduct.name}</h5><br>
 				 <h5>Гаранция* ${filtredProduct.worranty}</h5><br>
@@ -22,10 +21,11 @@
 				</c:if>
 				 <span>Номер на продукт* ${filtredProduct.productNumber}</span>
 				<h5>Цена*${filtredProduct.price}</h5>
-				<input type="button" value="Купи сега" name="${ filtredProduct.productId}">
+				<bitton><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</bitton>
 				</div>			
 			</c:forEach>
 		</c:if>
+		</form>
 		<c:if test = "${filtredProducts.size() == 0}">
 		      <div style = "border:1px solid red">
 		     <h3>Няма намерен резутат от търсенето</h3>

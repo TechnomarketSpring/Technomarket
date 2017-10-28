@@ -88,24 +88,27 @@ public class ProductController {
 		model.addAttribute("added", "New product added");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (MimeTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (InvalidCategoryDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (InvalidProductDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		} catch (NotAnAdminException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "admin_insert_product";
 		}
 		return "admin_insert_product";
 	}

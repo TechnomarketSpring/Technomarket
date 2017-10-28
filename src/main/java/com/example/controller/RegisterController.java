@@ -59,6 +59,7 @@ public class RegisterController {
 			try {
 				userDAO.insertUser(user);
 				session.setAttribute("user", user);
+				session.setAttribute("log", true);
 				return "index";
 			} catch (SQLException e) {
 				e.printStackTrace();

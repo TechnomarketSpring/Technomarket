@@ -76,7 +76,7 @@
 					</form>
 				</c:if>
  			 </div>
- 			 <button type="button"><c:out value = "${sessionScope.user.basket != null ? sessionScope.user.getBasketPrice() : '0'}"/></button>
+ 			 <button type="button"></a><c:out value = "${sessionScope.user.basket != null ? sessionScope.user.getBasketPrice() : '0'}"/></button>
 		</div>
 		</div>
 		</div>
