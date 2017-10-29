@@ -1,21 +1,47 @@
 package com.example.model.util;
+//
+//import java.util.HashSet;
+//import java.util.Properties;
+//
+//import javax.activation.DataHandler;
+//import javax.activation.DataSource;
+//import javax.mail.BodyPart;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.Multipart;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeBodyPart;
+//import javax.mail.internet.MimeMessage;
+//import javax.mail.internet.MimeMultipart;
+//
+//import com.example.model.User;
+//
+//import javafx.scene.shape.Line;
 
-import java.util.HashSet;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-
-import com.example.model.User;
-
-import javafx.scene.shape.Line;
+import javax.mail.internet.MimeMultipart;
 
 public class SendEmail {
+	
+	private static final String MEDELIN_EMAIL = "technomarkettalents@gmail.com";
+	private static final String MEDELIN_PASS = "ittechnomarket1234";
 	
 	//email gateways to costruct email subject and text:
 	
@@ -23,62 +49,183 @@ public class SendEmail {
 	public static void forgottenPassEmail(String email, String userPassword){
 		final String subject = "Technmatker - Forgotten password";
 		final String text = "Hello, dear customer " +  System.lineSeparator() + "on your request, we send you your forgotten password, witch is on Technomarket: " + userPassword + System.lineSeparator() + "If this doesn't consernt you, please ignore this message." + System.lineSeparator() + "Have a nice day," + System.lineSeparator() + "The Technomarket Team";
-		sendEmail(email, subject, text);
+		sendSimpleEmail(email, subject, text);
 	}
+	
+ 	public static void sendSimpleEmail(String receiverEmail, String subjectText, String msgText) {
+ System.out.println("==============================================================1");
+ 		Properties props = new Properties();
+ 		props.put("mail.smtp.auth", "true");
+ 		props.put("mail.smtp.starttls.enable", "true");
+ 		props.put("mail.smtp.host", "smtp.gmail.com");
+ 		props.put("mail.smtp.port", "587");
+ 
+ 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+ 			protected PasswordAuthentication getPasswordAuthentication() {
+ 				return new PasswordAuthentication(MEDELIN_EMAIL, MEDELIN_PASS);
+ 			}
+ 		});
+ System.out.println("=============================================================2");
+ 		try {
+ 			Message message = new MimeMessage(session);
+ 			message.setFrom(new InternetAddress("technomarkettalents@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
+ 			message.setSubject(subjectText);
+ 			message.setText(msgText);
+ 			System.out.println("=================================================================================3");
+ 			Transport.send(message);
+ 
+ 			System.out.println("Email sent.");
+ 
+ 		} catch (MessagingException e) {
+ 			throw new RuntimeException(e);
+ 		}
+ 
+ 	}
+ }
+	
+	
+
+
+
+
+
+
+
 	
 	//2 - new promo products -> email send to all subscribers by they system on request by the admin
 	//3 - technomarket news -> email send to all subscribers by the system on request of the system itself
+		 
+		 
+//		 public static void sendwithAttachmentEmail(String receiverEmail, String subjectText, String msgText) {
+//		 
+//		 		Properties props = new Properties();
+//		 		props.put("mail.smtp.auth", "true");
+//		 		props.put("mail.smtp.starttls.enable", "true");
+//		 		props.put("mail.smtp.host", "smtp.gmail.com");
+//		 		props.put("mail.smtp.port", "587");
+//		 
+//		 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+//		 			protected PasswordAuthentication getPasswordAuthentication() {
+//		 				return new PasswordAuthentication(MEDELIN_EMAIL, MEDELIN_PASS);
+//		 			}
+//		 		});
+//		 
+//		 		try {
+//		 
+//		 			Message message = new MimeMessage(session);
+//		 			message.setFrom(new InternetAddress(MEDELIN_EMAIL));
+//		 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
+//		 			message.setSubject(subjectText);
+//		 
+//		 			BodyPart messageBodyPart = new MimeBodyPart();
+//		 
+//		 			messageBodyPart.setText(msgText);
+//		 
+//		 			Multipart multipart = new MimeMultipart();
+//		 
+//		 			multipart.addBodyPart(messageBodyPart);
+//		 
+//		 			messageBodyPart = new MimeBodyPart();
+//		 			DataSource source = new FileDataSource(fileName); // the path
+//		 			messageBodyPart.setDataHandler(new DataHandler(source));
+//		 			messageBodyPart.setFileName(fileName); // the path
+//		 			multipart.addBodyPart(messageBodyPart);
+//		 
+//		 			message.setContent(multipart);
+//		 
+//		 			Transport.send(message);
+//		 
+//		 			System.out.println("Email sent.");
+//		 
+//		 		} catch (MessagingException e) {
+//		 			throw new RuntimeException(e);
+//		 		}
+//		 	}
 	
-	public static void sendEmail(String email, String subject, String text) {
-		final String username = "technomarkettalents@gmail.com";
-		final String password = "talents1234";
-		Properties props = new Properties();
-//	props.put("mail.smtp.auth", "true");
-//	props.put("mail.smtp.starttls.enable", "true");
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public static void sendEmail(String email, String subject, String text) {
+//		final String username = "technomarkettalents@gmail.com";
+//		final String password = "ittechnomarket1234";
+//		Properties props = new Properties();
+////	props.put("mail.smtp.auth", "true");
+////	props.put("mail.smtp.starttls.enable", "true");
+////	props.put("mail.smtp.host", "smtp.gmail.com");
+////	props.put("mail.smtp.port", "587");
 //	props.put("mail.smtp.host", "smtp.gmail.com");
-//	props.put("mail.smtp.port", "587");
-	props.put("mail.smtp.host", "smtp.gmail.com");
-	props.put("mail.smtp.socketFactory.port", "465");
-	props.put("mail.smtp.socketFactory.class",
-			"javax.net.ssl.SSLSocketFactory");
-	props.put("mail.smtp.auth", "true");
-	props.put("mail.smtp.port", "465");
+//	props.put("mail.smtp.socketFactory.port", "465");
+//	props.put("mail.smtp.socketFactory.class",
+//			"javax.net.ssl.SSLSocketFactory");
+//	props.put("mail.smtp.auth", "true");
+//	props.put("mail.smtp.port", "465");
+//	
+//	Session session = Session.getInstance(props,
+//	  new javax.mail.Authenticator() {
+//		protected PasswordAuthentication getPasswordAuthentication() {
+//			return new PasswordAuthentication(username, password);
+//		}
+//	  });
+//	System.out.println(text + "==================================================================");
+//	try {
+//		Message message = new MimeMessage(session);
+//		message.setFrom(new InternetAddress("technomarkettalents@gmail.com"));
+//		message.setRecipients(Message.RecipientType.TO,
+//			InternetAddress.parse(email));
+//		System.out.println(text + "==================================================================");
+//		message.setSubject(subject);
+//		message.setText(text);
+//
+//		Transport.send(message);
+//
+//		System.out.println("Done================================================================================");
+//
+//	} catch (MessagingException e) {
+//		throw new RuntimeException(e);
+//	}
+//}
+//
+//}	
 	
-	Session session = Session.getInstance(props,
-	  new javax.mail.Authenticator() {
-		protected PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication(username, password);
-		}
-	  });
-	System.out.println(text + "==================================================================");
-	try {
-		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress("technomarkettalents@gmail.com"));
-		message.setRecipients(Message.RecipientType.TO,
-			InternetAddress.parse(email));
-		System.out.println(text + "==================================================================");
-		message.setSubject(subject);
-		message.setText(text);
-
-		Transport.send(message);
-
-		System.out.println("Done================================================================================");
-
-	} catch (MessagingException e) {
-		throw new RuntimeException(e);
-	}
-}
-
-private static String getSubject(int reasonCode) {
-	if(reasonCode == 1) {
-		return "Technmatker - Forgotten password";
-	}else if(reasonCode == 2){
-		return "Technmatker - Promo products!";
-	}else{
-		return "Technmatker - New at Technomarket!";
-	}
-}
-}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//private static String getSubject(int reasonCode) {
+//	if(reasonCode == 1) {
+//		return "Technmatker - Forgotten password";
+//	}else if(reasonCode == 2){
+//		return "Technmatker - Promo products!";
+//	}else{
+//		return "Technmatker - New at Technomarket!";
+//	}
+//}
+//}
 		
 		
 		

@@ -38,6 +38,7 @@ public class InfoController {
 	@RequestMapping(value = "/infoForProduct", method = RequestMethod.GET)
 	public String infoForProduct(@RequestParam(value = "value") String id, Model model){
 		try {
+			System.out.println(id);
 			Product product = productDAO.searchProductById(id);
 			model.addAttribute("product", product);
 			

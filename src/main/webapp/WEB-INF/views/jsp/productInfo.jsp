@@ -7,6 +7,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="<c:url value="/js/product_script.js" />"></script>
+	<script type="text/javascript">
+		
+	
+	
+	
+	</script>
 </head>
 	<body>
 		<jsp:include page="header.jsp" />
@@ -19,12 +25,14 @@
 		<c:if test="${sessionScope.user.isAdmin == true}">
 		<ul id="admin-buttons">
 				<li class="admin-btn">
-					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
-						<img src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>" alt="grant-promo">
-					</a>
+					<form id="search" action="<c:url value='/product/setPromo'/>" method="post">
+						<input type="hidden" name="productId" id="product" value="${product.productId}">
+						<input type="number" id="promo-box" name="promoPercent" size="40" maxlength="35" min="0" value="0">
+						<input type="image" id="grant-promo" alt="set-promo" src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>"><br>
+					</form>
 				</li>
 				<li class="admin-btn">
-					<a class="btn-links" href="<cs:url value='/header/contacts'/>">
+					<a class="btn-links" href="<c:url value='/product/remove?value=${product.productId}'/>">
 						<img src="<c:url value='/img/buttons/admin-buttons/delete.png'/>" alt="delete">
 					</a>
 				</li>
@@ -45,6 +53,8 @@
 		<c:if test="${product.isNewProduct == true}">
 			<img alt="new-sticker" src="<c:url value='/img/stickers/new.jpg'/>">
 		</c:if>
+		
+		
 		<tr>
 			<td><h1>${product.price}</h1></td>
 			<td><div>${product.worranty}</div></td>
@@ -76,6 +86,6 @@
 				</ul>
         	    </c:forEach>		
 		</div>
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp" />
 	</body>
 </html>

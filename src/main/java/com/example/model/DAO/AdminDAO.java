@@ -47,9 +47,9 @@ public class AdminDAO {
 		
 	}
 	
-	public void removeProduct(Product p, User admin) throws NotAnAdminException, SQLException{
+	public void removeProduct(int productId, User admin) throws NotAnAdminException, SQLException{
 		if(admin.getIsAdmin()){
-			productDAO.removeProduct(p);
+			productDAO.removeProduct(productId);
 		}else{
 			throw new NotAnAdminException();
 		}
@@ -72,9 +72,9 @@ public class AdminDAO {
 	}
 
 	//changes the promo percent of product, adds promo sticker in view
-	public void setPromoPercent(User admin, Product p, int percent) throws SQLException, NotAnAdminException{
+	public void setPromoPercent(User admin, int productId, int promoPercent) throws SQLException, NotAnAdminException{
 		if(admin.getIsAdmin()){
-			productDAO.setPromoPercent(p, percent);
+			productDAO.setPromoPercent(productId, promoPercent);
 		}else{
 			throw new NotAnAdminException();
 		}

@@ -102,16 +102,17 @@ public class ProductDAO {
 		
 	}
 
-	public void setPromoPercent(Product p, int percent) throws SQLException {
+	// admin is able to set specific product on promo by adding promo percent:
+	
+	public void setPromoPercent(int productId, int promoPersent) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement ps = this.connection.prepareStatement(
 				"UPDATE technomarket.product SET percent_promo = ? WHERE product_id = ?",
 				Statement.RETURN_GENERATED_KEYS);
-		ps.setInt(1, percent);
-		ps.setLong(2, p.getProductId());
+		ps.setInt(1, promoPersent);
+		ps.setLong(2, productId);
 		ps.executeUpdate();
 		ps.close();
-		
 	}
 
 	// insert product module:
@@ -191,40 +192,40 @@ public class ProductDAO {
 
 	// remove product module:
 
-	public void removeProduct(Product p) throws SQLException {
+	public void removeProduct(int productId) throws SQLException {
 		this.connection = DBManager.getConnections();
 		this.connection.setAutoCommit(false);
 		try {
 			PreparedStatement ps1 = this.connection.prepareStatement("DELETE FROM technomarket.product WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			ps1.setLong(1, p.getProductId());
+			ps1.setLong(1, productId);
 			ps1.executeUpdate();
 
 			PreparedStatement ps2 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.order_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
-			ps2.setLong(1, p.getProductId());
+			ps2.setLong(1, productId);
 			ps2.executeUpdate();
 
 			PreparedStatement ps3 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.product_has_category WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			ps3.setLong(1, p.getProductId());
+			ps3.setLong(1, productId);
 			ps3.executeUpdate();
 
 			PreparedStatement ps4 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.store_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
-			ps4.setLong(1, p.getProductId());
+			ps4.setLong(1, productId);
 			ps4.executeUpdate();
 
 			PreparedStatement ps5 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.user_has_favourite WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			ps5.setLong(1, p.getProductId());
+			ps5.setLong(1, productId);
 			ps5.executeUpdate();
 
 			PreparedStatement ps6 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.characteristics WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
-			ps6.setLong(1, p.getProductId());
+			ps6.setLong(1, productId);
 			ps6.executeUpdate();
 			this.connection.commit();
 			ps1.close();
@@ -232,6 +233,7 @@ public class ProductDAO {
 			ps3.close();
 			ps4.close();
 			ps5.close();
+			ps6.close();
 		} catch (SQLException e) {
 			this.connection.rollback();
 			throw new SQLException();
@@ -241,7 +243,7 @@ public class ProductDAO {
 		}
 
 	}
-//�� �� ������ !
+
 	// Search product by name;
 	public LinkedHashSet searchProductByName(String productName) throws SQLException {
 		this.connection = DBManager.getConnections();

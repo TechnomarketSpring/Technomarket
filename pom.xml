@@ -47,11 +47,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>ca.juliusdavies</groupId>
 			<artifactId>not-yet-commons-ssl</artifactId>
@@ -69,10 +69,10 @@
 		    <version>1.16</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-			<version>1.5.5</version>
-		</dependency>
+ 		    <groupId>javax.mail</groupId>
+ 		    <artifactId>mail</artifactId>
+ 		    <version>1.4</version>
+ 		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

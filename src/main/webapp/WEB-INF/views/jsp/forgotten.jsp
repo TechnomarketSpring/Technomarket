@@ -7,17 +7,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
-<h1>Възтоновяване на парола</h1>
+	<body>
+		<jsp:include page="header.jsp" />
+		<h1>Възтоновяване на парола</h1>
 
         <c:if test="${ emailError != null }">
 			<div>
 			<p>Невалиден потребител</p>
 			</div>
-		 </c:if>
-		 <form action="forgotten" method="post">
-			Е-мейл <input type="text" name="email"><br>
-			<input type="submit" value="Изпрати"><br>
-		 </form>
+		</c:if>
+		<form action="forgotten" method="post">
+		Е-мейл <input type="text" name="email"><br>
+		<input type="submit" value="Изпрати"><br>
+		</form>
+		<jsp:include page="footer.jsp" />
 </body>
 </html>

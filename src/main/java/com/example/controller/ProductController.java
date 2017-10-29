@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.WebInitializer;
 import com.example.model.Category;
@@ -119,83 +120,49 @@ public class ProductController {
 		}
 	}
 	
+	@RequestMapping(value="/remove", method = RequestMethod.GET)
+	public String removeProduct(HttpSession session,
+			@RequestParam(value = "value") int productId){
+		try {
+			adminDAO.removeProduct(productId, (User) session.getAttribute("user"));
+		} catch (NotAnAdminException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "product_removed";
+	}
 	
-	
-//			@RequestMapping(value="daiSnimka/{id}", method = RequestMethod.GET)
-//			public void daiSnimka(@RequestParam("id") Integer productId){
-//				Product p = Dao.getProductById(productId);
-//				String url = p.getImageUrl();//krasi.jpg / stefi.gif / homer-lala.png
-//				File f = new File(WebInitializer.LOCATION + File.separator + url);
-//			}
+	@RequestMapping(value="/setPromo", method = RequestMethod.POST)
+	public String setPromo(Model model, HttpSession session,
+			@RequestParam(value = "productId") int productId,
+			@RequestParam(value = "promoPercent") int promoPersent){
+		try {
+			adminDAO.setPromoPercent((User) session.getAttribute("user"), productId, promoPersent);
+		} catch (NotAnAdminException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//TODO send email to all subscribers
+		
+		model.addAttribute("promoSet", true);
+		return "redirect:/info/infoForProduct?value=" + Integer.toString(productId);
+	}
 
-//			@RequestMapping(value="daiSnimka", method = RequestMethod.GET)
-//			public void daiSnimka(HttpServletResponse resp){
-//				File f = new File(WebInitializer.LOCATION + File.separator + "homer-end-is-near.jpg");
-//				try {
-//					Files.copy(f.toPath(), resp.getOutputStream());
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-//		
-//	<%@ page language="java" contentType="text/html; charset=UTF-8"
-//		    pageEncoding="UTF-8"%>
-//		<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-//		<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-//		<html>
-//		<head>
-//		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-//		<title>Insert title here</title>
-//		</head>
-//			<body>
-//				<form action="kachi" method="post" enctype="multipart/form-data">
-//					<input type="file" name="failche">
-//					<input type="submit">
-//				</form>
-//				<%-- <img src='daiSnimka.${ product.id }'> --%>
-//				<img src='daiSnimka'>
-//			</body>
-//		</html>
-//		
-		
-		
-		
-		
-		
-//		
-//		try {
-//			boolean exist = userDAO.checkIfUserWithSameEmailExist(email);
-//			if (exist) {
-//				// Send email to email address:
-//				return "email_sent";
-//			} else {
-//				model.addAttribute("emailError", "Email not valid");
-//				return "forgotten";
-//			}
-//		} catch (SQLException e) {
-//			// TODO send to errorPage
-//			System.out.println("Ops SQL Exceptions");
-//		}
-//		return "error";
-//	}
-	
-	//change quantity per store:
-	
-//	@RequestMapping(value = "/changeQuantityPerStore", method = RequestMethod.POST)
-//	public String selectAllStores(Model model){
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//	}
-	
-	
+
+
 	
 	
 	
