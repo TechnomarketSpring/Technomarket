@@ -63,7 +63,7 @@
   			<div id="dropdown-inner" class="dropdown_content">
    				<c:if test="${sessionScope.log == null}">
 					<a href="<cs:url value='/header/login'/>">Вход</a>
-   			 		<a href="<cs:url value='/header/register'/>">Регистрация</a>
+   			 		<a href="<cs:url value='/register'/>">Регистрация</a>
 				</c:if>
    				<c:if test="${sessionScope.log != null}">
 					<a href="<cs:url value='/info/infoUserProfile'/>">Профил</a>

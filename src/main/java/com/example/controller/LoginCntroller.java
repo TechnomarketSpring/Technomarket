@@ -19,6 +19,7 @@ import com.example.model.User;
 import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
+import com.example.model.util.SendEmail;
 
 @Controller
 public class LoginCntroller {
@@ -67,7 +68,9 @@ public class LoginCntroller {
 		try {
 			boolean exist = userDAO.checkIfUserWithSameEmailExist(email);
 			if (exist) {
-				// Send email to email address:
+				String userPassword = userDAO.getUserPassWhenForgotten(email);
+				System.out.println(userPassword + "==================================================================");
+				SendEmail.forgottenPassEmail(email, userPassword);
 				return "email_sent";
 			} else {
 				model.addAttribute("emailError", "Email not valid");
@@ -75,9 +78,10 @@ public class LoginCntroller {
 			}
 		} catch (SQLException e) {
 			// TODO send to errorPage
+			e.printStackTrace();
 			System.out.println("Ops SQL Exceptions");
+			return "error";
 		}
-		return "error";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

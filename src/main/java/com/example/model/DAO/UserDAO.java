@@ -63,12 +63,12 @@ public class UserDAO {
 	}
 
 	// log in of user:
-	public boolean existingUser(String userName, String pasword) throws SQLException {
+	public boolean existingUser(String userName, String password) throws SQLException {
 		String checkQuery = "SELECT * FROM technomarket.users WHERE email = ? and password = ?";
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(checkQuery);
 		statement.setString(1, userName);
-		statement.setString(2, Encrypter.encrypt(pasword));
+		statement.setString(2, Encrypter.encrypt(password));
 		ResultSet resultSet = statement.executeQuery();
 		if (resultSet.next()) {
 			return true;
@@ -124,6 +124,19 @@ public class UserDAO {
 		statement.close();
 		return exist;
 		
+	}
+	
+	public String getUserPassWhenForgotten(String email) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT password FROM technomarket.users WHERE users.email = ?");
+		statement.setString(1, email);
+		ResultSet result = statement.executeQuery();
+		String password = null;
+		while(result.next()){
+			password = result.getString("password");
+		}
+		statement.close();
+		return password;
 	}
 
 	// user confirming his order:

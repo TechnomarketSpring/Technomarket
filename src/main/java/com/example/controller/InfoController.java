@@ -68,19 +68,6 @@ public class InfoController {
        return "productInfo";		
 	}
 	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//site conditions info gets:
 
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
@@ -103,7 +90,6 @@ public class InfoController {
 	public String infoUniCredit(){
 		return "uniCreditInfo";
 	}
-	
 	
 	//user info gets:
 	
