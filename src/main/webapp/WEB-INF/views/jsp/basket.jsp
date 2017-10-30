@@ -13,31 +13,28 @@
 <div style="border:1px solid green;">
            <form>
           <h1>Кошница</h1>
-          <c:if test="${userBasket != null}">
-              <c:forEach items="${userBasket}" var="entry">
-               <h5>Модел: ${entry.key.name}</h5>
-                <h5>Марка: ${entry.key.tradeMark}</h5>
-                 <h5>Цена: ${entry.key.price}</h5>
-                  <h5>Артикул номер: ${entry.key.productNumber}</h5>
-                   <h5>Гаранция: ${entry.key.worranty}</h5>
+          
+          <c:if test="${sessionScope.basket.isEmpty() == true}">
+              <h4>Няма продукти във вашата кошница!</h4>
+          </c:if>
+          
+          <c:if test="${sessionScope.basket.isEmpty() == false}">
+              <c:forEach items="${sessionScope.basket}" var="entry">
+                    <h5>Модел: ${entry.key.name}</h5>
+                    <h5>Марка: ${entry.key.tradeMark}</h5>
+                    <h5>Цена: ${entry.key.price}</h5>
+                    <h5>Артикул номер: ${entry.key.productNumber}</h5>
+                    <h5>Гаранция: ${entry.key.worranty}</h5>
                     <h5>Отстъпка: ${entry.key.percentPromo}</h5>
-               <h5>Количесво: ${entry.value}</h5><br>
+                    <h5>Количесво: ${entry.value}</h5><br>
               </c:forEach>
-            
               <li class="btn-li">
-					<a class="btn-links" href="<cs:url value='/BuyController/makeOrder'/>">
+					 <a class="btn-links" href="<cs:url value='/buyController/makeOrder'/>">
 						<img src="<cs:url value='/img/buttons/deliver.png'/>" alt="contacts">
-					</a>
-				</li>
-                
+				   	</a>
+			</li>
            </c:if> 
           
-          
-            <c:if test="${userBasket == null}">
-            <div>
-            <h5>Няма продукти в кошницата!</h5>
-            </div>
-            </c:if>
         </form>
  </div>
 <jsp:include page="footer.jsp"></jsp:include>
