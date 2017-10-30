@@ -67,7 +67,7 @@
 		<div id="stores">
 			<c:forEach items="${statusPerStore}" var="entry">
 				<ul>
-					<c:if test="${(sessionScope.user.isAdmin == false && entry.value != null) || (sessionScope.user.isAdmin == true) || (sessionScope.user == null)}">
+					<c:if test="${(sessionScope.user.isAdmin == false && entry.value != null) || (sessionScope.user.isAdmin == true) || (sessionScope.user == null && entry.value != null)}">
 						<li><strong>${entry.key.city}</strong>, ${entry.key.address} 
 							<c:if test="${entry.value != null }">
 								<img alt="status" src="<c:url value='${entry.value}'/>">

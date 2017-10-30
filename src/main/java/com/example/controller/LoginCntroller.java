@@ -86,6 +86,10 @@ public class LoginCntroller {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
+<<<<<<< HEAD
+=======
+		session.removeAttribute("log");
+>>>>>>> 44b929142e15748c72b3afed968b27cc7d7da8fe
 		return "index";
 	}
 }
