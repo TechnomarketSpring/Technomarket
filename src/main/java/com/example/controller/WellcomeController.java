@@ -2,13 +2,10 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-<<<<<<< HEAD
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
-=======
 import java.util.LinkedHashMap;
->>>>>>> 3b0e9a91f685ea7f6b409bd08decc948bf14b476
 
 import javax.servlet.http.HttpSession;
 
