@@ -25,7 +25,7 @@
               </c:forEach>
             
               <li class="btn-li">
-					<a class="btn-links" href="<cs:url value='/buyController/makeOrder'/>">
+					<a class="btn-links" href="<cs:url value='/BuyController/makeOrder'/>">
 						<img src="<cs:url value='/img/buttons/deliver.png'/>" alt="contacts">
 					</a>
 				</li>
