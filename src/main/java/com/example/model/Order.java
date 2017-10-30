@@ -18,7 +18,7 @@ public class Order {
 	
 	private String userNames;
 	private long orderId;
-	private LinkedHashMap<Product, Integer> products;
+	private HashMap<Product, Integer> products;
 	private BigDecimal price;
 	private LocalDate time;
 	private String address;
@@ -30,7 +30,7 @@ public class Order {
 	private boolean isPaid;
 	private String shipingType;
 	
-	public Order(LinkedHashMap<Product, Integer> products, String address, String userPhoneNumber, String zip, String notes, String payment, LocalDate time, boolean isConfirmed, boolean isPaid) throws InvalidOrderDataException {
+	public Order(HashMap<Product, Integer> products, String address, String userPhoneNumber, String zip, String notes, String payment, LocalDate time, boolean isConfirmed, boolean isPaid) throws InvalidOrderDataException {
 		this.products = products;
 		//calculating the sum of all products and their numbers:
 		this.price = calculatePriceOfOrder();
@@ -219,7 +219,7 @@ public class Order {
 
 
 
-	public LinkedHashMap<Product, Integer> getProducts() {
+	public HashMap<Product, Integer> getProducts() {
       return this.products;
 	}
 
@@ -228,7 +228,7 @@ public class Order {
 
 
 
-	public void setProducts(LinkedHashMap<Product, Integer> products) {
+	public void setProducts(HashMap<Product, Integer> products) {
 		this.products = products;
 	}
 

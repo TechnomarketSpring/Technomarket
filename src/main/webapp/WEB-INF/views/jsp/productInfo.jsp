@@ -58,7 +58,7 @@
 		<tr>
 			<td><h1>${product.price}</h1></td>
 			<td><div>${product.worranty}</div></td>
-			<td><button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button></td>
+			<td><button><a class="btn-links" href="<c:url value='/buyController/buy?value=${product.productId}'/>">Купи сега</a></button></td>
 		</tr>
 		</div>
 		

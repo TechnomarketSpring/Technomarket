@@ -45,11 +45,12 @@ OrderDAO orderDAO;
 		}
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		try {
+			System.out.println(id + "=========================================================");
 			Product product = productDAO.searchProductById(id);
 			if(!basket.containsKey(product)){
 			   basket.put(product, 1);
 			}else{
-				Integer number = basket.get(product)+1;
+				Integer number = basket.get(product) + 1;
 				basket.put(product, number);
 			}
 		} catch (SQLException e) {
@@ -100,7 +101,7 @@ OrderDAO orderDAO;
 		if(session.getAttribute("basket") == null){
 			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
-		LinkedHashMap<Product, Integer> basket = (LinkedHashMap<Product, Integer>) session.getAttribute("basket");
+		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());
 		order.setConfirmed(false);
@@ -114,7 +115,7 @@ OrderDAO orderDAO;
 			e.printStackTrace();
 			return "errorPage";
 		}
-		((LinkedHashMap<Product, Integer>)session.getAttribute("basket")).clear();
+		((HashMap<Product, Integer>)session.getAttribute("basket")).clear();
 		return "confurt";
 	}
 	

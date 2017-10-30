@@ -25,7 +25,7 @@ public class WellcomeController {
 	public String intdePAge(HttpSession session) {
 		// setting basket in session:
 		if(session.getAttribute("basket") == null){
-			   LinkedHashMap<Product, Integer> basket = new LinkedHashMap<Product, Integer>();
+			   HashMap<Product, Integer> basket = new HashMap<Product, Integer>();
 			   session.setAttribute("basket", basket);
 			}
 
