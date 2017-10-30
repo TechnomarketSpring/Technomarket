@@ -13,9 +13,8 @@ import com.example.model.User;
 public class WellcomeController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String intdePAge(HttpSession session){
-		if(session.getAttribute("user") == null){
-			session.setAttribute("user", new User());
-		}
+		
+		
 		return "index";
 	}
 	
