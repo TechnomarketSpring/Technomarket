@@ -70,7 +70,7 @@ public class LoginCntroller {
 			if (exist) {
 				String userPassword = userDAO.getUserPassWhenForgotten(email);
 				System.out.println(userPassword + "==================================================================");
-				SendEmail.forgottenPassEmail(email, userPassword);
+				//SendEmail.forgottenPassEmail(email, userPassword);
 				return "email_sent";
 			} else {
 				model.addAttribute("emailError", "Email not valid");
