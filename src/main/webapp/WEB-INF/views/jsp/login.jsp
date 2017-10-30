@@ -13,7 +13,7 @@
 	<jsp:include page="header.jsp" />
 	
 	  <h1>Вход в сайта</h1>	
-	  <c:if test="${ notLog != null}">
+	  <c:if test="${ sessionScope.log == null}">
 	    <h5>Моля влезте в своя профил!<h5>
 	  </c:if>
 		<c:if test="${ invalidUser != null}">
