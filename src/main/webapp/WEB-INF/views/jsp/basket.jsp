@@ -5,8 +5,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<script src="<c:url value="/js/basket_scripts.js" />"></script>
+	<title>Insert title here</title>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -26,7 +27,7 @@
                     <h5>Артикул номер: ${entry.key.productNumber}</h5>
                     <h5>Гаранция: ${entry.key.worranty}</h5>
                     <h5>Отстъпка: ${entry.key.percentPromo}</h5>
-                    <h5>Количесво: ${entry.value}</h5><br>
+                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="changeQuantity(${entry.key.productId});" onload="keepSame(${entry.key.productId});" onbeforeunload ="return false;"></h5><br>   
               </c:forEach>
               <li class="btn-li">
 					 <a class="btn-links" href="<cs:url value='/buyController/makeOrder'/>">

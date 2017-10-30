@@ -25,7 +25,7 @@ public class StoreService {
 
 	@RequestMapping(value="/quantity", method=RequestMethod.POST)
 	@ResponseBody
-	public void likeVideo(HttpServletResponse resp, HttpSession session,
+	public void changeQuantityInStore(HttpServletResponse resp, HttpSession session,
 			@RequestParam(value="product") int productId,
 			@RequestParam(value="store") int storeId,
 			@RequestParam(value="amount") int amount){

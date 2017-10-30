@@ -52,6 +52,7 @@ OrderDAO orderDAO;
 			}else{
 				Integer number = basket.get(product) + 1;
 				basket.put(product, number);
+				System.out.println("============FUCK===============");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
