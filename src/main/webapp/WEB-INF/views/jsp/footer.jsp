@@ -7,7 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	</head>
 <body>
-<div style="border:1px solid red;">
+<div id="main-container" style="border:1px solid red;">
 <ul>
 <h4>Техномаркет</h4>
 <li> <a href="<cs:url value='/header/stores'/>">Магазини</a> </li>

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,12 @@ import com.example.model.Category;
 import com.example.model.Product;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.InvalidCategoryDataException;
+import com.mysql.jdbc.StandardSocketFactory;
 ;
 @Component
 public class CategoryDAO {
     @Autowired
-    DBManager DBManager;
+    private DBManager DBManager;
 	private Connection connection;
 
 	
@@ -47,8 +49,6 @@ public class CategoryDAO {
 	}
 
 	private long getCategoryId(String category) throws SQLException {
-		System.out.println("====================================================================================");
-		System.out.println("=================================================================" + category);
 		Connection con = DBManager.getConnections();
 		PreparedStatement ps = con
 				.prepareStatement("SELECT category_id FROM technomarket.categories WHERE category_name LIKE ?;");
@@ -106,5 +106,44 @@ public class CategoryDAO {
 		rs.close();
 		return innerCategories;
 	}	
+	
+	public TreeMap<String, TreeSet<String>> getCategoriesWithParentKeys() throws SQLException{
+		TreeMap<String, TreeSet<String>> result = new TreeMap<String, TreeSet<String>>();
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps1 = this.connection.prepareStatement("SELECT category_name FROM technomarket.categories WHERE parent_category_id IS NULL;");
+		ResultSet rs1 = ps1.executeQuery();
+		while (rs1.next()) {
+			result.put(rs1.getString("category_name"), new TreeSet<String>());
+		}
+		ps1.close();
+		rs1.close();
+		PreparedStatement ps2 = this.connection.prepareStatement("SELECT p.category_name, c.category_name FROM technomarket.categories AS p JOIN technomarket.categories AS c ON (c.parent_category_id = p.category_id);");
+		ResultSet rs2 = ps2.executeQuery();
+		while (rs2.next()) {
+			if(rs2.getString("p.category_name").equals("ТЕЛЕВИЗОРИ И АУДИО")){
+				result.get("ТЕЛЕВИЗОРИ И АУДИО").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("КОМПЮТРИ И ПЕРИФЕРИЯ")){
+				result.get("КОМПЮТРИ И ПЕРИФЕРИЯ").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("ТЕЛЕФОНИ И ТАБЛЕТИ")){
+				result.get("ТЕЛЕФОНИ И ТАБЛЕТИ").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("ЕЛЕКТРОУРЕДИ")){
+				result.get("ЕЛЕКТРОУРЕДИ").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("МАЛКИ ЕЛЕКТРОУРЕДИ")){
+				result.get("МАЛКИ ЕЛЕКТРОУРЕДИ").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("ФОТО И ВИДЕО")){
+				result.get("ФОТО И ВИДЕО").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("HOME")){
+				result.get("HOME").add(rs2.getString("c.category_name"));
+			}else if(rs2.getString("p.category_name").equals("ЗАБАВЛЕНИЯ")){
+				result.get("ЗАБАВЛЕНИЯ").add(rs2.getString("c.category_name"));
+			}
+			
+			//result.put(rs2.getString("category_name"), new TreeSet<String>());
+		}
+		ps2.close();
+		rs2.close();
+		return result;
+	}
+	
 
 }

@@ -29,7 +29,7 @@ public class StoreService {
 			@RequestParam(value="product") int productId,
 			@RequestParam(value="store") int storeId,
 			@RequestParam(value="amount") int amount){
-		resp.setStatus(200);
+			resp.setStatus(200);
 		try {
 			adminDAO.changeQuantityInStore(storeId, productId, amount, (User) session.getAttribute("user"));
 		} catch (SQLException | NotAnAdminException e) {

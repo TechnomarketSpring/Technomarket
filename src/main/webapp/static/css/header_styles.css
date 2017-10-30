@@ -3,6 +3,7 @@
     background: url(D:\technomarket_images\buttons\search.jpg);
     border: 0;
     display: block;
+    margin-botton: 0px;
 }
 
 #logout_submit {  
@@ -48,11 +49,20 @@
     display: block;
 }
 
-.show {display:block;}
+.show {
+	display:block;
+}
 
-body, div {
+body, div, nav {
 	margin: 0;
 	padding: 0;
+	margin-botton: 0;
+}
+
+#dropdown-category-menu {
+	magin-top: 0;
+	text-align: center;
+	margin-button: 0px;
 }
 
 #buttons {
@@ -102,7 +112,7 @@ body, div {
 #search-con {
 	margin-top: 70px;
 	margin-left: 0px;
-	margin-botton: 1000px;
+	margin-botton: 0px;
 	overflow: hidden;
 	padding-right: .5em;
 	display: flex;
@@ -111,23 +121,26 @@ body, div {
 
 #search-button {
 	float: right;
-	margin-left: 0;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
 #searched-text {
 	width: 250px;
-	margin-left: 100;
+	margin-left: 100px;
 	height: 50px;
 }
 
 #search {
 	display: inline;
-	margin-left: 250px;
-	margin-top: 0;
+	margin-left: 150px;
+	margin-top: 0px;
+	margin-right: 0px;
 }
 
 #continer {
 	display: flex;
+	margin-botton: 0px;
 }
 
 #menu-container {
@@ -135,17 +148,20 @@ body, div {
 	margin-left: 300px;
 	margin-top: 70px;
 	height: 300px;
+	margin-botton: 0px;
 }
 
 #search-menu {
 	display: flex;
 	overflow: hidden;
 	padding-right: .5em;
+	margin-button: 0px;
 }
 
-#buffer {
-	width: 200px;
-	height: 200px;
-	
-	
-}
+
+
+
+
+
+
+

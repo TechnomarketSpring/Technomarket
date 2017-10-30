@@ -69,7 +69,7 @@ public class ProductController {
 		return "admin_insert_product";
 	}
 	
-	@RequestMapping(value = "/insert_product", method = RequestMethod.POST)
+	@RequestMapping(value = "/insert_product", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String insertNewProduct(Model model, HttpSession session, @RequestParam("productName") String productName,
 			@RequestParam("tradeMark") String tradeMark,
 			@RequestParam("categoryName") String categoryName,
@@ -77,7 +77,7 @@ public class ProductController {
 			@RequestParam("warranty") int warranty,
 			@RequestParam("promoPercent") int promoPercent,
 			@RequestParam("image") MultipartFile image) {
-
+			System.out.println(categoryName + "================================================================");
 		String imageName = null;
 		try {
 			if(!tradeMarkDAO.tradeMarkExist(tradeMark)){
