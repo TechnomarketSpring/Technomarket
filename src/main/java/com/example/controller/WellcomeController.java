@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,13 +18,9 @@ import com.example.model.User;
 public class WellcomeController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String intdePAge(HttpSession session){
-<<<<<<< HEAD
-		HashMap<Product, Integer> basket = new HashMap<>();
+		HashMap<Product, Integer> basket = new LinkedHashMap<>();
 		session.setAttribute("basket", basket);
-=======
-		
-		
->>>>>>> 44b929142e15748c72b3afed968b27cc7d7da8fe
+
 		return "index";
 	
 	}
