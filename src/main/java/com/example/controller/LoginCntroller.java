@@ -28,11 +28,7 @@ public class LoginCntroller {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpSession ses, Model model) {
-		if(ses.getAttribute("user") == null){
-			ses.setAttribute("user", new User());
-			ses.setAttribute("log", true);
-		}
-		ses.setAttribute("log", true);
+		ses.setAttribute("user", new User());
 		return "login";
 	}
 
@@ -89,7 +85,7 @@ public class LoginCntroller {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.removeAttribute("log");
+		session.invalidate();
 		return "index";
 	}
 }

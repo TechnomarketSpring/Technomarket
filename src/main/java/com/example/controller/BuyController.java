@@ -3,6 +3,7 @@ package com.example.controller;
 import static org.mockito.Matchers.endsWith;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -28,27 +29,21 @@ ProductDAO productDAO;
 
 
 	@RequestMapping(value = "/buy", method = RequestMethod.GET)
-	public String addInTheBasket(@RequestParam(value = "value") String id, HttpSession session, Model model) {
+	public String addInTheBasket(@RequestParam(value = "value") String id, HttpSession session) {
 		System.out.println("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777");
-		if(session.getAttribute("user") == null){
-			session.setAttribute("user", new User());
+		if(session.getAttribute("basket") == null){
+			HashMap<Product, Integer> basket = new HashMap<>();
+			session.setAttribute("basket",basket);
 		}
-		User user = (User) session.getAttribute("user");
+		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		try {
 			Product product = productDAO.searchProductById(id);
-			if(!user.getBasket().containsKey(product)){
-			   user.getBasket().put(product, 1);
+			if(!basket.containsKey(product)){
+			   basket.put(product, 1);
 			}else{
-				Integer number = user.getBasket().get(product)+1;
-				user.getBasket().put(product, number);
+				Integer number = basket.get(product)+1;
+				basket.put(product, number);
 			}
-			
-			for(Iterator<Entry<Product, Integer>> products = user.getBasket().entrySet().iterator(); products.hasNext();){
-				Entry<Product, Integer> entry = products.next();
-				System.out.println(entry.getKey());
-				System.out.println(entry.getValue());
-			}
-			model.addAttribute("userBasket", user.getBasket());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";
