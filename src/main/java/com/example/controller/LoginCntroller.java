@@ -41,6 +41,7 @@ public class LoginCntroller {
 				User user = null;
 				try {
 					user = userDAO.getUser(username);
+					
 				} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 					System.out.println("Invalid date exceptions");
 				}
@@ -86,8 +87,7 @@ public class LoginCntroller {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.removeAttribute("user");
-        session.removeAttribute("basket");
+		session.invalidate();
 		return "index";
 	}
 }

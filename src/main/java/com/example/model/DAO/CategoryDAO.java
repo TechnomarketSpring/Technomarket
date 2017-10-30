@@ -62,11 +62,13 @@ public class CategoryDAO {
 	public Category getProductsCategory(long productId) throws SQLException, InvalidCategoryDataException {
 		Connection con = DBManager.getConnections();
 		PreparedStatement ps = con.prepareStatement(
-				"SELECT category_name FROM technomarket.categories AS c JOIN technomarket.order_has_product AS h ON(c.category_id = h.category_id) JOIN technomarket.product AS p ON(h.product_id = p.product_id) WHERE h.product_id = ?;");
+				"SELECT category_name FROM technomarket.categories AS c JOIN technomarket.product_has_category AS h ON(c.category_id = h.category_id) JOIN technomarket.product AS p ON(h.product_id = p.product_id) WHERE h.product_id = ?;");
 		ps.setLong(1, productId);
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		String name = rs.getString("category_name");
+		String name = "";
+		while(rs.next()){
+			name += rs.getString("category_name");
+		}
 		Category category = new Category(name);
 		return category;
 	}

@@ -38,17 +38,21 @@ public class User {
 
 	public User(String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, boolean isAbonat, boolean isAdmin, boolean isBanned) throws InvalidUserDataException {
 		if (!correctDateForNameOfUser(firstName, lastName)) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
 			throw new InvalidUserDataException();
 		} else {
 			this.firstName = firstName;
 			this.lastName = lastName;
 		}
 		if (!RegexValidator.validateEmail(email)) {
+			System.out.println("1111111111111111111111111111111");
 			throw new InvalidUserDataException();
+		
 		} else {
 			this.email = email;
 		}
 		if (!RegexValidator.validatePassword(password)) {
+			System.out.println("222222222222222222222222222222222222");
 			throw new InvalidUserDataException();
 		} else {
 			this.password = password;
@@ -57,6 +61,7 @@ public class User {
 		if (gender != null && !gender.isEmpty()) {
 			this.gender = gender;
 		} else {
+			System.out.println("3333333333333333333333333333333333333");
 			throw new InvalidUserDataException();
 		}
 

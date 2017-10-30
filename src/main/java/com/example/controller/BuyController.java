@@ -97,7 +97,9 @@ OrderDAO orderDAO;
 		order.setZip(postCode);
 		order.setNotes(notes);
 		order.setPrice(price);
-		
+		if(session.getAttribute("basket") == null){
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		}
 		LinkedHashMap<Product, Integer> basket = (LinkedHashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());
