@@ -33,6 +33,9 @@
 						<img src="<cs:url value='/img/buttons/deliver.png'/>" alt="contacts">
 				   	</a>
 			</li>
+			</div>
+				<button><a class="btn-links" href="<c:url value='/index'/>">Добаване на още продукти</a></button>
+				</div>	
            </c:if> 
           
         </form>

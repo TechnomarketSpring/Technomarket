@@ -1,6 +1,7 @@
 package com.example.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,21 +16,21 @@ import com.example.model.util.RegexValidator;
 
 public class Order {
 	
-	public enum Shiping{HOME_ADDRESS, STORE};
+	private String userNames;
 	private long orderId;
 	private LinkedHashMap<Product, Integer> products;
 	private BigDecimal price;
-	private LocalDateTime time;
+	private LocalDate time;
 	private String address;
 	private String userPhoneNumber;
 	private String zip;
 	private boolean isConfirmed;
 	private String notes;
-	private Shiping shipingType;
 	private String payment;
 	private boolean isPaid;
+	private String shipingType;
 	
-	public Order(LinkedHashMap<Product, Integer> products, String address, String userPhoneNumber, String zip, String notes, Shiping shipingType, String payment, LocalDateTime time, boolean isConfirmed, boolean isPaid) throws InvalidOrderDataException {
+	public Order(LinkedHashMap<Product, Integer> products, String address, String userPhoneNumber, String zip, String notes, String payment, LocalDate time, boolean isConfirmed, boolean isPaid) throws InvalidOrderDataException {
 		this.products = products;
 		//calculating the sum of all products and their numbers:
 		this.price = calculatePriceOfOrder();
@@ -60,11 +61,7 @@ public class Order {
 		}else{
 			throw new InvalidOrderDataException();
 		}
-		if(shipingType != null){
-			this.shipingType = shipingType;
-		}else{
-			throw new InvalidOrderDataException();
-		}
+		
 		
 		//setting the date and time of creating a new order to .now():
 		this.time = time;
@@ -111,10 +108,15 @@ public class Order {
 		this.orderId = orderId;
 	}
 
+    
 
 
-
-
+    public void setUserNames(String userNames) {
+		this.userNames = userNames;
+	}
+    public String getUserNames() {
+		return userNames;
+	}
 
 	public boolean getIsConfirmed() {
 		return isConfirmed;
@@ -170,7 +172,7 @@ public class Order {
 
 
 
-	public LocalDateTime getTime() {
+	public LocalDate getTime() {
 		return time;
 	}
 
@@ -201,19 +203,12 @@ public class Order {
 		return notes;
 	}
 
-
-
-
-
-
-	public Shiping getShipingType() {
-		return shipingType;
-	}
-
-
-
-
-
+   public void setShipingType(String shipingType) {
+	this.shipingType = shipingType;
+   }
+   public String getShipingType() {
+	return shipingType;
+   }
 
 	public String getPayment() {
 		return payment;
@@ -224,8 +219,8 @@ public class Order {
 
 
 
-	public HashMap<Product, Integer> getProducts() {
-		return (HashMap<Product, Integer>) Collections.unmodifiableMap(products);
+	public LinkedHashMap<Product, Integer> getProducts() {
+      return this.products;
 	}
 
 
@@ -240,13 +235,15 @@ public class Order {
 
 
 
-
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+    public String getZip() {
+		return zip;
 	}
 
-	public void setTime(LocalDateTime time) {
+	public void setPrice(String price) {
+		this.price = new BigDecimal(price);
+	}
+
+	public void setTime(LocalDate time) {
 		this.time = time;
 	}
 
@@ -266,9 +263,7 @@ public class Order {
 		this.notes = notes;
 	}
 
-	public void setShipingType(Shiping shipingType) {
-		this.shipingType = shipingType;
-	}
+	
 
 	public void setPayment(String payment) {
 		this.payment = payment;
@@ -286,7 +281,6 @@ public class Order {
 		result = prime * result + ((payment == null) ? 0 : payment.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((products == null) ? 0 : products.hashCode());
-		result = prime * result + ((shipingType == null) ? 0 : shipingType.hashCode());
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		result = prime * result + ((userPhoneNumber == null) ? 0 : userPhoneNumber.hashCode());
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
@@ -337,8 +331,6 @@ public class Order {
 			if (other.products != null)
 				return false;
 		} else if (!products.equals(other.products))
-			return false;
-		if (shipingType != other.shipingType)
 			return false;
 		if (time == null) {
 			if (other.time != null)

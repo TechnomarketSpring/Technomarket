@@ -17,7 +17,6 @@ public class DBManager {
 	private static final String DB_USERNAME = "root";
 	private static final String DB_PASSWORD ="44237899a";
 	private static final String URL = "jdbc:mysql://"+DB_IP+":"+DB_PORT+"/"+DB_NAME+"?useUnicode=yes&characterEncoding=UTF-8";
-
 	private DBManager() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

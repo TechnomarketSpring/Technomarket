@@ -73,12 +73,16 @@ public class ProductDAO {
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(query);
 		statement.setLong(1, id);
-		ResultSet resut = statement.executeQuery();
-		resut.next();
-		resut.close();
+		ResultSet result = statement.executeQuery();
+		String tradeMark = null;
+		while(result.next()){
+			tradeMark = result.getString(1);
+		}
+		
+		result.close();
 		statement.close();
 		
-		return resut.getString("trade_mark_name");
+		return tradeMark;
 	}
 	
 	public Product searchProductById(String id) throws SQLException{

@@ -41,6 +41,7 @@ public class LoginCntroller {
 				User user = null;
 				try {
 					user = userDAO.getUser(username);
+					
 				} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 					System.out.println("Invalid date exceptions");
 				}
@@ -51,6 +52,7 @@ public class LoginCntroller {
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL Exceptions");
+			e.printStackTrace();
 		}
 		model.addAttribute("invalidUser", "Invalid username or password");
 		return "login";

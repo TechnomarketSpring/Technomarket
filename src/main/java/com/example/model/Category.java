@@ -9,6 +9,7 @@ public class Category {
 	
 	
 	public Category(String name) throws InvalidCategoryDataException{
+	
 		if(name != null && !name.isEmpty()){
 			this.name = name;
 		}else{

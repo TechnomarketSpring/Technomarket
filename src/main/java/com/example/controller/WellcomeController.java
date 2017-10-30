@@ -2,9 +2,13 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
+=======
+import java.util.LinkedHashMap;
+>>>>>>> 3b0e9a91f685ea7f6b409bd08decc948bf14b476
 
 import javax.servlet.http.HttpSession;
 
@@ -22,9 +26,11 @@ public class WellcomeController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String intdePAge(HttpSession session) {
-		HashMap<Product, Integer> basket = new HashMap<>();
 		// setting basket in session:
-		session.setAttribute("basket", basket);
+		if(session.getAttribute("basket") == null){
+			   LinkedHashMap<Product, Integer> basket = new LinkedHashMap<Product, Integer>();
+			   session.setAttribute("basket", basket);
+			}
 
 		// setting all categories in application scope to be used when
 		// visualization the main dropdown menu:
@@ -37,14 +43,7 @@ public class WellcomeController {
 		}
 		
 		session.getServletContext().setAttribute("menuCategories", menuCategories);
-		
-//		session.getServletContext().setAttribute("tv", menuCategories.get("ТЕЛЕВИЗОРИ И АУДИО"));
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
-//		session.getServletContext().setAttribute("menuCategories", menuCategories);
+
 		return "index";
 	}
 

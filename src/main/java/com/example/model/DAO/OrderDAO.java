@@ -53,9 +53,10 @@ public class OrderDAO {
 			o.setAddress(result.getString("address"));
 			o.setPayment(result.getString("payment"));
 			o.setNotes(result.getString("notes"));
-			o.setConfirmed(result.getBoolean("isCnfirmed"));
+	
+			o.setConfirmed(result.getBoolean("isConfirmed"));
 			o.setPaid(result.getBoolean("isPaid"));
-			o.setShipingType(getTheRightShipingType(result.getString("shiping_type")));
+			o.setShipingType(null);
 			LinkedHashMap<Product, Integer> products = fillAllProductsInOrder(o);
 			o.setProducts(products);
 		}
@@ -78,21 +79,21 @@ public class OrderDAO {
 		return products;
 	}
 
-	private Order.Shiping getTheRightShipingType(String shipingType) {
-		if(shipingType.equals("HOME_ADDRESS")){
-			return Order.Shiping.HOME_ADDRESS;
-		}
-		
-		if(shipingType.equals("STORE")){
-			return Order.Shiping.STORE;
-		}
-		
-		return null;
-	}
+//	private Order.Shiping getTheRightShipingType(String shipingType) {
+//		if(shipingType.equals("HOME_ADDRESS")){
+//			return Order.Shiping.HOME_ADDRESS;
+//		}
+//		
+//		if(shipingType.equals("STORE")){
+//			return Order.Shiping.STORE;
+//		}
+//		
+//		return null;
+//	}
 
-	private LocalDateTime returnDateAndTime(String dateAndTime) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, formatter);
+	private LocalDate returnDateAndTime(String dateAndTime) {
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDate dateTime = LocalDate.parse(dateAndTime);
 		return dateTime;
 	}
 
@@ -100,7 +101,7 @@ public class OrderDAO {
 	
 	public void insertNewOrder(User u, Order o) throws SQLException{
 		Connection con = DBManager.getConnections();
-		PreparedStatement ps = con.prepareStatement("INSERT INTO technomarket.orders (user_id, date_time, address, payment, notes, isConfirmed, isPaid, shiping_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement ps = con.prepareStatement("INSERT INTO technomarket.orders (user_id, date_time, address, payment, notes, isConfirmed, isPaid, shiping_type, zip, user_phone) VALUES (?,?, ?, ?, ?,?,?, ?,?,?);", Statement.RETURN_GENERATED_KEYS);
 		ps.setLong(1, u.getUserId());
 		ps.setString(2, o.getTime().toString());
 		ps.setString(3, o.getAddress());
@@ -108,7 +109,9 @@ public class OrderDAO {
 		ps.setString(5, o.getNotes());
 		ps.setBoolean(6, o.getIsConfirmed());
 		ps.setBoolean(7, o.getIsPaid());
-		ps.setString(8, o.getShipingType().toString());
+		ps.setString(8, null);
+		ps.setString(9, o.getZip());
+		ps.setString(10, o.getUserPhoneNumber());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
@@ -120,7 +123,7 @@ public class OrderDAO {
 		Connection con = DBManager.getConnections();
 		for (Iterator<Entry<Product, Integer>> iterator = o.getProducts().entrySet().iterator(); iterator.hasNext();) {
 			Entry<Product, Integer> entry = iterator.next();
-			PreparedStatement ps = con.prepareStatement("INSERT INTO technomarket.order_has_product (order_id, product_id, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = con.prepareStatement("INSERT INTO technomarket.order_has_product (order_id, product_id, quantity) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, o.getOrderId());
 			ps.setLong(2, entry.getKey().getProductId());
 			ps.setInt(3, entry.getValue());
