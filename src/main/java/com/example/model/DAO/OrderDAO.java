@@ -59,7 +59,9 @@ public class OrderDAO {
 			o.setShipingType(null);
 			LinkedHashMap<Product, Integer> products = fillAllProductsInOrder(o);
 			o.setProducts(products);
+			orders.add(o);
 		}
+		System.out.println(orders.size()+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 		return orders;
 	}
 

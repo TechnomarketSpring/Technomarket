@@ -9,10 +9,10 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
- <c:if test="${orders != null}">
+ <c:if test="${order!= null}">
 	 <tbody>
-	  <c:forEach items="${orders}" var="Orders">
-  	 	<c:forEach items = "${orders.product}" var = "product" >
+	  <c:forEach items="${order}" var="Orders">
+  	 	<c:forEach items = "${order.product}" var = "product" >
   	 	<tr>
   	 	<h2>Продукт*</h2>
             <td>Цена* product.price</td>
@@ -24,12 +24,7 @@
         	<hr>
        
   	 	</c:forEach>
-       <tr>
-            <td>Цена* userOrders.price</td>
-            <td>Дата* userOrders.time</td>
-            <td>Статус* userOrders.isConfirmed</td> 
-            <td align="right"><a href="<cs:url value='/info/infoForCurrentProduct?value=${userOrders}'/>">Виж поръчката <i class="icon-arrow-long-right"></i></a></td>
-        </tr>
+      
 
            </tbody>
            				

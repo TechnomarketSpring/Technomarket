@@ -73,12 +73,19 @@ public class Order {
 	public Order(){
 		
 	}
+	
+	
 
 	
 	
 	
 	// private system methods:
 	
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	
+
 	private BigDecimal calculatePriceOfOrder() {
 		BigDecimal totalSum = new BigDecimal(0);
 		for (Iterator<Entry<Product, Integer>> iterator = products.entrySet().iterator(); iterator.hasNext();) {
@@ -102,15 +109,13 @@ public class Order {
 	}
 
 
-	//setters and getters:
+	public BigDecimal getPrice() {
+		return price;
+	}
 	
 	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
-
-    
-
-
     public void setUserNames(String userNames) {
 		this.userNames = userNames;
 	}
@@ -121,84 +126,31 @@ public class Order {
 	public boolean getIsConfirmed() {
 		return isConfirmed;
 	}
-
-
-
-
-
-
 	public void setConfirmed(boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
 	}
-
-
-
-
-
 
 	public boolean getIsPaid() {
 		return isPaid;
 	}
 
-
-
-
-
-
 	public void setPaid(boolean isPaid) {
 		this.isPaid = isPaid;
 	}
-
-
-
-
-
-
 	public long getOrderId() {
 		return orderId;
 	}
 
-
-
-
-
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-
-
-
-
-
 	public LocalDate getTime() {
 		return time;
 	}
-
-
-
-
-
-
 	public String getAddress() {
 		return address;
 	}
 
-
-
-
-
-
 	public String getUserPhoneNumber() {
 		return userPhoneNumber;
 	}
-
-
-
-
-
-
 	public String getNotes() {
 		return notes;
 	}

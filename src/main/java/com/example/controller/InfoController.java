@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,8 +22,11 @@ import com.example.model.Order;
 import com.example.model.Product;
 import com.example.model.Store;
 import com.example.model.User;
+import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.StoreDAO;
+import com.example.model.exceptions.InvalidCategoryDataException;
+import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
 @Controller
 @RequestMapping(value = "/info")
@@ -32,6 +36,8 @@ public class InfoController {
 	ProductDAO productDAO;
 	@Autowired
 	StoreDAO storeDAO;
+	@Autowired
+	OrderDAO orderDAO;
 	
 	//product info gets:
 	
@@ -104,17 +110,30 @@ public class InfoController {
 		return "/index";
 	}
 	@RequestMapping(value = "/infoUserOrders", method = RequestMethod.GET)
-	public String infoUserOrders(HttpSession sesion){
+	public String infoUserOrders(HttpSession sesion, Model model){
 		
+		User user = (User)sesion.getAttribute("user");
+		try {
+			LinkedHashSet<Order> orders = orderDAO.getOrdersForUser(user.getUserId());
+			System.out.println(orders);
+			model.addAttribute("orders", orders);
+		} catch (SQLException e) {
+			System.out.println("SQL Exception into /info/infoUserOrders ");
+			e.printStackTrace();
+		} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
+			System.out.println("Ivalid data into /info/infoUserOrders");
+			e.printStackTrace();
+		} 
 		return "user_orders";
 	}
 	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)
 	public String infoUserFavourites(){
 		return "user_favourites";
 	}
-	@RequestMapping(value = "/infoFoCuurentOrder", method = RequestMethod.GET )
-	public String infoForCurrentOrder(@RequestParam("value") Order order,Model model){
-		model.addAttribute("orders", order);
+	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST )
+	public String infoForCurrentOrder(@RequestParam("value") String orderId,Model model){
+		System.out.println("DAI BOJE DA RABOTI @@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 		return "pageForCurrentOrders";
 	}
 	

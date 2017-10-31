@@ -25,6 +25,7 @@ import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
+import com.example.model.DAO.UserDAO;
 
 @Controller
 @RequestMapping("/buyController")
@@ -33,6 +34,8 @@ public class BuyController {
 ProductDAO productDAO;
 @Autowired
 OrderDAO orderDAO;
+@Autowired
+UserDAO userDAO;
 
 
 
@@ -113,11 +116,13 @@ OrderDAO orderDAO;
 		try {
 			User user = (User) session.getAttribute("user");
 			orderDAO.insertNewOrder(user, order);
+			
 		} catch (SQLException e) {
 			System.out.println("SQL Exception in BuyController");
 			e.printStackTrace();
 			return "errorPage";
 		}
+		
 		((HashMap<Product, Integer>)session.getAttribute("basket")).clear();
 		return "confurt";
 	}

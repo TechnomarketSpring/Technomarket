@@ -13,22 +13,30 @@
 
 
 <jsp:include page="user_menu.jsp" />
-  <c:if test = "${user.orders.size() == 0 }">
-    <div style = "border:1px solid green">
-    <h3>"${user.firstName}" няма направени поръчки!</h3>
-  </div >
-  </c:if>
+  
+       <c:if test = "${orders.size() == 0 }">
+           <div style = "border:1px solid green">
+              <h3>"${user.firstName}" няма направени поръчки!</h3>
+           </div >
+       </c:if>
+ 
 
-  <c:if test="${user.orders != null}">
+  <c:if test="${orders != null}">
+  <h3>Всички поръчки на ${user.firstName}</h3>
 	 <tbody>
-	  <c:forEach items="${sessinScope.user.orders}" var="userOrders">
+	  <c:forEach items="${orders}" var="userOrders">
   	 	
        <tr>
-            <td>Цена* userOrders.price</td>
-            <td>Дата* userOrders.time</td>
-            <td>Статус* userOrders.isConfirmed</td> 
-            <td align="right"><a href="<cs:url value='/info/infoForCurrentProduct?value=${userOrders}'/>">Виж поръчката <i class="icon-arrow-long-right"></i></a></td>
-        </tr>
+            <td>Цена* ${ userOrders.price}|</td>
+            <td> Дата* ${userOrders.time}|</td>
+            <td> Статус* ${userOrders.isConfirmed == false ? "Непотвърдена" : "Потвърдена"}|</td> 
+            <td align="right">
+            <form action = "<cs:url value='/info/infoFoCurrentOrder'/>" method="post">
+                <input type = "submit" value = "Виж поръчката">
+                <input type="hidden" name="value" value = "${userOrders.orderId}">
+            </form>
+            </i></a></td>
+        </tr><br>
 
            </tbody>
            				
