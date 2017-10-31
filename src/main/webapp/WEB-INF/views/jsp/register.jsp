@@ -42,8 +42,8 @@
 		</div>
 	</c:if>
 		<form action="register" method="post">
-				Име* <input type="text" name="firstName" pattern="[a-zA-Z]*" required><br>
-				Фамилия* <input type="text" name="lastName" pattern="[a-zA-Z]*" required><br>
+				Име* <input type="text" name="firstName" pattern= required><br>
+				Фамилия* <input type="text" name="lastName" pattern= required><br>
 				Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 				Парола* <input type="password" name="password" required></input><br>
 				Парола(отново)* <input type="password" name="password1" required></input><br>

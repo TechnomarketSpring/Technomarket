@@ -58,7 +58,15 @@
 		<tr>
 			<td><h1>${product.price}</h1></td>
 			<td><div>${product.worranty}</div></td>
-			<td><button><a class="btn-links" href="<c:url value='/buyController/buy?value=${product.productId}'/>">Купи сега</a></button></td>
+			<td>
+				<form action = "<c:url value='/buyController/buy'/>" method = "post">
+				  <input type = "hidden" name = "value" value = "${product.productId}"/>
+				  <input type = "submit" value = "Купи сега"/>
+				</form>	
+			
+			
+		<!-- 	<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${product.productId}'/>">Купи сега</a></button> -->
+		</td>
 		</tr>
 		</div>
 		

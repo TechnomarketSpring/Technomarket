@@ -38,13 +38,8 @@ public class HeaderConttroler {
 	}
 	@RequestMapping(value = "/home",  method = RequestMethod.GET)
 	public String getHome(Model model){
-		System.out.println("=================================================================1");
 		try {
-			HashSet<Product> product = productDAO.searchProductByCategoryName("Home");
-			System.out.println("=================================================================2");
-			if(product.isEmpty()){
-				System.out.println("=================================================================empty");
-			}
+			Set<Product> product = productDAO.searchProductByCategoryName("Home");
 			model.addAttribute("filtredProducts", product);
 		} catch (SQLException | InvalidCategoryDataException e) {
 			System.out.println("Error for SQL");

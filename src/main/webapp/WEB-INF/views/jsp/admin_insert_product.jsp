@@ -10,6 +10,7 @@
 </head>
 	<body>
 		<jsp:include page="header.jsp" />
+		<c:if test="${sessionScope.user.isAdmin == true}">
 		<cs:if test="${ added != null }">
 			<div>
 				<a href="<cs:url value='/info/infoForProduct?value=${productId}'/>">     
@@ -38,6 +39,10 @@
 				<input type="submit" value="Добави">
 			</form>
 	<sup id="fn1">1. Допустимите формати са: .jpg,.png,.gif,.bmp,.jpeg<a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
+	</c:if>
+	<c:if test="${sessionScope.user.isAdmin == false}">
+		<p>Само администраторите, влезли в сметката си, имат достъп до тази страница!</p>
+	</c:if>
 	<jsp:include page="footer.jsp" />
 	</body>
 </html>

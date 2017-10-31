@@ -277,16 +277,13 @@ public class ProductDAO {
 	}
 
 	//Search product by category name:
-	public HashSet<Product> searchProductByCategoryName(String category) throws SQLException, InvalidCategoryDataException {
-		System.out.println("=================================================================a");
-		HashSet<Product> products = new HashSet<>();
+	public Set<Product> searchProductByCategoryName(String category) throws SQLException, InvalidCategoryDataException {
+		Set<Product> products = new HashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS pr JOIN technomarket.product_has_category AS h ON(pr.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) JOIN technomarket.categories AS p ON(c.parent_category_id = p.category_id) WHERE p.category_name LIKE ?;");
+		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS pr JOIN technomarket.product_has_category AS h ON(pr.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) JOIN technomarket.categories AS p ON(c.parent_category_id = p.category_id) WHERE c.category_name LIKE ?;");
 		statement.setString(1, category);
-		System.out.println("=================================================================b");
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
-			System.out.println("=================================================================c");
 			Product pro = new Product();
 			pro.setProductId(result.getLong("product_id"));
 			pro.setTradeMark(getTradeMark(pro.getProductId()));

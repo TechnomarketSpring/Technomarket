@@ -16,21 +16,3 @@ function changeQuantity(nameIndex) {
 		request.open("post", "../basket/quantity" + params, true);
 		request.send();
 	}
-
-
-//window.onload = function decrementQuantity() {
-//	var request = new XMLHttpRequest();
-//	
-//	request.onreadystatechange = function() {
-//		//when response is received
-//		if (this.readyState == 4 && this.status == 200) {
-//		}
-//		else
-//		if (this.readyState == 4 && this.status == 401) {
-//			alert("Sorry, you must be admin to like this video!");
-//		}
-//			
-//	}
-//	request.open("post", "../basket/decrement", true);
-//	request.send();
-//}

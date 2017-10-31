@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -153,6 +154,9 @@ public class ProductController {
 	public String searchProduct(@RequestParam("categoryName") String categoryName, Model model){
 		try {
 			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
+			if(products == null || products.isEmpty()){
+				System.out.println("=============================================");
+			}
 			model.addAttribute("filtredProducts", products);
 		} catch (SQLException | InvalidCategoryDataException e) {
 			e.printStackTrace();
