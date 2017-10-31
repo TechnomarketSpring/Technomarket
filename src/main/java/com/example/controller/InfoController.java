@@ -42,10 +42,9 @@ public class InfoController {
 	//product info gets:
 	
 	@RequestMapping(value = "/infoForProduct", method = RequestMethod.GET)
-	public String infoForProduct(@RequestParam(value = "value") String id, Model model){
+	public String infoForProduct(@RequestParam(value = "value") String productId, Model model){
 		try {
-			System.out.println(id);
-			Product product = productDAO.searchProductById(id);
+			Product product = productDAO.searchProductById(productId);
 			model.addAttribute("product", product);
 			
 			LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
@@ -67,6 +66,8 @@ public class InfoController {
 				System.out.println(statusImgLink);
 			}
 			model.addAttribute("statusPerStore", statusPerStore);
+			boolean isProductInStock = storeDAO.isProductInStock(productId);
+			model.addAttribute("isProductInStock", isProductInStock);
 		} catch (SQLException | InvalidStoreDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,6 +78,10 @@ public class InfoController {
 	
 	//site conditions info gets:
 
+	@RequestMapping(value = "/infoContacts", method = RequestMethod.GET)
+	public String infoContacts(){
+       return "contacts";		
+	}
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
 	public String infoShopping(){
        return "shoppingConditions";		

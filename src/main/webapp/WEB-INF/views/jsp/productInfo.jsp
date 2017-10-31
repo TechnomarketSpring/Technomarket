@@ -56,15 +56,32 @@
 		
 		
 		<tr>
-			<td><h1>${product.price}</h1></td>
+			<c:if test="${product.percentPromo == 0}">
+				<td><h1>Цена: ${product.price}</h1></td>
+			</c:if>
+			<c:if test="${product.percentPromo > 0}">
+				<c:set var="promoPrice" value="${0}"/>
+				<c:set var="promoPrice" value="${promoPrice + product.price - (product.price * product.percentPromo/100)}" />
+				<td><h1>Стара цена: <del>${product.price}</del></h1></td>
+				<td><h1>Промо цена: ${promoPrice}</h1></td>
+			</c:if>
+			<td></td>
 			<td><div>${product.worranty}</div></td>
 			<td>
-				<form action = "<c:url value='/buyController/buy'/>" method = "post">
-				  <input type = "hidden" name = "value" value = "${product.productId}"/>
-				  <input type = "submit" value = "Купи сега"/>
-				</form>	
-			
-			
+				<c:if test="${isProductInStock == true }">
+					<form action = "<c:url value='/buyController/buy'/>" method = "post">
+					  <input type = "hidden" name = "value" value = "${product.productId}"/>
+					  <input type = "image" id="buy-button" alt="buy-button" src="<c:url value='/img/buttons/buy-buttons/buy_online.png'/>"/>
+					</form>	
+				</c:if>
+				<c:if test="${isProductInStock == false }">	
+					<a class="btn-links" href="<c:url value='/info/infoContacts'/>">
+						<img src="<c:url value='/img/buttons/buy-buttons/request.png'/>" alt="request">
+					</a>
+					<span>Продуктът не е в наличност!</span><br>
+					<span>В случай, че проявявате интерест, ще получите контакти за заявка.</span>
+				</c:if>
+				
 		<!-- 	<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${product.productId}'/>">Купи сега</a></button> -->
 		</td>
 		</tr>

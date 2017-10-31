@@ -14,10 +14,11 @@
     background-color: #E60000;
     color: white;
     padding: 16px;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     cursor: pointer;
     width: 120px;
+    margin-botton: 0px;
 }
 
 .user_dropdown {
@@ -107,6 +108,7 @@ body, div, nav {
 	overflow: hidden;
 	padding-right: .5em;
 	display: flex;
+	margin-botton: 0px;
 }
 
 #search-con {
@@ -124,12 +126,15 @@ body, div, nav {
 	float: right;
 	margin-left: 0px;
 	margin-right: 0px;
+	margin-botton: 0px;
+	height: 50px;
 }
 
 #searched-text {
 	width: 250px;
 	margin-left: 90px;
 	height: 50px;
+	margin-botton: 0px;
 }
 
 #search {
@@ -137,6 +142,7 @@ body, div, nav {
 	margin-left: 100px;
 	margin-top: 0px;
 	margin-right: 0px;
+	margin-botton: 0px;
 }
 
 #continer {
@@ -166,6 +172,7 @@ body, div, nav {
 	display: flex;
 	overflow: hidden;
 	padding-right: .5em;
+	margin-botton: 0px;
 }
 
 #basket-button{
@@ -176,18 +183,22 @@ body, div, nav {
 	background-color: #333333;
 	border: none;
 	padding: 14px 20px;
+	margin-botton: 0px;
 }
 
 #basket-link{
 	text-decoration: none;
 	color: #FFFFFF;
+	margin-botton: 0px;
 }
 
 #cart {
 	height: 18px;
 	wight: 18px;
 	margin-right: 2px;
+	margin-botton: 0px;
 }
 
-
-
+body {
+	z-index:1;
+}

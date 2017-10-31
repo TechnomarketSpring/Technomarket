@@ -75,7 +75,6 @@
 						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>
 					<a href="<cs:url value='/logout'/>">Изход</a>
-					</form>
 				</c:if>
  			 </div>
  			 	 <!-- Getting baskets price to set it in button on every addition: -->

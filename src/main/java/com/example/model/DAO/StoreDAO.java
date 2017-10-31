@@ -130,6 +130,25 @@ public class StoreDAO {
 		
 	}
 	
+	public boolean isProductInStock(String productId) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT SUM(amount) AS in_stock FROM store_has_product WHERE product_id = ?;");
+		ps.setString(1, productId);
+		ResultSet rs = ps.executeQuery();
+		int productsInStock = 0;
+		while(rs.next()){
+			 productsInStock = rs.getInt("in_stock");
+		}
+		ps.close();
+		rs.close();
+		if(productsInStock == 0){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+	
 	//Admin panel in Stores: 
 	
 	public void insertProductInStore(int storeId, int productId, int amount) throws SQLException{

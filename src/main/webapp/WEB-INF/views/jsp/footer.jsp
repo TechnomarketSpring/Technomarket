@@ -14,7 +14,7 @@
 			<ul id="first-ul">
 				<li class="footer-li"><strong class="titles">Техномаркет</strong></li>
 				<li> <a class="footer-a" href="<cs:url value='/header/stores'/>">Магазини</a> </li>
-				<li> <a class="footer-a" href="contacts">Контакти</a> </li>
+				<li> <a class="footer-a" href="<cs:url value='/info/infoContacts'/>">Контакти</a> </li>
 			</ul>
 			</div>
 			<div class="mini-containers">

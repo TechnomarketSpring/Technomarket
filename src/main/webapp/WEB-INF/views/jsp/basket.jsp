@@ -23,7 +23,18 @@
               <c:forEach items="${sessionScope.basket}" var="entry">
                     <h5>Модел: ${entry.key.name}</h5>
                     <h5>Марка: ${entry.key.tradeMark}</h5>
-                    <h5>Цена: ${entry.key.price}</h5>
+                    <c:if test="${entry.key.percentPromo == 0}">
+                   		<h5>Цена: ${entry.key.price}</h5>
+                    </c:if>
+                    <c:set var="counting" value="${entry.key.price}"/>
+                    <c:if test="${entry.key.percentPromo > 0}">
+							<c:set var="counting" value="${(counting + ((entry.key.price * pro.value)) - ((entry.key.price*entry.key.percentPromo)/100))}" />
+                   		<h5>Стара цена: <del>${entry.key.price}</del></h5>
+                   		<h5>Промо цена: ${counting}</h5>
+                    </c:if>
+                    
+                    
+                    </h5>
                     <h5>Артикул номер: ${entry.key.productNumber}</h5>
                     <h5>Гаранция: ${entry.key.worranty}</h5>
                     <h5>Отстъпка: ${entry.key.percentPromo}</h5>
@@ -47,11 +58,11 @@
 				 <c:set var="total" value="${(total + ((basket.key.price * basket.value)) - ((basket.key.price*basket.key.percentPromo)/100))}" />
    			 </cs:forEach>
    			 <c:if test="${total != 0}">
- 			  <h4>Сумата за плащане е: ${total} лв.</h4>
+ 			  <h4>Сумата за плащане е: <span id="priceSum">${total}</span> лв.</h4>
  			 </c:if>	
           
         
- </div>
+ 		</div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
