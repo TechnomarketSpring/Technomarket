@@ -27,7 +27,6 @@
 	  <c:forEach items="${orders}" var="userOrders">
   	 	
        <tr>
-            <td>Цена* ${ userOrders.price}|</td>
             <td> Дата* ${userOrders.time}|</td>
             <td> Статус* ${userOrders.isConfirmed == false ? "Непотвърдена" : "Потвърдена"}|</td> 
             <td align="right">

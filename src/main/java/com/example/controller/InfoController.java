@@ -25,6 +25,7 @@ import com.example.model.User;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.StoreDAO;
+import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
@@ -38,6 +39,8 @@ public class InfoController {
 	StoreDAO storeDAO;
 	@Autowired
 	OrderDAO orderDAO;
+	@Autowired
+	UserDAO userDAO;
 	
 	//product info gets:
 	
@@ -132,11 +135,54 @@ public class InfoController {
 		return "user_orders";
 	}
 	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)
-	public String infoUserFavourites(){
+	public String infoUserFavourites(HttpSession session ,Model model){
+		User user = (User) session.getAttribute("user");
+		try {
+			LinkedHashSet<Product> product = userDAO.viewFavourite(user);
+			model.addAttribute("product", product);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL Exception in /info/infoUserFavourites");
+			return "errorPage";
+		}
+		
+		
+		return "user_favourites";
+	}
+	@RequestMapping(value = "/addInFavorite", method = RequestMethod.GET)
+	public String addInFavorite(@RequestParam("value") long productId, Model model , HttpSession session){
+		if(session.getAttribute("user") == null){
+			return "login";
+		}
+		User user = (User) session.getAttribute("user");
+		try {
+			userDAO.addInFavorite(user.getUserId(), productId);
+		} catch (SQLException e) {
+			System.out.println("SQL Exception in /info/addInFavorite");
+			e.printStackTrace();
+			return "errorPage";
+		}
+		return "user_favourites";
+	}
+	
+	@RequestMapping(value = "/removeFromFavorite", method = RequestMethod.GET)
+	public String removeFromFavorite(@RequestParam("value") long productId, Model model, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		try {
+     		userDAO.removeFavouriteProduct(user.getUserId(), productId);
+			LinkedHashSet<Product> product = userDAO.viewFavourite(user);
+			model.addAttribute("product", product);
+		} catch (SQLException e) {
+			System.out.println("SQL Exception in info/removeFromFavorite");
+			e.printStackTrace();
+			return "errorPage";
+		}
+		
 		return "user_favourites";
 	}
 	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST )
-	public String infoForCurrentOrder(@RequestParam("value") String orderId,Model model){
+	public String infoForCurrentOrder(@RequestParam(value = "value") String orderId,Model model){
 		try {
 			Order order = orderDAO.searchOrderById(orderId);
 			HashSet<Product> product = orderDAO.getProductFromOrder(orderId);
