@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <div style="border:1px solid green;">
-           <form>
+           
           <h1>Кошница</h1>
           
           <c:if test="${sessionScope.basket.size() == 0}">
@@ -27,19 +27,30 @@
                     <h5>Артикул номер: ${entry.key.productNumber}</h5>
                     <h5>Гаранция: ${entry.key.worranty}</h5>
                     <h5>Отстъпка: ${entry.key.percentPromo}</h5>
-                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="changeQuantity(${entry.key.productId});" onload="keepSame(${entry.key.productId});" onbeforeunload ="return false;"></h5><br>   
+                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="changeQuantity(${entry.key.productId});" onload="keepSame(${entry.key.productId});" onbeforeunload ="return false;"></h5><br> 
+                    <form action = "<c:url value='/buyController/removeProduct?value=${entry.key.productId}'/>" method="post">
+				      <input type = "submit" value = "Премахни продукта">
+				    </form>  
               </c:forEach>
               <li class="btn-li">
 					 <a class="btn-links" href="<cs:url value='/buyController/makeOrder'/>">
 						<img src="<cs:url value='/img/buttons/deliver.png'/>" alt="contacts">
 				   	</a>
-			</li>
+			  </li>
 			</div>
 				<button><a class="btn-links" href="<c:url value='/header/goIndex'/>">Добаване на още продукти</a></button>
+				
 				</div>	
            </c:if> 
+           <c:set var="total" value="${0}"/>
+ 		   	 <cs:forEach items="${ sessionScope.basket }" var="basket">
+				 <c:set var="total" value="${(total + ((basket.key.price * basket.value)) - ((basket.key.price*basket.key.percentPromo)/100))}" />
+   			 </cs:forEach>
+   			 <c:if test="${total != 0}">
+ 			  <h4>Сумата за плащане е: ${total} лв.</h4>
+ 			 </c:if>	
           
-        </form>
+        
  </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

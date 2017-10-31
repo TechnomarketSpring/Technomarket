@@ -26,6 +26,8 @@ import com.example.model.User;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.UserDAO;
+import com.example.model.exceptions.InvalidCategoryDataException;
+import com.example.model.exceptions.InvalidCharacteristicsDataException;
 
 @Controller
 @RequestMapping("/buyController")
@@ -37,6 +39,34 @@ OrderDAO orderDAO;
 @Autowired
 UserDAO userDAO;
 
+
+
+
+
+    @RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
+    public String removeProduct(@RequestParam(value = "value") long id, HttpSession session){
+    	HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
+//    	Product pro = null;
+//    	try {
+//			 pro = productDAO.getProduct(id);
+//			
+//		} catch (SQLException e) {
+//			System.out.println("SQL exception in buyController/removeProduct");
+//			e.printStackTrace();
+//			return "errorPage";
+//		} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
+//			System.out.println("InvalidCharacteristicsDataException or InvalidCategoryDataException in buyController/removeProduct");
+//			e.printStackTrace();
+//			return "errorPage";
+//		}
+    	for(Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();){
+    		Entry<Product, Integer> entry = it.next();
+    		if(entry.getKey().getProductId() == id){
+    			it.remove();
+    		}
+    	}
+    	return "basket";
+    }
 
 
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
