@@ -15,7 +15,7 @@
            <form>
           <h1>Кошница</h1>
           
-          <c:if test="${sessionScope.basket.isEmpty() == true}">
+          <c:if test="${sessionScope.basket.size() == 0}">
               <h4>Няма продукти във вашата кошница!</h4>
           </c:if>
           

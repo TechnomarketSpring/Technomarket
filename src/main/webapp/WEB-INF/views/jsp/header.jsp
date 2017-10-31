@@ -77,8 +77,8 @@
 					</form>
 				</c:if>
  			 </div>
- 			 <button type="button"></a><c:out value = "${sessionScope.user.basket != null ? sessionScope.user.getBasketPrice() : '0'}"/></button>
- 			 
+ 		
+ 			    <button id = "basket-button"><a class="btn-links" href="<c:url value='/buyController/basket'/>">Кошница</a></button>
  			 <!-- Dropdown menu with base categories on top -->
  
  

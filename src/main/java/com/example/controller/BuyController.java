@@ -36,28 +36,32 @@ OrderDAO orderDAO;
 
 
 
-	@RequestMapping(value = "/buy", method = RequestMethod.GET)
+	@RequestMapping(value = "/buy", method = RequestMethod.POST)
 	public String addInTheBasket(@RequestParam(value = "value") String id, HttpSession session) {
-		System.out.println("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777");
+		
 		if(session.getAttribute("basket") == null){
 			HashMap<Product, Integer> basket = new HashMap<>();
 			session.setAttribute("basket",basket);
 		}
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		try {
-			System.out.println(id + "=========================================================");
 			Product product = productDAO.searchProductById(id);
 			if(!basket.containsKey(product)){
 			   basket.put(product, 1);
 			}else{
 				Integer number = basket.get(product) + 1;
 				basket.put(product, number);
-				System.out.println("============FUCK===============");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";
 		}
+		return "basket";
+	}
+	
+	
+	@RequestMapping(value = "/basket", method = RequestMethod.GET)
+	public String goToBasket(){
 		return "basket";
 	}
 	     
@@ -99,9 +103,7 @@ OrderDAO orderDAO;
 		order.setZip(postCode);
 		order.setNotes(notes);
 		order.setPrice(price);
-		if(session.getAttribute("basket") == null){
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		}
+		
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());
