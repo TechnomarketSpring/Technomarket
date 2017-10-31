@@ -281,7 +281,7 @@ public class ProductDAO {
 		Set<Product> products = new HashSet<>();
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS pr JOIN technomarket.product_has_category AS h ON(pr.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) JOIN technomarket.categories AS p ON(c.parent_category_id = p.category_id) WHERE c.category_name LIKE ?;");
-		statement.setString(1, category);
+		statement.setString(1, "%"+ category +"%");
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
 			Product pro = new Product();
@@ -296,6 +296,9 @@ public class ProductDAO {
 			pro.setImageUrl(result.getString("image_url"));
 			pro.setCategory(new Category(result.getString("c.category_name")));
 			products.add(pro);
+		}
+		if(products.isEmpty()){
+			System.out.println("==========================================123");
 		}
 		result.close();
 		statement.close();
@@ -433,25 +436,27 @@ public class ProductDAO {
 	}
 
 	// Search produc where category is home
-	public Set<Product> searchProductWithCategoryHome() throws SQLException {
+	public Set<Product> searchProductWithCategoryHome() throws SQLException, InvalidCategoryDataException {
 		LinkedHashSet<Product> products = new LinkedHashSet<>();
 		this.connection = DBManager.getConnections();
-		String query = "SELECT product.product_id, product.product_name, product.price, product.product_number,trade_marks.trade_mark_name , product.warranty, product.percent_promo , categories.category_name, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) JOIN technomarket.categories ON(product.credit_id = categories.category_id) WHERE category_name = ?";
+		String query = "SELECT * FROM technomarket.product AS pr JOIN technomarket.product_has_category AS h ON(pr.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) JOIN technomarket.categories AS p ON(c.parent_category_id = p.category_id) WHERE p.category_name LIKE ?";
 		PreparedStatement statement = this.connection.prepareStatement(query);
-		statement.setString(1,"'Home'");
+		statement.setString(1,"%Home%");
 		ResultSet result = statement.executeQuery();
-		Product product = null;
 		while (result.next()) {
-			product = new Product();
+			Product product = new Product();
 			product.setProductId(result.getLong("product_id"));
 			product.setName(result.getString("product_name"));
-			product.setPrice(result.getString("produc_price"));
+			product.setPrice(result.getString("price"));
 			product.setProductNumber(result.getString("product_number"));
 			product.setTradeMark(getTradeMark(product.getProductId()));
 			product.setWorranty(result.getInt("warranty"));
 			product.setPercentPromo(result.getInt("percent_promo"));
 			product.setImageUrl(result.getString("image_url"));
+			product.setCategory(new Category(result.getString("c.category_name")));
+			product.setDateAdded(LocalDate.parse(result.getString("date_added")));
 			products.add(product);
+			System.out.println("=====================================2");
 		}
 		result.close();
 		statement.close();

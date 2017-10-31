@@ -39,7 +39,7 @@ public class HeaderConttroler {
 	@RequestMapping(value = "/home",  method = RequestMethod.GET)
 	public String getHome(Model model){
 		try {
-			Set<Product> product = productDAO.searchProductByCategoryName("Home");
+			Set<Product> product = productDAO.searchProductWithCategoryHome();
 			model.addAttribute("filtredProducts", product);
 		} catch (SQLException | InvalidCategoryDataException e) {
 			System.out.println("Error for SQL");
