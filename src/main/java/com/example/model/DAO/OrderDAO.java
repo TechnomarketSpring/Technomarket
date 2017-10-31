@@ -166,5 +166,46 @@ public class OrderDAO {
 		}
 		
 	}
+	public Order searchOrderById(String id) throws SQLException{
+		Order order = new Order();
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT order_id, users.first_name, users.last_name, date_time, address, payment,notes, isConfirmed, isPaid, zip, user_phone  FROM technomarket.orders JOIN technomarket.users ON(orders.user_id = users.user_id)  WHERE order_id = ?");
+		statement.setString(1, id);
+		ResultSet result = statement.executeQuery();
+		while(result.next()){
+		  order.setOrderId(result.getLong(1));
+		  order.setUserNames(result.getString(2)+" "+result.getString(3));
+		  order.setTime(LocalDate.parse(result.getString(4)));
+		  order.setAddress(result.getString(5));
+		  order.setPayment(result.getString(6));
+		  order.setNotes(result.getString(7));
+		  order.setConfirmed(result.getBoolean(8));
+		  order.setPaid(result.getBoolean(9));
+		  order.setZip(result.getString(10));
+		  order.setUserPhoneNumber(result.getString(11));
+		}
+		statement.close();
+		return order;
+	}
+	public HashSet<Product> getProductFromOrder(String id) throws SQLException{
+		HashSet<Product> products = new HashSet<>();
+		PreparedStatement st = this.connection.prepareStatement("select trade_marks.trade_mark_name, product.product_name ,price, warranty, percent_promo, date_added, product_number, image_url, product_number from technomarket.product join technomarket.trade_marks on(trade_marks.trade_mark_id = product.trade_mark_id) join technomarket.order_has_product on(order_has_product.order_id = ?)");
+		st.setString(1, id);
+		ResultSet rs = st.executeQuery();
+		Product pr = null;
+		while(rs.next()){
+			pr = new Product();
+			pr.setTradeMark(rs.getString(1));
+			pr.setName(rs.getString(2));
+			pr.setPrice(rs.getString(3));
+			pr.setWorranty(rs.getInt(4));
+			pr.setPercentPromo(rs.getInt(5));
+			pr.setDateAdded(LocalDate.parse(rs.getString(6)));
+			pr.setImageUrl(rs.getString(7));
+			pr.setProductNumber(rs.getString(8));
+			products.add(pr);
+		}
+		return products;
+	}
 
 }

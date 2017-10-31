@@ -10,25 +10,21 @@
 <body>
 <jsp:include page="header.jsp" />
  <c:if test="${order!= null}">
-	 <tbody>
-	  <c:forEach items="${order}" var="Orders">
-  	 	<c:forEach items = "${order.product}" var = "product" >
-  	 	<tr>
-  	 	<h2>Продукт*</h2>
-            <td>Цена* product.price</td>
-            <td>Име* product.name</td>
-            <td>Номер на артикул* product.productNumber</td> 
-             <td>Гаранция* product.worranty</td> 
-           <td><img sr =product.imageUrl></td>   
-        </tr>
-        	<hr>
-       
-  	 	</c:forEach>
-      
+	 
+	 <h4>Номер на поръчка* ${order.orderId}</h4>
+  	 	   <c:forEach items = "${products}" var = "product" >
+  	 	        
+  	 	        <h4>Продукт* ${product.productNumber }</h4>
+                <h4>Цена* ${product.price}</h4>
+                <h4>Име* ${product.name}</h4>
+                <h4>Номер на артикул* ${product.productNumber}</h4> 
+                <h4>Гаранция* ${product.worranty}</h4>   
+                <img src="<c:url value='/product/product_pic?value=${product.imageUrl}'/>" alt="product-image" width="120" height="auto">
+          
+        	    <hr>
+  	 	   </c:forEach>
+         				
 
-           </tbody>
-           				
-</c:forEach>
   </c:if>
 
 

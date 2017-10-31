@@ -81,9 +81,7 @@ public class Order {
 	
 	// private system methods:
 	
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+	
 	
 
 	private BigDecimal calculatePriceOfOrder() {
@@ -102,12 +100,15 @@ public class Order {
 			return true;
 		}
 	}
-
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	
+	
 
 	private boolean isAddressValid(String address) {
 		return address != null && !address.isEmpty();
 	}
-
 
 	public BigDecimal getPrice() {
 		return price;

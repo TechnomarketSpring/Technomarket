@@ -132,7 +132,16 @@ public class InfoController {
 	}
 	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST )
 	public String infoForCurrentOrder(@RequestParam("value") String orderId,Model model){
-		System.out.println("DAI BOJE DA RABOTI @@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		try {
+			Order order = orderDAO.searchOrderById(orderId);
+			HashSet<Product> product = orderDAO.getProductFromOrder(orderId);
+			model.addAttribute("order", order);
+			model.addAttribute("products", product);
+		} catch (SQLException e) {
+			System.out.println("SQL EXception is InfoControlle/inForCurrenrOrder");
+			e.printStackTrace();
+			return "errorPage";
+		}
 		
 		return "pageForCurrentOrders";
 	}
