@@ -10,29 +10,34 @@
 	<body>
 		<jsp:include page="header.jsp"></jsp:include>
 		
-		<form <c:url value='/header/search'/>" method="get">
+		<!--<form <c:url value='/header/search'/>" method="get">-->
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div id="product-box" style="border:1px solid black;">
 					<div>
-					<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${filtredProduct.productId}'/>">
-						<img src="<c:url value='/product/product_pic?value=${filtredProduct.productId}'/>" alt="product-image" width="120" height="auto">
-					</a>
-				 <h5>${filtredProduct.name}</h5><br>
-				<c:if test="${ filtredProduct.percentPromo > 0}">
-				 <img alt="promo-sticker" src="<c:url value='/img/stickers/promo.jpg'/>">
-				</c:if>
-				<c:if test="${ filtredProduct.isNewProduct == true}">
-				 <img alt="new-sticker" src="<c:url value='/img/stickers/new.jpg'/>">
-				</c:if>
-				 <span>Арт. Nº: ${filtredProduct.productNumber}</span>
-				<h5>${filtredProduct.price} лв.</h5>
+						<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${filtredProduct.productId}'/>">
+							<img src="<c:url value='/product/product_pic?value=${filtredProduct.productId}'/>" alt="product-image" width="120" height="auto">
+						</a>
+					 	<h5>${filtredProduct.name}</h5><br>
+						<c:if test="${ filtredProduct.percentPromo > 0}">
+						 	<img alt="promo-sticker" src="<c:url value='/img/stickers/promo.jpg'/>">
+						</c:if>
+						<c:if test="${ filtredProduct.isNewProduct == true}">
+						 	<img alt="new-sticker" src="<c:url value='/img/stickers/new.jpg'/>">
+						</c:if>
+					 	<span>Арт. Nº: ${filtredProduct.productNumber}</span>
+						<h5>${filtredProduct.price} лв.</h5>
+					</div>
+					
+		<!--		<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button> -->
 				</div>
-				<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button>
-				</div>			
+				<form action = "<c:url value='/buyController/buy'/>" method = "post">
+				  <input type = "hidden" name = "value" value = "${ filtredProduct.productId }"/>
+				  <input type = "submit" value = "Купи сега"/>
+				</form>		
 			</c:forEach>
 		</c:if>
-		</form>
+		<!--</form>-->
 		<c:if test = "${filtredProducts.size() == 0}">
 		      <div style = "border:1px solid red">
 		     <h3>Няма намерен резутат от търсенето</h3>

@@ -13,7 +13,7 @@
 
 
 <jsp:include page="user_menu.jsp" />
-  <c:if test = "${sessinScope.user.orders == null }">
+  <c:if test = "${user.orders.size() == 0 }">
     <div style = "border:1px solid green">
     <h3>"${user.firstName}" няма направени поръчки!</h3>
   </div >
