@@ -58,6 +58,7 @@
 		</form>
 		</div>
 		</div>
+		<div id="menu-basket">
 		<div id="menu-container">
 		<div class="user_dropdown">
   			<button onclick="myFunction()" class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
@@ -77,15 +78,29 @@
 					</form>
 				</c:if>
  			 </div>
- 		
- 			    <button id = "basket-button"><a class="btn-links" href="<c:url value='/buyController/basket'/>">Кошница</a></button>
- 			 <!-- Dropdown menu with base categories on top -->
- 
- 
+ 			 	 <!-- Getting baskets price to set it in button on every addition: -->
+ 			 <c:set var="total" value="${0}"/>
+ 		   	 <cs:forEach items="${ sessionScope.basket }" var="basket">
+				 <c:set var="total" value="${total + (basket.key.price * basket.value)}" />
+   			 </cs:forEach>
+   			 <button id = "basket-button">
+   			 		<img id="cart" alt="cart" src="<cs:url value='/img/buttons/cart.png'/>">
+ 			    	<a id="basket-link" href="<c:url value='/buyController/basket'/>">
+ 			    		<c:if test="${total != 0}">
+ 			  				<span>${total} лв.</span>
+ 			  			</c:if>	
+ 			  			<c:if test="${total == 0}">
+ 			  				<span>-</span>
+ 			  			</c:if>	
+ 			    	</a>
+ 			 </button>
+ 			</div>
+ 			    
+			</div>
 		</div>
-		</div>
-		</div>
-		</div>
+	</div>
+</div>
+ <!-- Dropdown menu with base categories on top -->
 		<div id="dropdown-category-menu">			 
 			<nav id="primary_nav_wrap">
 					<ul>
@@ -100,7 +115,11 @@
       				</ul>
   					</li>
 					</c:forEach>
-			
+					</ul>
+			</nav>
+ 		</div>	 
+	</body>
+</html>
 			
 	<!--			<ul>
   					<li>ТЕЛЕВИЗОРИ И АУДИО
@@ -141,8 +160,3 @@
   <li><a href="#">ФОТО И ВИДЕО</a></li>
   <li><a href="#">@HOME</a></li>
   <li><a href="#">ЗАБАВЛЕНИЯ</a></li> -->
-</ul>
-</nav>
- 		</div>	 
-	</body>
-</html>

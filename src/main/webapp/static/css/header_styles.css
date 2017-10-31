@@ -117,6 +117,7 @@ body, div, nav {
 	padding-right: .5em;
 	display: flex;
 	float: right;
+	margin-right: 0px;
 }
 
 #search-button {
@@ -127,13 +128,13 @@ body, div, nav {
 
 #searched-text {
 	width: 250px;
-	margin-left: 100px;
+	margin-left: 90px;
 	height: 50px;
 }
 
 #search {
 	display: inline;
-	margin-left: 150px;
+	margin-left: 100px;
 	margin-top: 0px;
 	margin-right: 0px;
 }
@@ -145,10 +146,11 @@ body, div, nav {
 
 #menu-container {
 	float: right;
-	margin-left: 300px;
+	margin-left: 220px;
 	margin-top: 70px;
 	height: 300px;
 	margin-botton: 0px;
+	margin-right: 100px;
 }
 
 #search-menu {
@@ -156,16 +158,36 @@ body, div, nav {
 	overflow: hidden;
 	padding-right: .5em;
 	margin-button: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
 }
+
+#menu-basket {
+	display: flex;
+	overflow: hidden;
+	padding-right: .5em;
+}
+
 #basket-button{
-	margin-top:200px;
-	float: left;
-	position: relative;
+	display:inline;
+	float: right;
+	margin-left: 4px;
+	margin-right: 0px;
+	background-color: #333333;
+	border: none;
+	padding: 14px 20px;
 }
 
+#basket-link{
+	text-decoration: none;
+	color: #FFFFFF;
+}
 
-
-
+#cart {
+	height: 18px;
+	wight: 18px;
+	margin-right: 2px;
+}
 
 
 
