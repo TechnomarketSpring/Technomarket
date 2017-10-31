@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 
 public class RegexValidator {
 	
-	private static final String EMAIL_REGEX = "^(.+)@(.+)$";
-	private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$";
-	private static final String MOBILE_PHONE_REGEX = "/^08[7-9][0-9]{7}$/";
-	private static final String IMAGE_FILE_REGEX = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|jpeg))$)";
+	private static final String EMAIL_REGEX = "^(.+)@(.+)$"; //username at domain
+	private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$"; //Minimum eight characters, at least one letter and one number
+	private static final String MOBILE_PHONE_REGEX = "/^08[7-9][0-9]{7}$/"; //starts with 0, 0-9 numbers, 10 numbers
+	private static final String IMAGE_FILE_REGEX = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|jpeg))$)"; //possible image formats
 	
 	public static boolean validateEmail(String email) {
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);

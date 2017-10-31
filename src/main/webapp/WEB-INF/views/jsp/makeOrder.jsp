@@ -37,10 +37,10 @@
      </div>
      <div>
      <form action="<cs:url value='/buyController/addOrder'/>" method="post">
-				Име и Фамилия* <input type="text" name="firstAndLastName" required><br>
-				Телефон* <input type="number" name="telNumber" required><br>
-				Град* <input type="text" name="town" required></input><br>
-				Пощенски код* <input type="text" name="postCode" min = 4 required></input><br>
+				Име и Фамилия* <input type="text" name="firstAndLastName" pattern="\b[a-zA-Z]+\s[a-zA-Z]+\b" required><br>
+				Телефон* <input type="number" name="telNumber" pattern="/^08[7-9][0-9]{7}$/" required><br>
+				Град* <input type="text" name="town" pattern="[a-zA-Z]*" required></input><br>
+				Пощенски код* <input type="number" name="postCode" min = 4 pattern= "[0-9]" required></input><br>
 				Улица/Квартал* <input type="text" name="street" required>  Номер*
 				<input type="number" name="number" required><br>
 				Блок*<input type="text" name="block">  
@@ -50,10 +50,10 @@
                 Уточнения за адрес*<input type="text" name="notes"><br>
                 Начин на плащане*<select name = "payment">
                     <option value = "buy-shipping">При получаване</option>
-                     <option value="banckCard">Банкова карта</option>
+                    <option value="banckCard">Банкова карта</option>
                 </select>
-                 <input type="hidden" name="price" value = "${price}">
-				<input type="submit" value="Изпрати">
+					<input type="hidden" name="price" value = "${price}">
+					<input type="submit" value="Изпрати">
 		</form>
      </div>
     <jsp:include page="footer.jsp" />

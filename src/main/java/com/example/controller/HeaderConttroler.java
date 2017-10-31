@@ -20,6 +20,7 @@ import com.example.model.Product;
 import com.example.model.Store;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.StoreDAO;
+import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
 
 
@@ -27,9 +28,9 @@ import com.example.model.exceptions.InvalidStoreDataException;
 @RequestMapping("/header")
 public class HeaderConttroler {
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	StoreDAO storeDAO;
+	private StoreDAO storeDAO;
 	
 	@RequestMapping(value = "/contacts" , method = RequestMethod.GET)
 	public String getContacts(){
@@ -37,10 +38,15 @@ public class HeaderConttroler {
 	}
 	@RequestMapping(value = "/home",  method = RequestMethod.GET)
 	public String getHome(Model model){
+		System.out.println("=================================================================1");
 		try {
-			Set<Product> product = productDAO.searchProductWithCategoryHome();
+			HashSet<Product> product = productDAO.searchProductByCategoryName("Home");
+			System.out.println("=================================================================2");
+			if(product.isEmpty()){
+				System.out.println("=================================================================empty");
+			}
 			model.addAttribute("filtredProducts", product);
-		} catch (SQLException e) {
+		} catch (SQLException | InvalidCategoryDataException e) {
 			System.out.println("Error for SQL");
 			return "errorPage";
 		}

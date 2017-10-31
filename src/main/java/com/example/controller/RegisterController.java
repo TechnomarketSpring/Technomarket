@@ -19,6 +19,7 @@ import com.example.model.User;
 import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.EmailAlreadyInUseException;
 import com.example.model.exceptions.InvalidUserDataException;
+import com.example.model.util.RegexValidator;
 
 @Controller
 public class RegisterController {
@@ -44,6 +45,7 @@ public class RegisterController {
 			@RequestParam(value = "abonat", defaultValue = "null") String abonat,
 			@RequestParam(value = "submit", defaultValue = "null") String submit) {
 		try {
+			//validation for equal password samples:
 			if (!password.equals(password1)) {
 				model.addAttribute("passError", "Passwords are not the same");
 				return "register";
@@ -52,6 +54,15 @@ public class RegisterController {
 				model.addAttribute("submitError", "Passwords are not the same");
 				return "register";
 			}
+			if (!RegexValidator.validatePassword(password)) {
+				model.addAttribute("invlidPassError", "Invalid passwod format");
+				return "register";
+			}
+			if (!RegexValidator.validateEmail(email)) {
+				model.addAttribute("invlidMail", "Invalid mail format");
+				return "register";
+			}
+			
 			User user = new User(firstName, lastName,
 					email, password, gender,
 					LocalDate.parse(bday),

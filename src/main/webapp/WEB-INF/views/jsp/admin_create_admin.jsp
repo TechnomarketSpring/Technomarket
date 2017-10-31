@@ -12,7 +12,7 @@
 			<p>ÐÐ°Ð¿ÑÐ°Ð²Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ» Ð°Ð´Ð¼Ð¸Ð½:</p>
 			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
 				<label for="name">ÐÐ¼Ðµ</label>
-				<input type="text" name="productName" value="name" required><br>
+				<input type="email" name="productName" value="name" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 				<input type="submit" value="ÐÐ¾Ð±Ð°Ð²Ð¸">
 			</form>
 

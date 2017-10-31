@@ -54,7 +54,7 @@
 		<div id="search-con">
 		<form id="search" action="<c:url value='/header/search'/>" method="get">
 			<input type="text" id="searched-text" name="searched_text" size="40" maxlength="35" placeholder="Търси...">
-			<input type="image" id="search-button" alt="Search" src="<cs:url value='/img/buttons/search.jpg'/>"><br>
+			<input type="image" id="search-button" alt="Search" src="<cs:url value='/img/buttons/search.jpg'/>" onclick="return isEmpty();" tabindex="8"><br>
 		</form>
 		</div>
 		</div>
@@ -95,7 +95,7 @@
 						</c:if>
 					<ul>	
 						<c:forEach items="${headCategory.value}" var="innerCategory">
-      					<li><a href="#">${innerCategory}</a></li>
+      					<li><a href="<c:url value='/product/productsByCategory?categoryName=${innerCategory}'/>">${innerCategory}</a></li>
       					</c:forEach>
       				</ul>
   					</li>

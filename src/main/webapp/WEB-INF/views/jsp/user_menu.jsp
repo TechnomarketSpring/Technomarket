@@ -23,11 +23,6 @@
 		</ul>
 	</c:if>
 	<c:if test="${sessionScope.user == null}">
-<<<<<<< HEAD
-	   
-=======
-
->>>>>>> 13629dad8b9e62eea60c11f18fb2df9ee7f1ba9e
 	</c:if>
 	</div>
 </body>

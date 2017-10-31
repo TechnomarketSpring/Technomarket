@@ -22,8 +22,8 @@
 			</div>
 		</c:if>
 		<form action="<cs:url value='/login'/>" method="post">
-			Е-мейл <input type="text" name="username"><br>
-			Парола <input type="password" name="password"><br>
+			Е-мейл <input type="email" name="username" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+			Парола <input type="password" name="password" required><br>
 			Запомни ме <input type = "checkbox" name = "remember"> 
 			<a href="../forgotten">Забравена парола?</a>
 			<input type="submit" value="Вход"><br>

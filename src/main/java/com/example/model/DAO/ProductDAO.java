@@ -278,12 +278,15 @@ public class ProductDAO {
 
 	//Search product by category name:
 	public HashSet<Product> searchProductByCategoryName(String category) throws SQLException, InvalidCategoryDataException {
+		System.out.println("=================================================================a");
 		HashSet<Product> products = new HashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS p JOIN technomarket.product_has_category AS h ON (p.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) WHERE c.category_name LIKE ?;");
+		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS pr JOIN technomarket.product_has_category AS h ON(pr.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) JOIN technomarket.categories AS p ON(c.parent_category_id = p.category_id) WHERE p.category_name LIKE ?;");
 		statement.setString(1, category);
+		System.out.println("=================================================================b");
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
+			System.out.println("=================================================================c");
 			Product pro = new Product();
 			pro.setProductId(result.getLong("product_id"));
 			pro.setTradeMark(getTradeMark(pro.getProductId()));
@@ -294,7 +297,7 @@ public class ProductDAO {
 			pro.setDateAdded(LocalDate.parse(result.getString("date_added")));
 			pro.setProductNumber(result.getString("product_number"));
 			pro.setImageUrl(result.getString("image_url"));
-			pro.setCategory(new Category(result.getString("category_name")));
+			pro.setCategory(new Category(result.getString("c.category_name")));
 			products.add(pro);
 		}
 		result.close();
@@ -443,14 +446,14 @@ public class ProductDAO {
 		Product product = null;
 		while (result.next()) {
 			product = new Product();
-			product.setProductId(result.getLong(1));
-			product.setName(result.getString(2));
-			product.setPrice(result.getString(3));
-			product.setProductNumber(result.getString(4));
-			product.setTradeMark(result.getString(5));
-			product.setWorranty(result.getInt(6));
-			product.setPercentPromo(result.getInt(7));
-			product.setImageUrl(result.getString(8));
+			product.setProductId(result.getLong("product_id"));
+			product.setName(result.getString("product_name"));
+			product.setPrice(result.getString("produc_price"));
+			product.setProductNumber(result.getString("product_number"));
+			product.setTradeMark(getTradeMark(product.getProductId()));
+			product.setWorranty(result.getInt("warranty"));
+			product.setPercentPromo(result.getInt("percent_promo"));
+			product.setImageUrl(result.getString("image_url"));
 			products.add(product);
 		}
 		result.close();
