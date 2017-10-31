@@ -1,5 +1,5 @@
-window.onload = function() {
-	function visitRegister(){
-			window.location='register';
-    	}
-};
+//window.onload = function() {
+//	function visitRegister(){
+//			window.location='register';
+//    	}
+//};

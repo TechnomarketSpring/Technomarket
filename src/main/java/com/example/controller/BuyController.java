@@ -45,7 +45,6 @@ OrderDAO orderDAO;
 		}
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		try {
-			System.out.println(id + "=========================================================");
 			Product product = productDAO.searchProductById(id);
 			if(!basket.containsKey(product)){
 			   basket.put(product, 1);

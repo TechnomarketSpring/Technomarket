@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -275,45 +276,72 @@ public class ProductDAO {
 
 	}
 
-	// Search product by category
-	public List<Product> searchProductByCategory(Category category, campareEnum campare) throws SQLException {
-		String orderBy = "";
-		if (campare == campareEnum.defaultt) {
-			// default date_added
-			orderBy += "date_added";
-		} else {
-			orderBy += campare;
-		}
-		LinkedList<Product> products = new LinkedList<>();
+	//Search product by category name:
+	public HashSet<Product> searchProductByCategoryName(String category) throws SQLException, InvalidCategoryDataException {
+		HashSet<Product> products = new HashSet<>();
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement(
-				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty"
-						+ ", product.percent_promo, product.date_added, product.product_number FROM technomarket.product"
-						+ "JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)"
-						+ "JOIN technomarket.product_has_category ON(product_has_category.product_id = product_has_category.category_id)"
-						+ "JOIN technomarket.categories on(categories.category_id = product_has_category.category_id) WHERE technomarket.categories.categoy_name = ? GROUP BY ? ORDER BY ?");
-		statement.setString(1, category.getName());
-		statement.setString(2, orderBy);
-		statement.setString(3, orderBy);
+		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.product AS p JOIN technomarket.product_has_category AS h ON (p.product_id = h.product_id) JOIN technomarket.categories AS c ON(h.category_id = c.category_id) WHERE c.category_name LIKE ?;");
+		statement.setString(1, category);
 		ResultSet result = statement.executeQuery();
 		while (result.next()) {
 			Product pro = new Product();
-			pro.setProductId(result.getLong(1));
-			pro.setTradeMark(result.getString(2));
-			pro.setName(result.getString(3));
-			pro.setPrice(result.getString(4));
-			pro.setWorranty(result.getInt(5));
-			pro.setPercentPromo(result.getInt(6));
-			pro.setDateAdded(LocalDate.parse(result.getString(7)));
-			pro.setProductNumber(result.getString(8));
+			pro.setProductId(result.getLong("product_id"));
+			pro.setTradeMark(getTradeMark(pro.getProductId()));
+			pro.setName(result.getString("product_name"));
+			pro.setPrice(result.getString("price"));
+			pro.setWorranty(result.getInt("warranty"));
+			pro.setPercentPromo(result.getInt("percent_promo"));
+			pro.setDateAdded(LocalDate.parse(result.getString("date_added")));
+			pro.setProductNumber(result.getString("product_number"));
+			pro.setImageUrl(result.getString("image_url"));
+			pro.setCategory(new Category(result.getString("category_name")));
 			products.add(pro);
 		}
 		result.close();
 		statement.close();
-	
 		return products;
 
 	}
+	
+//	// Search product by category
+//	public List<Product> searchProductByCategory(Category category, campareEnum campare) throws SQLException {
+//		String orderBy = "";
+//		if (campare == campareEnum.defaultt) {
+//			// default date_added
+//			orderBy += "date_added";
+//		} else {
+//			orderBy += campare;
+//		}
+//		LinkedList<Product> products = new LinkedList<>();
+//		this.connection = DBManager.getConnections();
+//		PreparedStatement statement = this.connection.prepareStatement(
+//				"SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty"
+//						+ ", product.percent_promo, product.date_added, product.product_number FROM technomarket.product"
+//						+ "JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)"
+//						+ "JOIN technomarket.product_has_category ON(product_has_category.product_id = product_has_category.category_id)"
+//						+ "JOIN technomarket.categories on(categories.category_id = product_has_category.category_id) WHERE technomarket.categories.categoy_name = ? GROUP BY ? ORDER BY ?");
+//		statement.setString(1, category.getName());
+//		statement.setString(2, orderBy);
+//		statement.setString(3, orderBy);
+//		ResultSet result = statement.executeQuery();
+//		while (result.next()) {
+//			Product pro = new Product();
+//			pro.setProductId(result.getLong(1));
+//			pro.setTradeMark(result.getString(2));
+//			pro.setName(result.getString(3));
+//			pro.setPrice(result.getString(4));
+//			pro.setWorranty(result.getInt(5));
+//			pro.setPercentPromo(result.getInt(6));
+//			pro.setDateAdded(LocalDate.parse(result.getString(7)));
+//			pro.setProductNumber(result.getString(8));
+//			products.add(pro);
+//		}
+//		result.close();
+//		statement.close();
+//	
+//		return products;
+//
+//	}
 
 	// Search product with promo price
 	public Set<Product> getPromoProduct() throws SQLException {

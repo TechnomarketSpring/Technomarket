@@ -45,16 +45,16 @@ public class BasketService {
 		}
 	}
 	
-	@RequestMapping(value="/decrement", method=RequestMethod.POST)
-	@ResponseBody
-	public void decrementAll(HttpServletResponse resp, HttpSession session){
-			resp.setStatus(200);
-		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
-		for (Iterator<Entry<Product, Integer>> iterator = basket.entrySet().iterator(); iterator.hasNext();) {
-			Entry<Product,Integer> entry = iterator.next();
-			Product p = entry.getKey();
-			Integer i = entry.getValue() - 1;
-			basket.put(p, i);
-		}
-	}
+//	@RequestMapping(value="/decrement", method=RequestMethod.POST)
+//	@ResponseBody
+//	public void decrementAll(HttpServletResponse resp, HttpSession session){
+//			resp.setStatus(200);
+//		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
+//		for (Iterator<Entry<Product, Integer>> iterator = basket.entrySet().iterator(); iterator.hasNext();) {
+//			Entry<Product,Integer> entry = iterator.next();
+//			Product p = entry.getKey();
+//			Integer i = entry.getValue() - 1;
+//			basket.put(p, i);
+//		}
+//	}
 }

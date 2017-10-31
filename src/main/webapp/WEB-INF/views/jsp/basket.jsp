@@ -35,7 +35,7 @@
 				   	</a>
 			</li>
 			</div>
-				<button><a class="btn-links" href="<c:url value='/index'/>">Добаване на още продукти</a></button>
+				<button><a class="btn-links" href="<c:url value='/header/goIndex'/>">Добаване на още продукти</a></button>
 				</div>	
            </c:if> 
           

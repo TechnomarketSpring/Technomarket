@@ -77,7 +77,6 @@ public class ProductController {
 			@RequestParam("warranty") int warranty,
 			@RequestParam("promoPercent") int promoPercent,
 			@RequestParam("image") MultipartFile image) {
-			System.out.println(categoryName + "================================================================");
 		String imageName = null;
 		try {
 			if(!tradeMarkDAO.tradeMarkExist(tradeMark)){
@@ -144,13 +143,24 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
-		//TODO send email to all subscribers
+		//TODO send email to all subscribers with favourites = this product
 		
 		model.addAttribute("promoSet", true);
 		return "redirect:/info/infoForProduct?value=" + Integer.toString(productId);
 	}
 
-	
+	@RequestMapping(value = "/productsByCategory" , method = RequestMethod.GET)
+	public String searchProduct(@RequestParam("categoryName") String categoryName, Model model){
+		try {
+			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
+			model.addAttribute("filtredProducts", products);
+		} catch (SQLException | InvalidCategoryDataException e) {
+			e.printStackTrace();
+			System.out.println("Error for SQL");
+			return "errorPage";
+		}
+		return "filtred_products";
+	}
 	
 	
 	
