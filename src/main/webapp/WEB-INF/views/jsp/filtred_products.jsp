@@ -31,6 +31,10 @@
 					
 		<!--		<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${filtredProduct.productId}'/>">Купи сега</a></button> -->
 				</div>
+				<form action = "<c:url value='/info/addInFavorite'/>" method = "get">
+				  <input type = "hidden" name = "value" value = "${ filtredProduct.productId }"/>
+				  <input type = "submit" value = "Добави в любими"/>
+				</form>
 				<form action = "<c:url value='/buyController/buy'/>" method = "post">
 				  <input type = "hidden" name = "value" value = "${ filtredProduct.productId }"/>
 				  <input type = "submit" value = "Купи сега"/>

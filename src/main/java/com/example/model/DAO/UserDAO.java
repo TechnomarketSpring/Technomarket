@@ -148,23 +148,23 @@ public class UserDAO {
 	// favourite products:
 
 	// Adding favourite product to user account:
-	public void addInFavorite(User user, Product product) throws SQLException {
+	public void addInFavorite(long userId, long productId) throws SQLException {
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("INSER INTO technomarket.users_has_favourite (user_id, product_id) VALUES (?, ?)");
-		statement.setLong(1, user.getUserId());
-		statement.setLong(2, product.getProductId());
-		statement.executeQuery();
+		PreparedStatement statement = this.connection.prepareStatement("INSERT INTO technomarket.user_has_favourite (user_id, product_id) VALUES (?,?)");
+		statement.setLong(1, userId);
+		statement.setLong(2, productId);
+		statement.executeUpdate();
 		statement.close();
 		
 	}
 
 	// Remove favourite product:
-	public void removeFavouriteProduct(User u, Product p) throws SQLException {
+	public void removeFavouriteProduct(long userId, long  productId) throws SQLException {
 		this.connection = DBManager.getConnections();
 		PreparedStatement statment = this.connection.prepareStatement("DELETE FROM technomarket.user_has_favouite WHERE user_id = ? AND product_id = ?");
-		statment.setLong(1, u.getUserId());
-		statment.setLong(2, p.getProductId());
-		statment.executeQuery();
+		statment.setLong(1, userId);
+		statment.setLong(2, productId);
+		statment.executeUpdate();
 		statment.close();
 	
 	}
@@ -187,6 +187,7 @@ public class UserDAO {
 			product.setDateAdded(LocalDate.parse(result.getString("date_added")));
 			product.setProductNumber(result.getString("product_number"));
 			product.setProductId(result.getLong("product_id"));
+			product.setImageUrl(result.getString("image_url"));
 			product.setTradeMark(productDAO.getTradeMark(product.getProductId()));
 			products.add(product);
 		}
