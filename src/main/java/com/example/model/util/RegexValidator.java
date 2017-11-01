@@ -3,7 +3,7 @@ package com.example.model.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegexValidator {
+public final class RegexValidator {
 	
 	private static final String EMAIL_REGEX = "^(.+)@(.+)$"; //username at domain
 	private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$"; //Minimum eight characters, at least one letter and one number

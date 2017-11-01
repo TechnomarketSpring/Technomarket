@@ -19,12 +19,13 @@ import com.example.model.User;
 import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
-import com.example.model.util.SendEmail;
+import com.example.model.util.PasswordGenerator;
+import com.example.model.util.Postman;
 
 @Controller
 public class LoginCntroller {
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpSession ses, Model model) {
@@ -41,23 +42,41 @@ public class LoginCntroller {
 				User user = null;
 				try {
 					user = userDAO.getUser(username);
-					
+
 				} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 					System.out.println("Invalid date exceptions");
 				}
 				user.setAdmin(true);
 				session.setAttribute("user", user);
 				session.setAttribute("log", true);
-				return "index";
+
+				// if user was in basket before log in, method sends him back in
+				// his basket:
+				if (session.getAttribute("inBasket") != null) {
+					boolean inBasket = (boolean) session.getAttribute("inBasket");
+					if (inBasket == true) {
+						session.removeAttribute("inBasket");
+						return "basket";
+					} else {
+
+						// if he wasn't, in index:
+						return "index";
+					}
+				}else{
+					return "index";
+				}
+			}else{
+				model.addAttribute("invalidUser", "Invalid username or password");
+				return "login";
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL Exceptions");
 			e.printStackTrace();
 		}
-		model.addAttribute("invalidUser", "Invalid username or password");
 		return "login";
-
 	}
+
+	// forgotten password module:
 
 	@RequestMapping(value = "/forgotten", method = RequestMethod.GET)
 	public String forgotten() {
@@ -67,12 +86,24 @@ public class LoginCntroller {
 	@RequestMapping(value = "/forgotten", method = RequestMethod.POST)
 	public String forgottenPassword(Model model, @RequestParam("email") String email) {
 		try {
+
+			// checks for same email
 			boolean exist = userDAO.checkIfUserWithSameEmailExist(email);
 			if (exist) {
-				String userPassword = userDAO.getUserPassWhenForgotten(email);
-				System.out.println(userPassword + "==================================================================");
-				//SendEmail.forgottenPassEmail(email, userPassword);
-				return "email_sent";
+				// Builds new password:
+				PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
+						.useLower(true).useUpper(true).build();
+				String newPassword = passwordGenerator.generate(8);
+
+				Postman.forgottenPassEmail(email, newPassword);
+				// inserts new password in DB after hashing in the method of
+				// UserDAO:
+				if (userDAO.isertNewlyGeneratedPassword(email, newPassword)) {
+					return "email_sent";
+				} else {
+					model.addAttribute("systemProblem", "System cant insert the new password");
+					return "email_sent";
+				}
 			} else {
 				model.addAttribute("emailError", "Email not valid");
 				return "forgotten";
@@ -84,7 +115,9 @@ public class LoginCntroller {
 			return "error";
 		}
 	}
-	
+
+	// logout module:
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();

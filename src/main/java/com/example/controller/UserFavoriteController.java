@@ -20,7 +20,7 @@ import com.example.model.DAO.UserDAO;
 @RequestMapping(value = "/favourite")
 public class UserFavoriteController {
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 	
 	
 	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)

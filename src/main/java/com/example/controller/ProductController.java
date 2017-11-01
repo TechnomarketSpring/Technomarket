@@ -46,6 +46,7 @@ import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidProductDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
 import com.example.model.exceptions.NotAnAdminException;
+import com.example.model.util.Postman;
 
 @Component
 @RequestMapping(value="/product")
@@ -53,17 +54,17 @@ public class ProductController {
 
 	
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 	@Autowired
-	TradeMarkDAO tradeMarkDAO;
+	private TradeMarkDAO tradeMarkDAO;
 	@Autowired
-	CategoryDAO categoryDAO;
+	private CategoryDAO categoryDAO;
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	AdminDAO adminDAO;
+	private AdminDAO adminDAO;
 	@Autowired
-	StoreDAO storeDAO;
+	private StoreDAO storeDAO;
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.GET)
 	public String prepareRegistarion() {
@@ -136,15 +137,27 @@ public class ProductController {
 	@RequestMapping(value="/setPromo", method = RequestMethod.POST)
 	public String setPromo(Model model, HttpSession session,
 			@RequestParam(value = "productId") int productId,
-			@RequestParam(value = "promoPercent") int promoPersent){
+			@RequestParam(value = "promoPercent") int percentPromo){
 		try {
-			adminDAO.setPromoPercent((User) session.getAttribute("user"), productId, promoPersent);
-		} catch (NotAnAdminException | SQLException e) {
+			
+			User user = (User) session.getAttribute("user");
+			
+			//sets the product on promo after checking is user is really admin:
+			adminDAO.setPromoPercent(user, productId, percentPromo);
+			
+			//gets the product for email purposes:
+			Product promoProduct = productDAO.getProduct((int) productId);
+			
+			//gets all the needed emails: 
+			HashSet<String> emails = productDAO.getEmailsPerFavourites(user.getUserId());
+			
+			//sends mail data to Postman class to construct and send email to recipients:
+			Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
+			
+		} catch (NotAnAdminException | SQLException | InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//TODO send email to all subscribers with favourites = this product
 		
 		model.addAttribute("promoSet", true);
 		return "redirect:/info/infoForProduct?value=" + Integer.toString(productId);

@@ -89,6 +89,7 @@ private StoreDAO storeDAO;
 	@RequestMapping(value = "/makeOrder", method = RequestMethod.GET)
 	public String makeOrder(HttpSession session, Model model){
 		if(session.getAttribute("user") == null){
+			session.setAttribute("inBasket", true);
 			return "login";
 		}
 		model.addAttribute("date", LocalDate.now());

@@ -25,11 +25,11 @@ import com.example.model.exceptions.NotAnAdminException;
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	AdminDAO adminDAO;
+	private AdminDAO adminDAO;
 	@Autowired
-	OrderDAO orderDAO;
+	private OrderDAO orderDAO;
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 
 	@RequestMapping(value = "/contacts" , method = RequestMethod.GET)
 	public String getContacts(){

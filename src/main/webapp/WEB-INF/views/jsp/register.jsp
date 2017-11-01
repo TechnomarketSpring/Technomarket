@@ -33,7 +33,7 @@
 	</c:if>
 		<c:if test="${ invlidPassError != null }">
 		<div>
-			<p>Паролата трябва да съдържа поне 8 символа от тип букви и цифри едновременно!</p>
+			<p>Паролата трябва да съдържа поне 8 символа от тип букви и цифри едновременно като кирилицата не е разрешена!</p>
 		</div>
 	</c:if>
 		<c:if test="${ invlidMail != null }">
@@ -42,8 +42,8 @@
 		</div>
 	</c:if>
 		<form action="register" method="post">
-				Име* <input type="text" name="firstName" pattern= required><br>
-				Фамилия* <input type="text" name="lastName" pattern= required><br>
+				Име* <input type="text" name="firstName" required><br>
+				Фамилия* <input type="text" name="lastName" required><br>
 				Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 				Парола* <input type="password" name="password" required></input><br>
 				Парола(отново)* <input type="password" name="password1" required></input><br>

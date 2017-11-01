@@ -126,18 +126,49 @@ public class UserDAO {
 		
 	}
 	
-	public String getUserPassWhenForgotten(String email) throws SQLException{
+	public boolean isertNewlyGeneratedPassword(String email, String newPassword) throws SQLException{
+		long userId = getUserIdByEmail(email);
+			this.connection = DBManager.getConnections();
+			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.users SET password = ? WHERE user_id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, Encrypter.encrypt(newPassword));
+			ps.setLong(2, userId);
+			int resultSet = ps.executeUpdate();
+			ps.close();
+			if(resultSet > 0){
+				return true;
+			}else{
+				return false;
+			}
+	}
+	
+	
+private long getUserIdByEmail(String email) throws SQLException {
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("SELECT password FROM technomarket.users WHERE users.email = ?");
+		PreparedStatement statement = this.connection.prepareStatement("SELECT user_id FROM technomarket.users WHERE users.email = ?");
 		statement.setString(1, email);
 		ResultSet result = statement.executeQuery();
-		String password = null;
+		long userId = 0;
 		while(result.next()){
-			password = result.getString("password");
+			userId = result.getLong("user_id");
 		}
+		
 		statement.close();
-		return password;
+		return userId;
 	}
+
+//	public String getUserPassWhenForgotten(String email) throws SQLException{
+//		this.connection = DBManager.getConnections();
+//		PreparedStatement statement = this.connection.prepareStatement("SELECT password FROM technomarket.users WHERE users.email = ?");
+//		statement.setString(1, email);
+//		ResultSet result = statement.executeQuery();
+//		String password = null;
+//		while(result.next()){
+//			password = result.getString("password");
+//		}
+//		statement.close();
+//		return password;
+//	}
 
 	// user confirming his order:
 
@@ -228,7 +259,6 @@ public class UserDAO {
 			ps.setBoolean(1, isAdmin);
 			ps.setLong(2, u.getUserId());
 			ps.executeUpdate();
-			
 			ps.close();
 		}
 	}

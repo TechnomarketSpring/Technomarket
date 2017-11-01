@@ -86,10 +86,10 @@ public class ProductDAO {
 		return tradeMark;
 	}
 	
-	public Product searchProductById(String id) throws SQLException{
+	public Product searchProductById(String productId) throws SQLException{
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_id = ?");
-		statement.setString(1, id);
+		statement.setString(1, productId);
 		ResultSet result = statement.executeQuery();
 		Product product = new Product();
 		while(result.next()){
@@ -297,9 +297,6 @@ public class ProductDAO {
 			pro.setCategory(new Category(result.getString("c.category_name")));
 			products.add(pro);
 		}
-		if(products.isEmpty()){
-			System.out.println("==========================================123");
-		}
 		result.close();
 		statement.close();
 		return products;
@@ -456,12 +453,30 @@ public class ProductDAO {
 			product.setCategory(new Category(result.getString("c.category_name")));
 			product.setDateAdded(LocalDate.parse(result.getString("date_added")));
 			products.add(product);
-			System.out.println("=====================================2");
 		}
 		result.close();
 		statement.close();
 
 		return products;
+	}
+	
+	//Finds emails of all users who have specific product in favourites and isAbonat:
+	
+	public HashSet<String> getEmailsPerFavourites(long userId) throws SQLException{
+		String query = "SELECT email, isAbonat FROM technomarket.users AS u JOIN technomarket.user_has_favourite AS f USING(user_id) WHERE u.isAbonat = ? AND user_id = ?;";
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement(query);
+		statement.setBoolean(1, true);
+		statement.setLong(2, userId);
+		ResultSet result = statement.executeQuery();
+		HashSet<String> emails = new HashSet<>();
+		while(result.next()){
+			System.out.println(result.getString("email"));
+			emails.add(result.getString("email")); 
+		}
+		result.close();
+		statement.close();
+		return emails;
 	}
 
 }
