@@ -42,6 +42,20 @@
 		<div id="product-info">
 		<p>${product.name}</p>
 		<p>${product.tradeMark}</p>
+		<c:if test="${sessionScope.user != null}">
+		<c:if test="${isProductInFavourite == false}">
+			<form action = "<c:url value='/favourite/addInFavorite'/>" method = "get">
+				<input type = "hidden" name = "value" value = "${ product.productId }"/>
+				<input type = "submit" value = "Добави в любими"/>
+			</form>
+		</c:if>
+		<c:if test="${isProductInFavourite == true}">
+		<form action = "<c:url value='/favourite/removeFromFavorite'/>" method="post">
+			<input type = "submit" value = "Премахни от любими">
+			<input type = "hidden" name = "value" value = "${ product.productId }"/>
+		</form> 
+		</c:if>
+		</c:if>
 		<!-- TODO add description of product here!!! -->
 		</div>
 		
@@ -74,10 +88,6 @@
 					  <input type = "image" id="buy-button" alt="buy-button" src="<c:url value='/img/buttons/buy-buttons/buy_online.png'/>"/>
 					</form>	
 				</c:if>
-				<form action = "<c:url value='/favourite/addInFavorite'/>" method = "get">
-				  <input type = "hidden" name = "value" value = "${ product.productId }"/>
-				  <input type = "submit" value = "Добави в любими"/>
-				</form>
 				<c:if test="${isProductInStock == false }">	
 					<a class="btn-links" href="<c:url value='/info/infoContacts'/>">
 						<img src="<c:url value='/img/buttons/buy-buttons/request.png'/>" alt="request">

@@ -11,7 +11,6 @@ function handleBasket(nameIndex){
 function changeQuantity(quantity, nameIndex) {
 		var request = new XMLHttpRequest();
 		var params = "?product=" + nameIndex + "&quantity=" + quantity;
-		alert("haha");
 		request.onreadystatechange = function() {
 			//when response is received
 			if (this.readyState == 4 && this.status == 200) {

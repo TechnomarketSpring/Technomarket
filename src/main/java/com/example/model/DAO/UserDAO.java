@@ -147,6 +147,24 @@ public class UserDAO {
 
 	// favourite products:
 
+	//Is product in favourite for specific user:
+	
+	public boolean isPrductInFavourite(String userId, String productId) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM technomarket.user_has_favourite WHERE user_id = ? AND product_id = ?;");
+		ps.setString(1, userId);
+		ps.setString(2, productId);
+		ResultSet rs = ps.executeQuery();
+		boolean isThere = rs.next();
+		ps.close();
+		rs.close();
+		if(isThere){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	// Adding favourite product to user account:
 	public void addInFavorite(long userId, long productId) throws SQLException {
 		this.connection = DBManager.getConnections();
