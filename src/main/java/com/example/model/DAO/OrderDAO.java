@@ -203,7 +203,7 @@ public class OrderDAO {
 	}
 	public HashSet<Product> getProductFromOrder(String id) throws SQLException{
 		HashSet<Product> products = new HashSet<>();
-		PreparedStatement st = this.connection.prepareStatement("SELECT product_id, trade_marks.trade_mark_name, product.product_name, price, warranty, percent_promo, date_added, product_number, image_url FROM technomarket.product JOIN technomarket.trade_marks ON(trade_marks.trade_mark_id = product.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?)");
+		PreparedStatement st = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name,product.product_name, product.price, product.warranty,product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?) ");
 		st.setString(1, id);
 		ResultSet rs = st.executeQuery();
 		Product pr = null;
@@ -215,7 +215,7 @@ public class OrderDAO {
 			pr.setPrice(rs.getString("price"));
 			pr.setWorranty(rs.getInt("warranty"));
 			pr.setPercentPromo(rs.getInt("percent_promo"));
-//			pr.setDateAdded(LocalDate.parse("date_added"));
+			pr.setDateAdded(LocalDate.parse(rs.getString("date_added")));
 			pr.setProductNumber("product_number");
 			pr.setImageUrl("image_url");
 			products.add(pr);
