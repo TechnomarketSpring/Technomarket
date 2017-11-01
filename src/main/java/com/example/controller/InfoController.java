@@ -181,7 +181,17 @@ public class InfoController {
 	}
 
 	@RequestMapping(value = "/infoAdminOrders", method = RequestMethod.GET)
-	public String infoAdminOrders() {
+
+	public String infoAdminOrders(Model model, HttpSession session){
+		try {
+			HashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
+			model.addAttribute("orders", orders);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL Exception in info/infoAdminPanel");
+			return "errorPage";
+		}
+
 		return "admin_orders";
 	}
 

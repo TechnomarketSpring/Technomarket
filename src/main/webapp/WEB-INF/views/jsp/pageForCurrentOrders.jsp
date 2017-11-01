@@ -18,17 +18,15 @@
   	 	        <c:if test="${product.percentPromo == 0}">
                 <h4>Цена* ${product.price}</h4>
                 </c:if>
-                <c:if test="${product.percentPromo == 0}">
-                <h4>Стара цена* <del>${product.price}</del></h4>
-				<c:set var="promoPrice" value="${0}"/>
-				<span>${product.price}</span>
-				<span>${product.percentPromo}</span>
-        		<c:set var="promoPrice" value="${promoPrice + product.price - (product.price * product.percentPromo/100)}" />
-          		<h4>Промо цена* ${promoPrice}</h4>
+                <c:if test="${product.percentPromo != 0}">
+                  <h4>Стара цена* <del>${product.price}</del></h4>
+				  <c:set var="promoPrice" value="${0}"/>
+        		  <c:set var="promoPrice" value="${promoPrice + product.price - (product.price * product.percentPromo/100)}" />
+          		  <h4>Промо цена* ${promoPrice}</h4>
                 </c:if>
                 <h4>Име* ${product.name}</h4>
                 <h4>Гаранция* ${product.worranty}</h4>   
-                <img src="<c:url value='/product/product_pic?value=${product.imageUrl}'/>" alt="product-image" width="120" height="auto">
+                <img src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="120" height="auto">
         	    <hr>
   	 	   </c:forEach>
          				

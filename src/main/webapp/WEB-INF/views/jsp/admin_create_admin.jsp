@@ -9,12 +9,14 @@
 </head>
 	<body>
 			<jsp:include page="header.jsp" />
-
+         <c:if test="${create != null}">
+          <h4>Новият админ е създаден</h4>
+         </c:if>
 		<c:if test="${sessionScope.user.isAdmin == true}">
 			<p>Въведете имейла на потребителя, който ще получи администраторки права:</p>
-			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
+			<form action="<cs:url value='/admin/createAdmin'/>" method="post" enctype="multipart/form-data">
 				<label for="name">Имейл</label>
-				<input type="email" name="productName" value="name" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+				<input type="email" name="email" value="name" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 				<input type="submit" value="Въведи">
 			</form>
 		</c:if>

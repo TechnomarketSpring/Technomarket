@@ -43,7 +43,7 @@
 		<p>${product.name}</p>
 		<p>${product.tradeMark}</p>
 		<c:if test="${sessionScope.user != null}">
-		<c:if test="${isProductInFavourite == false}">
+		 <c:if test="${isProductInFavourite == false}">
 			<form action = "<c:url value='/favourite/addInFavorite'/>" method = "get">
 				<input type = "hidden" name = "value" value = "${ product.productId }"/>
 				<input type = "submit" value = "Добави в любими"/>

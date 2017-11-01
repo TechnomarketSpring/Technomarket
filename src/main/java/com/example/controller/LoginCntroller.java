@@ -25,7 +25,7 @@ import com.example.model.util.Postman;
 @Controller
 public class LoginCntroller {
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpSession ses, Model model) {

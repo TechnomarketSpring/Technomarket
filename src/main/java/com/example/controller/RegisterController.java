@@ -25,7 +25,7 @@ import com.example.model.util.RegexValidator;
 public class RegisterController {
 
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String prepareRegistarion(HttpSession s) {

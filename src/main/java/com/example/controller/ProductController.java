@@ -54,17 +54,17 @@ public class ProductController {
 
 	
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 	@Autowired
-	TradeMarkDAO tradeMarkDAO;
+	private TradeMarkDAO tradeMarkDAO;
 	@Autowired
-	CategoryDAO categoryDAO;
+	private CategoryDAO categoryDAO;
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	AdminDAO adminDAO;
+	private AdminDAO adminDAO;
 	@Autowired
-	StoreDAO storeDAO;
+	private StoreDAO storeDAO;
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.GET)
 	public String prepareRegistarion() {
