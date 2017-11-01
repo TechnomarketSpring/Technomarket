@@ -19,6 +19,7 @@ import com.example.model.Store;
 import com.example.model.User;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.IlligalAdminActionException;
+import com.example.model.exceptions.IlligalUserActionException;
 import com.example.model.exceptions.NotAnAdminException;
 
 
@@ -99,9 +100,23 @@ public class AdminDAO {
 	}
 	
 	//set order as paid:
-	public void setOrderAsPaid(User admin, Order o, boolean isPaid) throws NotAnAdminException, SQLException, IlligalAdminActionException{
+	public void setOrderAsPaid(User admin, long orderId) throws NotAnAdminException, SQLException, IlligalAdminActionException{
 		if(admin.getIsAdmin()){
-			orderDAO.setOrderAsPaid(o, isPaid);
+			orderDAO.setOrderAsPaid(orderId);
+		}else{
+			throw new NotAnAdminException();
+		}
+	}
+	public void setOrderAsConfirmed(User admin, long orderId, boolean isConfirmend) throws NotAnAdminException, SQLException, IlligalAdminActionException, IlligalUserActionException{
+		if(admin.getIsAdmin()){
+			orderDAO.setOrderAsConfirmed(orderId, isConfirmend);
+		}else{
+			throw new NotAnAdminException();
+		}
+	}
+	public void deleteOrder(User admin,long orderId) throws NotAnAdminException, SQLException{
+		if(admin.getIsAdmin()){
+			orderDAO.deleteOrder(orderId);
 		}else{
 			throw new NotAnAdminException();
 		}

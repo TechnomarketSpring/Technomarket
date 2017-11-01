@@ -141,9 +141,9 @@ public class UserDAO {
 
 	// user confirming his order:
 
-	public void confirmOrder(Order o, boolean isConfirmed) throws SQLException, IlligalUserActionException {
-		orderDAO.setOrderAsConfirmed(o, isConfirmed);
-	}
+//	public void confirmOrder(Order o, boolean isConfirmed) throws SQLException, IlligalUserActionException {
+//		orderDAO.setOrderAsConfirmed(o, isConfirmed);
+//	}
 
 	// favourite products:
 

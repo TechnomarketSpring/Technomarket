@@ -64,6 +64,8 @@ public class OrderDAO {
 		System.out.println(orders.size()+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 		return orders;
 	}
+	
+	
 
 	
 
@@ -120,7 +122,30 @@ public class OrderDAO {
 		o.setOrderId(rs.getLong(1));
 		addOrderedProductsToTable(o);
 	}
-	
+	public HashSet<Order> getOrderWhereIsNotConfirmedAndIsNotPaid() throws SQLException{
+		this.connection = DBManager.getConnections();
+		HashSet<Order> orders = new HashSet<>();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT order_id, users.first_name, users.last_name, date_time, address, payment,notes, isConfirmed, isPaid, zip, user_phone  FROM technomarket.orders JOIN technomarket.users ON(orders.user_id = users.user_id)  WHERE orders.isConfirmed = false OR ispaid = false;");
+		ResultSet result = statement.executeQuery();
+		while(result.next()){
+			Order order = new Order();
+			order.setOrderId(result.getLong("order_id"));
+			order.setUserNames(result.getString("users.first_name")+" "+result.getString("users.last_name"));
+			order.setTime(LocalDate.parse(result.getString("date_time")));
+			order.setAddress(result.getString("address"));
+			order.setPayment(result.getString("payment"));
+			order.setNotes(result.getString("notes"));
+			order.setConfirmed(result.getString("isConfirmed").equals("0") ? false : true);
+			order.setPaid(result.getString("isPaid").equals("0") ? false : true);
+			order.setZip(result.getString("zip"));
+			order.setUserPhoneNumber(result.getString("user_phone"));
+			
+			if(order.getTime().plusDays(15).isAfter(LocalDate.now())){
+			   orders.add(order);
+			}
+		}
+		return orders;
+	}
 	private void addOrderedProductsToTable(Order o) throws SQLException{
 		Connection con = DBManager.getConnections();
 		for (Iterator<Entry<Product, Integer>> iterator = o.getProducts().entrySet().iterator(); iterator.hasNext();) {
@@ -133,37 +158,26 @@ public class OrderDAO {
 		}
 	}
 	
-	public void setOrderAsConfirmed(Order o, boolean isConfirmed) throws SQLException, IlligalUserActionException {
-		if (o.getIsConfirmed() && isConfirmed) {
-			throw new IlligalUserActionException();
-		} else if (!o.getIsConfirmed() && !isConfirmed) {
-			throw new IlligalUserActionException();
-		} else {
-			Connection con = DBManager.getConnections();
-			PreparedStatement ps = con.prepareStatement("UPDATE technomarket.orders SET isConfirmed = ? WHERE order_id = ?",
+	public void setOrderAsConfirmed(long orderId ,boolean isConfirmed) throws SQLException, IlligalUserActionException {
+			this.connection  = DBManager.getConnections();
+			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = ? WHERE order_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setBoolean(1, isConfirmed);
-			ps.setLong(2, o.getOrderId());
+			ps.setLong(2, orderId);
 			ps.executeUpdate();
-		}
+		
 		
 	}
 	
 	//admin panel in Orders:
 
-	public void setOrderAsPaid(Order o, boolean isPaid) throws IlligalAdminActionException, SQLException {
-		if (o.getIsConfirmed() && isPaid) {
-			throw new IlligalAdminActionException();
-		} else if (!o.getIsConfirmed() && !isPaid) {
-			throw new IlligalAdminActionException();
-		} else {
-			Connection con = DBManager.getConnections();
-			PreparedStatement ps = con.prepareStatement("UPDATE technomarket.orders SET isConfirmed = ? WHERE order_id = ?",
-					Statement.RETURN_GENERATED_KEYS);
-			ps.setBoolean(1, isPaid);
-			ps.setLong(2, o.getOrderId());
+	public void setOrderAsPaid(long orderId) throws IlligalAdminActionException, SQLException {
+			this.connection  = DBManager.getConnections();
+			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isPaid = true WHERE order_id = ?",
+			Statement.RETURN_GENERATED_KEYS);
+			ps.setLong(1, orderId);
 			ps.executeUpdate();
-		}
+		
 		
 	}
 	public Order searchOrderById(String id) throws SQLException{
@@ -206,6 +220,12 @@ public class OrderDAO {
 			products.add(pr);
 		}
 		return products;
+	}
+	public void deleteOrder(long orderId) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("DELETE FROM technomarket.orders WHERE order_id = ?;");
+		statement.setLong(1, orderId);
+		statement.executeUpdate();
 	}
 
 }

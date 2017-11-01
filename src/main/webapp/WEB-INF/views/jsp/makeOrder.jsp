@@ -10,7 +10,7 @@
 <body>
 <jsp:include page="header.jsp" />
     <div style="border:1px solid red";>
-         <h3><a href="">Вашата поръчка все още не е потвърдена</a></h3>
+         <h3>Вашата поръчка все още не е потвърдена</h3>
     </div>
             <div>
                 <dl>
@@ -21,11 +21,11 @@
             </div>
             
      <div style="border:1px solid red";>
-         <h3><a href="">Детайли на поръчката</a></h3>
+         <h3>Детайли на поръчката</h3>
     </div>
     <cs:forEach items="${ sessionScope.basket }" var="basket">
         <div style="border:1px solid red";>
-        <h5>${basket.value} X ${basket.key.name} - <span>price:  ${basket.key.price} * ${basket.value}</span></h5>
+        <h5>${basket.value} X ${basket.key.name} - <span>price:  ${basket.key.price} * ${basket.value}  промо: %${basket.key.percentPromo }</span></h5>
         <h5>Доставка -</h5>
        </div>
     </cs:forEach>
