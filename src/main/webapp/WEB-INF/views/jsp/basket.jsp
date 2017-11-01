@@ -38,8 +38,8 @@
                     <h5>Артикул номер: ${entry.key.productNumber}</h5>
                     <h5>Гаранция: ${entry.key.worranty}</h5>
                     <h5>Отстъпка: ${entry.key.percentPromo}</h5>
-                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="changeQuantity(${entry.key.productId});" onload="keepSame(${entry.key.productId});" onbeforeunload ="return false;"></h5><br> 
-                    <form action = "<c:url value='/buyController/removeProduct?value=${entry.key.productId}'/>" method="post">
+                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="handleBasket(${entry.key.productId});" onbeforeunload ="return false;"></h5><br> 
+                    <form id="remove${entry.key.productId}" action = "<c:url value='/buyController/removeProduct?value=${entry.key.productId}'/>" method="post">
 				      <input type = "submit" value = "Премахни продукта">
 				    </form>  
               </c:forEach>
