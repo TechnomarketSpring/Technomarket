@@ -189,12 +189,13 @@ public class OrderDAO {
 	}
 	public HashSet<Product> getProductFromOrder(String id) throws SQLException{
 		HashSet<Product> products = new HashSet<>();
-		PreparedStatement st = this.connection.prepareStatement("SELECT trade_marks.trade_mark_name, product.product_name, price, warranty, percent_promo, date_added, product_number, image_url FROM technomarket.product JOIN technomarket.trade_marks ON(trade_marks.trade_mark_id = product.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?)");
+		PreparedStatement st = this.connection.prepareStatement("SELECT product_id, trade_marks.trade_mark_name, product.product_name, price, warranty, percent_promo, date_added, product_number, image_url FROM technomarket.product JOIN technomarket.trade_marks ON(trade_marks.trade_mark_id = product.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?)");
 		st.setString(1, id);
 		ResultSet rs = st.executeQuery();
 		Product pr = null;
 		while(rs.next()){
 			pr = new Product();
+			pr.setProductId(rs.getLong("product_id"));
 			pr.setTradeMark(rs.getString("trade_marks.trade_mark_name"));
 			pr.setName(rs.getString("product.product_name"));
 			pr.setPrice(rs.getString("price"));

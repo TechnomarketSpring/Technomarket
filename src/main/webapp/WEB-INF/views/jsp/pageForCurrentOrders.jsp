@@ -29,8 +29,6 @@
                 <h4>Име* ${product.name}</h4>
                 <h4>Гаранция* ${product.worranty}</h4>   
                 <img src="<c:url value='/product/product_pic?value=${product.imageUrl}'/>" alt="product-image" width="120" height="auto">
-                
-          
         	    <hr>
   	 	   </c:forEach>
          				
