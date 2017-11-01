@@ -30,7 +30,6 @@
       		<td> Номер* ${userOrders.orderId}|</td> 
             <td> Дата* ${userOrders.time}|</td>
             <td> Статус* ${userOrders.isConfirmed == false ? "Непотвърдена" : "Потвърдена"}|</td> 
-            <td> Цена* ${userOrders.price} лв.|</td> 
             <td align="right">
             <form action = "<cs:url value='/info/infoFoCurrentOrder'/>" method="post">
                 <input type = "submit" value = "Виж поръчката">

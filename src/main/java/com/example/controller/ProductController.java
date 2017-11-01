@@ -154,10 +154,8 @@ public class ProductController {
 	public String searchProduct(@RequestParam("categoryName") String categoryName, Model model){
 		try {
 			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
-			if(products == null || products.isEmpty()){
-				System.out.println("=============================================");
-			}
 			model.addAttribute("filtredProducts", products);
+			model.addAttribute("categoryName", categoryName);
 		} catch (SQLException | InvalidCategoryDataException e) {
 			e.printStackTrace();
 			System.out.println("Error for SQL");
@@ -165,7 +163,50 @@ public class ProductController {
 		}
 		return "filtred_products";
 	}
-	
+	@RequestMapping(value = "/compareProduct" , method = RequestMethod.GET)
+	public String compare(@RequestParam("compare") String compare,@RequestParam("categoryName")String categoryName, Model model){
+		try {
+			
+			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
+			TreeSet<Product> sortProduct = null;
+			if(compare.equals("price")){
+			  sortProduct = new TreeSet<Product>((o1 , o2) -> {
+				  if(o1.getPrice().compareTo(o2.getPrice())== 0){
+					  return 1;
+				  }
+				  return o1.getPrice().compareTo(o2.getPrice());
+			  });
+			}
+			if(compare.equals("mark")){
+			  sortProduct = new TreeSet<Product>((o1, o2) ->{
+				  if(o1.getTradeMark().compareTo(o2.getTradeMark()) == 0){
+					  return 1;
+				  }
+				  return o1.getTradeMark().compareTo(o2.getTradeMark());
+			  });
+			}
+			if(compare.equals("type")){
+				sortProduct = new TreeSet<Product>((o1, o2) ->{
+					if(o1.getPercentPromo() == o2.getPercentPromo()){
+						return 1;
+					}else{
+						if(o1.getPercentPromo() > o2.getPercentPromo()){
+							return -1;
+						}
+					}
+					return 1;		
+				});
+			}
+			sortProduct.addAll(products);
+			model.addAttribute("filtredProducts", sortProduct);
+			model.addAttribute("categoryName", categoryName);
+		} catch (SQLException | InvalidCategoryDataException e) {
+			e.printStackTrace();
+			System.out.println("Error for SQL");
+			return "errorPage";
+		}
+		return "filtred_products";
+	}
 	
 	
 	

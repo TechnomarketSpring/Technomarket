@@ -11,6 +11,17 @@
 		<jsp:include page="header.jsp"></jsp:include>
 		
 		<!--<form <c:url value='/header/search'/>" method="get">-->
+		<form action="<c:url value='/product/compareProduct?compare=${mark}'/> " method="get">
+		Сортирай по *<select name  = "compare" >
+            <option value = "price">По ценa</option>
+            <option value = "mark"  >По марка</option>
+            <option value = "type">Промоциий</option>
+        </select>
+        <input type = "hidden" value = "${categoryName}" name = "categoryName">
+        <input type = "submit">
+        
+        </form>
+         
 		<c:if test="${filtredProducts != null}">
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div id="product-box" style="border:1px solid black;">

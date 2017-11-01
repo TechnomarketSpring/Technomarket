@@ -12,8 +12,8 @@
  <c:if test="${order!= null}">
 	 
 	 	<h4>Номер на поръчка* ${order.orderId}</h4>
+	 	
   	 	   <c:forEach items = "${products}" var = "product" >
-  	 	        
   	 	        <h4>Продукт* ${product.name}</h4>
   	 	        <c:if test="${product.percentPromo == 0}">
                 <h4>Цена* ${product.price}</h4>
@@ -29,6 +29,7 @@
                 <img src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="120" height="auto">
         	    <hr>
   	 	   </c:forEach>
+  	 	      
          				
 
   </c:if>
