@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import com.example.model.DAO.AdminDAO;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.StoreDAO;
+import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.IlligalAdminActionException;
 import com.example.model.exceptions.IlligalUserActionException;
 import com.example.model.exceptions.NotAnAdminException;
@@ -26,6 +28,8 @@ public class AdminController {
 	AdminDAO adminDAO;
 	@Autowired
 	OrderDAO orderDAO;
+	@Autowired
+	UserDAO userDAO;
 
 	@RequestMapping(value = "/contacts" , method = RequestMethod.GET)
 	public String getContacts(){
@@ -103,6 +107,26 @@ public class AdminController {
 			return "admin_panel";
 		}
 		return "redirect:/info/infoAdminOrders";
+	}
+	@RequestMapping(value = "/adminCreateAdmin", method = RequestMethod.GET)
+	public String adminCreateAdmin() {
+		return "admin_create_admin";
+	}
+	
+	@RequestMapping(value = "/createAdmin", method = RequestMethod.POST)
+	public String infoAdminCreateAdmin(@RequestParam("email") String email,HttpSession session, Model model) {
+		User user = (User)session.getAttribute("user");
+		if(user != null && user.getIsAdmin()){
+			try {
+				userDAO.createAdmin(email);
+			} catch (SQLException e) {
+				System.out.println("SQLException /createAdmin ");
+				e.printStackTrace();
+				return "errorPage";
+			}
+		}
+		model.addAttribute("create", "Admin is create");
+		return "admin_create_admin";
 	}
 	
 	

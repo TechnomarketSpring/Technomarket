@@ -248,5 +248,19 @@ public class UserDAO {
 			ps.close();
 		}
 	}
+	public void createAdmin(String email) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement st = this.connection.prepareStatement("select users.user_id from technomarket.users where email = ?");
+		st.setString(1, email);
+		ResultSet result = st.executeQuery();
+		String id = "";
+		while(result.next()){
+			id+=result.getString(1);
+		}
+		st.close();
+		PreparedStatement statement = this.connection.prepareStatement("UPDATE  technomarket.users SET users.isAdmin = false WHERE user_id = ?;");
+		statement.setString(1, id);
+		statement.executeUpdate();
+	}
 
 }
