@@ -12,7 +12,7 @@ import com.example.model.DAO.StoreDAO;
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	ProductDAO adminDAO;
+	private ProductDAO adminDAO;
 
 	@RequestMapping(value = "/contacts" , method = RequestMethod.GET)
 	public String getContacts(){
