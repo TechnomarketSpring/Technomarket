@@ -29,98 +29,120 @@ import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
+
 @Controller
 @RequestMapping(value = "/info")
 public class InfoController {
-	
+
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	StoreDAO storeDAO;
+	private StoreDAO storeDAO;
 	@Autowired
-	OrderDAO orderDAO;
+	private OrderDAO orderDAO;
 	@Autowired
-	UserDAO userDAO;
-	
-	//product info gets:
-	
+	private UserDAO userDAO;
+
+	// product info gets:
+
 	@RequestMapping(value = "/infoForProduct", method = RequestMethod.GET)
-	public String infoForProduct(@RequestParam(value = "value") String productId, Model model){
+	public String infoForProduct(@RequestParam(value = "value") String productId, HttpSession session, Model model) {
 		try {
+			// gets the product itself:
 			Product product = productDAO.searchProductById(productId);
 			model.addAttribute("product", product);
-			
-			LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
-			HashSet<Store> cities = storeDAO.getAllStores();
-			for (Iterator<Store> iterator = cities.iterator(); iterator.hasNext();) {
-				Store store = iterator.next();
-				StoreDAO.Status status = storeDAO.checkQuantity(store, product);
-				String statusImgLink = null;
-				if(status == StoreDAO.Status.NO_STATUS){
-					statusImgLink = null;
-				}else if(status == StoreDAO.Status.RED_STATUS){
-					statusImgLink = "/img/store_statuses/red.png";
-				}else if(status == StoreDAO.Status.YELLOW_STATUS){
-					statusImgLink = "/img/store_statuses/yellow.png";
-				}else if(status == StoreDAO.Status.GREEN_STATUS){
-					statusImgLink = "/img/store_statuses/green.png";
-				}
-				statusPerStore.put(store, statusImgLink);
-				System.out.println(statusImgLink);
-			}
-			model.addAttribute("statusPerStore", statusPerStore);
+
+			// finds if product is in stock in any store:
 			boolean isProductInStock = storeDAO.isProductInStock(productId);
 			model.addAttribute("isProductInStock", isProductInStock);
+			
+			//gets user, check if he/she is logged and if yes checks if products is in his/her favourites:
+			User user = (User) session.getAttribute("user");
+			if(user != null){
+				boolean isProductInFavourite = userDAO.isPrductInFavourite(String.valueOf(user.getUserId()), productId);
+				model.addAttribute("isProductInFavourite", isProductInFavourite);
+			}
+
+			//if products is in stock anywhere or user is admin method is searching for stock status per store:
+			if (isProductInStock || (user != null && user.getIsAdmin())) {
+				// gets the product stock status per store:
+				LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
+				HashSet<Store> cities = storeDAO.getAllStores();
+				for (Iterator<Store> iterator = cities.iterator(); iterator.hasNext();) {
+					Store store = iterator.next();
+					StoreDAO.Status status = storeDAO.checkQuantity(store, product);
+					String statusImgLink = null;
+					if (status == StoreDAO.Status.NO_STATUS) {
+						statusImgLink = null;
+					} else if (status == StoreDAO.Status.RED_STATUS) {
+						statusImgLink = "/img/store_statuses/red.png";
+					} else if (status == StoreDAO.Status.YELLOW_STATUS) {
+						statusImgLink = "/img/store_statuses/yellow.png";
+					} else if (status == StoreDAO.Status.GREEN_STATUS) {
+						statusImgLink = "/img/store_statuses/green.png";
+					}
+					statusPerStore.put(store, statusImgLink);
+				}
+				model.addAttribute("statusPerStore", statusPerStore);
+			}
+			
 		} catch (SQLException | InvalidStoreDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-       return "productInfo";		
+		return "productInfo";
 	}
-	
-	//site conditions info gets:
+
+	// site conditions info gets:
 
 	@RequestMapping(value = "/infoContacts", method = RequestMethod.GET)
-	public String infoContacts(){
-       return "contacts";		
+	public String infoContacts() {
+		return "contacts";
 	}
+
 	@RequestMapping(value = "/infoForShoppingCon", method = RequestMethod.GET)
-	public String infoShopping(){
-       return "shoppingConditions";		
+	public String infoShopping() {
+		return "shoppingConditions";
 	}
+
 	@RequestMapping(value = "/infoForDelivery", method = RequestMethod.GET)
-	public String infoDelivery(){
+	public String infoDelivery() {
 		return "deliveryInfo";
 	}
+
 	@RequestMapping(value = "/infoForOnlinePay", method = RequestMethod.GET)
-	public String infoOnlinePay(){
+	public String infoOnlinePay() {
 		return "onlinePayInfo";
 	}
+
 	@RequestMapping(value = "/infoForTBICredit", method = RequestMethod.GET)
-	public String infoTBICredit(){
+	public String infoTBICredit() {
 		return "tbiCreditInfo";
 	}
+
 	@RequestMapping(value = "/infoForUniCredit", method = RequestMethod.GET)
-	public String infoUniCredit(){
+	public String infoUniCredit() {
 		return "uniCreditInfo";
 	}
-	
-	//user info gets:
-	
+
+	// user info gets:
+
 	@RequestMapping(value = "/infoUserProfile", method = RequestMethod.GET)
-	public String infoUserProfile(){
+	public String infoUserProfile() {
 		return "user_profile";
 	}
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String log(HttpSession session){
+	public String log(HttpSession session) {
 		session.invalidate();
 		return "/index";
 	}
+
 	@RequestMapping(value = "/infoUserOrders", method = RequestMethod.GET)
-	public String infoUserOrders(HttpSession sesion, Model model){
-		
-		User user = (User)sesion.getAttribute("user");
+	public String infoUserOrders(HttpSession sesion, Model model) {
+
+		User user = (User) sesion.getAttribute("user");
 		try {
 			LinkedHashSet<Order> orders = orderDAO.getOrdersForUser(user.getUserId());
 			System.out.println(orders);
@@ -131,15 +153,12 @@ public class InfoController {
 		} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 			System.out.println("Ivalid data into /info/infoUserOrders");
 			e.printStackTrace();
-		} 
+		}
 		return "user_orders";
 	}
-	
-	
-	
-	
-	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST )
-	public String infoForCurrentOrder(@RequestParam(value = "value") String orderId,Model model){
+
+	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST)
+	public String infoForCurrentOrder(@RequestParam(value = "value") String orderId, Model model) {
 		try {
 			Order order = orderDAO.searchOrderById(orderId);
 			HashSet<Product> product = orderDAO.getProductFromOrder(orderId);
@@ -150,17 +169,19 @@ public class InfoController {
 			e.printStackTrace();
 			return "errorPage";
 		}
-		
+
 		return "pageForCurrentOrders";
 	}
-	
-	//admin info gets:
-	
+
+	// admin info gets:
+
 	@RequestMapping(value = "/infoAdminPanel", method = RequestMethod.GET)
-	public String infoAdminPanel(){
+	public String infoAdminPanel() {
 		return "admin_panel";
 	}
+
 	@RequestMapping(value = "/infoAdminOrders", method = RequestMethod.GET)
+<<<<<<< HEAD
 	public String infoAdminOrders(Model model, HttpSession session){
 		try {
 			HashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
@@ -170,21 +191,25 @@ public class InfoController {
 			System.out.println("SQL Exception in info/infoAdminPanel");
 			return "errorPage";
 		}
+=======
+	public String infoAdminOrders() {
+>>>>>>> 8b76518de2abac6dd71db2dc5b6c2625a93b8e6a
 		return "admin_orders";
 	}
+
 	@RequestMapping(value = "/infoAdminBan", method = RequestMethod.GET)
-	public String infoAdminBan(){
+	public String infoAdminBan() {
 		return "admin_ban";
 	}
+
 	@RequestMapping(value = "/infoAdminCreateAdmin", method = RequestMethod.GET)
-	public String infoAdminCreateAdmin(){
+	public String infoAdminCreateAdmin() {
 		return "admin_create_admin";
 	}
+
 	@RequestMapping(value = "/infoAdminInsertProduct", method = RequestMethod.GET)
-	public String infoAdminInsertProduct(){
+	public String infoAdminInsertProduct() {
 		return "admin_insert_product";
 	}
-	
-	
-	
+
 }

@@ -25,6 +25,7 @@ import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
+import com.example.model.DAO.StoreDAO;
 import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
@@ -33,52 +34,38 @@ import com.example.model.exceptions.InvalidCharacteristicsDataException;
 @RequestMapping("/buyController")
 public class BuyController {
 @Autowired
-ProductDAO productDAO;
+private ProductDAO productDAO;
 @Autowired
-OrderDAO orderDAO;
+private OrderDAO orderDAO;
 @Autowired
-UserDAO userDAO;
-
-
-
-
-
-    @RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
-    public String removeProduct(@RequestParam(value = "value") long id, HttpSession session){
-    	HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
-//    	Product pro = null;
-//    	try {
-//			 pro = productDAO.getProduct(id);
-//			
-//		} catch (SQLException e) {
-//			System.out.println("SQL exception in buyController/removeProduct");
-//			e.printStackTrace();
-//			return "errorPage";
-//		} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
-//			System.out.println("InvalidCharacteristicsDataException or InvalidCategoryDataException in buyController/removeProduct");
-//			e.printStackTrace();
-//			return "errorPage";
-//		}
-    	for(Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();){
-    		Entry<Product, Integer> entry = it.next();
-    		if(entry.getKey().getProductId() == id){
-    			it.remove();
-    		}
-    	}
-    	return "basket";
-    }
+private UserDAO userDAO;
+@Autowired
+private StoreDAO storeDAO;
 
 
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
-	public String addInTheBasket(@RequestParam(value = "value") String id, HttpSession session) {
+	public String addInTheBasket(@RequestParam(value = "value") String productId, HttpSession session) {
+		
+		boolean isProductInStock = false;
+		try {
+			isProductInStock = storeDAO.isProductInStock(productId);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		if(!isProductInStock){
+			return "redirect:/info/infoForProduct?value=" + productId;
+		}
 		
 		if(session.getAttribute("basket") == null){
 			HashMap<Product, Integer> basket = new HashMap<>();
 			session.setAttribute("basket",basket);
 		}
+		
+		
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
+		
 		try {
-			Product product = productDAO.searchProductById(id);
+			Product product = productDAO.searchProductById(productId);
 			if(!basket.containsKey(product)){
 			   basket.put(product, 1);
 			}else{
@@ -89,7 +76,8 @@ UserDAO userDAO;
 			e.printStackTrace();
 			return "errorPage";
 		}
-		return "basket";
+		
+			return "basket";
 	}
 	
 	

@@ -21,7 +21,7 @@ import com.example.model.exceptions.NotAnAdminException;
 public class StoreService {
 	
 	@Autowired
-	AdminDAO adminDAO;
+	private AdminDAO adminDAO;
 
 	@RequestMapping(value="/quantity", method=RequestMethod.POST)
 	@ResponseBody

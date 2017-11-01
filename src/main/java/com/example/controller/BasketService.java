@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Product;
-import com.example.model.User;
-import com.example.model.DAO.AdminDAO;
 import com.example.model.DAO.ProductDAO;
-import com.example.model.exceptions.NotAnAdminException;
 
 @RestController
 @RequestMapping("/basket")
@@ -37,13 +35,30 @@ public class BasketService {
 		try {
 			HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 			Product product = productDAO.searchProductById(productId);
-			System.out.println(productId + "==============================" + quantity);
-			
-			basket.put(product, quantity);
+			basket.put(product, (quantity - 1));
+//			resp.sendRedirect("basket");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	@ResponseBody
+	public void removeProduct(HttpServletResponse resp, HttpSession session,
+			@RequestParam(value="product") long productId){
+			resp.setStatus(200);
+		HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
+		for(Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();){
+			Entry<Product, Integer> entry = it.next();
+			if(entry.getKey().getProductId() == productId){
+				it.remove();
+			}
+		}
+	}
+	
+//	/buyController/removeProduct
+//	basket
+	
 	
 //	@RequestMapping(value="/decrement", method=RequestMethod.POST)
 //	@ResponseBody

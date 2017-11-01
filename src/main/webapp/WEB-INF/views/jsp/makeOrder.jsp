@@ -25,7 +25,19 @@
     </div>
     <cs:forEach items="${ sessionScope.basket }" var="basket">
         <div style="border:1px solid red";>
+<<<<<<< HEAD
         <h5>${basket.value} X ${basket.key.name} - <span>price:  ${basket.key.price} * ${basket.value}  промо: %${basket.key.percentPromo }</span></h5>
+=======
+        
+        <c:if test="${basket.key.percentPromo == 0 }">
+          <h5>${basket.value} X ${basket.key.name} - <span> цена: ${basket.key.price} * ${basket.value}</span></h5>
+        </c:if>
+        <c:if test="${basket.key.percentPromo > 0 }">
+        	<c:set var="promoPrice" value="${0}"/>
+        	<c:set var="promoPrice" value="${promoPrice + basket.key.price - (basket.key.price * basket.key.percentPromo/100)}" />
+          <h5>${basket.value} X ${basket.key.name} - <span> цена: <del>${basket.key.price}</del> ${promoPrice} * ${basket.value}</span></h5>
+        </c:if>
+>>>>>>> 8b76518de2abac6dd71db2dc5b6c2625a93b8e6a
         <h5>Доставка -</h5>
        </div>
     </cs:forEach>
