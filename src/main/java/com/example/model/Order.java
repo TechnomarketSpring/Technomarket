@@ -1,6 +1,7 @@
 package com.example.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -71,26 +72,28 @@ public class Order {
 	}
 
 	public Order(){
-		
+	
 	}
 	
 	
-
-	
-	
-	
 	// private system methods:
-	
-	
 	
 
 	private BigDecimal calculatePriceOfOrder() {
 		BigDecimal totalSum = new BigDecimal(0);
 		for (Iterator<Entry<Product, Integer>> iterator = products.entrySet().iterator(); iterator.hasNext();) {
 			Entry<Product, Integer> orderedProduct = iterator.next();
-			totalSum.add(orderedProduct.getKey().getPrice().multiply(new BigDecimal(orderedProduct.getValue())));
+			BigDecimal price = orderedProduct.getKey().getPrice();
+			double promoDiff = ((double)orderedProduct.getKey().getPercentPromo())/100;
+			if(orderedProduct.getKey().getPercentPromo() > 0){
+				price.subtract(price.multiply(new BigDecimal(promoDiff)));
+			}
+			totalSum.add(price.multiply(new BigDecimal(orderedProduct.getValue())));
 		}
-		return totalSum;
+		//Rounding sum to always have two decimal places:
+		BigDecimal roundedResult = totalSum.setScale(2, RoundingMode.CEILING);
+		System.out.println(roundedResult);
+		return roundedResult;
 	}
 
 	private boolean isZipValid(String zip) {

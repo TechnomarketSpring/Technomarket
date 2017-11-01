@@ -189,20 +189,20 @@ public class OrderDAO {
 	}
 	public HashSet<Product> getProductFromOrder(String id) throws SQLException{
 		HashSet<Product> products = new HashSet<>();
-		PreparedStatement st = this.connection.prepareStatement("select trade_marks.trade_mark_name, product.product_name ,price, warranty, percent_promo, date_added, product_number, image_url, product_number from technomarket.product join technomarket.trade_marks on(trade_marks.trade_mark_id = product.trade_mark_id) join technomarket.order_has_product on(order_has_product.order_id = ?)");
+		PreparedStatement st = this.connection.prepareStatement("SELECT trade_marks.trade_mark_name, product.product_name, price, warranty, percent_promo, date_added, product_number, image_url FROM technomarket.product JOIN technomarket.trade_marks ON(trade_marks.trade_mark_id = product.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?)");
 		st.setString(1, id);
 		ResultSet rs = st.executeQuery();
 		Product pr = null;
 		while(rs.next()){
 			pr = new Product();
-			pr.setTradeMark(rs.getString(1));
-			pr.setName(rs.getString(2));
-			pr.setPrice(rs.getString(3));
-			pr.setWorranty(rs.getInt(4));
-			pr.setPercentPromo(rs.getInt(5));
-			pr.setDateAdded(LocalDate.parse(rs.getString(6)));
-			pr.setImageUrl(rs.getString(7));
-			pr.setProductNumber(rs.getString(8));
+			pr.setTradeMark(rs.getString("trade_marks.trade_mark_name"));
+			pr.setName(rs.getString("product.product_name"));
+			pr.setPrice(rs.getString("price"));
+			pr.setWorranty(rs.getInt("warranty"));
+			pr.setPercentPromo(rs.getInt("percent_promo"));
+//			pr.setDateAdded(LocalDate.parse("date_added"));
+			pr.setProductNumber("product_number");
+			pr.setImageUrl("image_url");
 			products.add(pr);
 		}
 		return products;

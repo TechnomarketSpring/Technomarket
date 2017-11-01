@@ -24,7 +24,9 @@
                 <h4>Име* ${favourite.name}</h4>
                 <h4>Номер на артикул* ${favourite.productNumber}</h4> 
                 <h4>Гаранция* ${favourite.worranty}</h4>   
-                <img src="<c:url value='/product/product_pic?value=${favourite.imageUrl}'/>" alt="product-image" width="120" height="auto">
+                <a class="btn-links" href="<c:url value='/info/infoForProduct?value=${favourite.productId}'/>">
+							<img src="<c:url value='/product/product_pic?value=${favourite.productId}'/>" alt="product-image" width="120" height="auto">
+				</a>
                 <form action = "<c:url value='/favourite/removeFromFavorite'/>" method="post">
 				      <input type = "submit" value = "Премахни продукта">
 				      <input type = "hidden" name = "value" value = "${ favourite.productId }"/>

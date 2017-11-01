@@ -21,6 +21,9 @@
           
           <c:if test="${sessionScope.basket.isEmpty() == false}">
               <c:forEach items="${sessionScope.basket}" var="entry">
+              		<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${entry.key.productId}'/>">
+							<img src="<c:url value='/product/product_pic?value=${entry.key.productId}'/>" alt="product-image" width="120" height="auto">
+					</a>
                     <h5>Модел: ${entry.key.name}</h5>
                     <h5>Марка: ${entry.key.tradeMark}</h5>
                     <c:if test="${entry.key.percentPromo == 0}">
@@ -28,7 +31,7 @@
                     </c:if>
                     <c:set var="counting" value="${entry.key.price}"/>
                     <c:if test="${entry.key.percentPromo > 0}">
-							<c:set var="counting" value="${(counting + ((entry.key.price * pro.value)) - ((entry.key.price*entry.key.percentPromo)/100))}" />
+						<c:set var="counting" value="${(counting + ((entry.key.price * pro.value)) - ((entry.key.price*entry.key.percentPromo)/100))}" />
                    		<h5>Стара цена: <del>${entry.key.price}</del></h5>
                    		<h5>Промо цена: ${counting}</h5>
                     </c:if>

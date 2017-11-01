@@ -101,8 +101,12 @@
 		</tr>
 		</div>
 		
-		
-		
+		<c:if test="${isProductInStock == true}">
+			<img alt="status-legend" src="<c:url value='/img/legends/legend.png'/>">
+		</c:if>
+		<c:if test="${isProductInStock == false}">
+			<img alt="status-legend" src="<c:url value='/img/legends/no_product.png'/>">
+		</c:if>
 		<div id="stores">
 			<c:forEach items="${statusPerStore}" var="entry">
 				<ul>

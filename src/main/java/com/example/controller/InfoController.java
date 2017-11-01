@@ -35,13 +35,13 @@ import com.example.model.exceptions.InvalidStoreDataException;
 public class InfoController {
 
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	@Autowired
-	StoreDAO storeDAO;
+	private StoreDAO storeDAO;
 	@Autowired
-	OrderDAO orderDAO;
+	private OrderDAO orderDAO;
 	@Autowired
-	UserDAO userDAO;
+	private UserDAO userDAO;
 
 	// product info gets:
 
@@ -55,9 +55,16 @@ public class InfoController {
 			// finds if product is in stock in any store:
 			boolean isProductInStock = storeDAO.isProductInStock(productId);
 			model.addAttribute("isProductInStock", isProductInStock);
+			
+			//gets user, check if he/she is logged and if yes checks if products is in his/her favourites:
+			User user = (User) session.getAttribute("user");
+			if(user != null){
+				boolean isProductInFavourite = userDAO.isPrductInFavourite(String.valueOf(user.getUserId()), productId);
+				model.addAttribute("isProductInFavourite", isProductInFavourite);
+			}
 
-			//if products is in stock anywhere method is searching for stock status per store:
-			if (isProductInStock) {
+			//if products is in stock anywhere or user is admin method is searching for stock status per store:
+			if (isProductInStock || (user != null && user.getIsAdmin())) {
 				// gets the product stock status per store:
 				LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
 				HashSet<Store> cities = storeDAO.getAllStores();
@@ -77,14 +84,6 @@ public class InfoController {
 					statusPerStore.put(store, statusImgLink);
 				}
 				model.addAttribute("statusPerStore", statusPerStore);
-			}
-
-			
-			User user = (User) session.getAttribute("user");
-			if(user != null){
-				boolean isProductInFavourite = userDAO.isPrductInFavourite(String.valueOf(user.getUserId()), productId);
-				model.addAttribute("isProductInFavourite", isProductInFavourite);
-				System.out.println("111111111111111111111111111111111111111111111111111111");
 			}
 			
 		} catch (SQLException | InvalidStoreDataException e) {
