@@ -15,7 +15,7 @@
 			<li id="head"><stong><span id="glyphicons-parents"></span>Профил</stong></li>
 			<li class="menu-button"><a href="<cs:url value='/info/infoUserProfile'/>"> Моят профил</a></li>
 			<li class="menu-button"><a href="<cs:url value='/info/infoUserOrders'/>">> Моите поръчки</a></li>
-			<li class="menu-button"><a href="<cs:url value='/info/infoUserFavourites'/>">> Любими продукти</a></li>
+			<li class="menu-button"><a href="<cs:url value='/favourite/infoUserFavourites'/>">> Любими продукти</a></li>
 				<c:if test="${session.user.isAdmin == true}">
 					<li class="menu-button"><a href="<cs:url value='/info/infoAdminPanel'/>">> Админ панел</a></li>
 				</c:if>

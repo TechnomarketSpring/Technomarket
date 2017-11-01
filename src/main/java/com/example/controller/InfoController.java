@@ -134,53 +134,10 @@ public class InfoController {
 		} 
 		return "user_orders";
 	}
-	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)
-	public String infoUserFavourites(HttpSession session ,Model model){
-		User user = (User) session.getAttribute("user");
-		try {
-			LinkedHashSet<Product> product = userDAO.viewFavourite(user);
-			model.addAttribute("product", product);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("SQL Exception in /info/infoUserFavourites");
-			return "errorPage";
-		}
-		
-		
-		return "user_favourites";
-	}
-	@RequestMapping(value = "/addInFavorite", method = RequestMethod.GET)
-	public String addInFavorite(@RequestParam("value") long productId, Model model , HttpSession session){
-		if(session.getAttribute("user") == null){
-			return "login";
-		}
-		User user = (User) session.getAttribute("user");
-		try {
-			userDAO.addInFavorite(user.getUserId(), productId);
-		} catch (SQLException e) {
-			System.out.println("SQL Exception in /info/addInFavorite");
-			e.printStackTrace();
-			return "errorPage";
-		}
-		return "user_favourites";
-	}
 	
-	@RequestMapping(value = "/removeFromFavorite", method = RequestMethod.GET)
-	public String removeFromFavorite(@RequestParam("value") long productId, Model model, HttpSession session){
-		User user = (User) session.getAttribute("user");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		try {
-     		userDAO.removeFavouriteProduct(user.getUserId(), productId);
-			LinkedHashSet<Product> product = userDAO.viewFavourite(user);
-			model.addAttribute("product", product);
-		} catch (SQLException e) {
-			System.out.println("SQL Exception in info/removeFromFavorite");
-			e.printStackTrace();
-			return "errorPage";
-		}
-		
-		return "user_favourites";
-	}
+	
+	
+	
 	@RequestMapping(value = "/infoFoCurrentOrder", method = RequestMethod.POST )
 	public String infoForCurrentOrder(@RequestParam(value = "value") String orderId,Model model){
 		try {

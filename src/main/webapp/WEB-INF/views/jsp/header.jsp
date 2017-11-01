@@ -70,7 +70,7 @@
    				<c:if test="${sessionScope.user != null}">
 					<a href="<cs:url value='/info/infoUserProfile'/>">Профил</a>
     				<a href="<cs:url value='/info/infoUserOrders'/>">Поръчки</a>
-    				<a href="<cs:url value='/info/infoUserFavourites'/>">Любими</a>
+    				<a href="<cs:url value='/favourite/infoUserFavourites'/>">Любими</a>
     				<c:if test="${sessionScope.user.isAdmin == true}">
 						<a href="<cs:url value='/info/infoAdminPanel'/>">Админ панел</a>
 					</c:if>

@@ -161,7 +161,7 @@ public class UserDAO {
 	// Remove favourite product:
 	public void removeFavouriteProduct(long userId, long  productId) throws SQLException {
 		this.connection = DBManager.getConnections();
-		PreparedStatement statment = this.connection.prepareStatement("DELETE FROM technomarket.user_has_favouite WHERE user_id = ? AND product_id = ?");
+		PreparedStatement statment = this.connection.prepareStatement("DELETE FROM technomarket.user_has_favourite WHERE user_id = ? AND product_id = ?");
 		statment.setLong(1, userId);
 		statment.setLong(2, productId);
 		statment.executeUpdate();
@@ -180,13 +180,13 @@ public class UserDAO {
 		LinkedHashSet<Product> products = new LinkedHashSet<>();
 		while (result.next()) {
 			product = new Product();
+			product.setProductId(result.getLong(1));
 			product.setName(result.getString("product_name"));
 			product.setPrice(result.getString("price"));
 			product.setWorranty(result.getInt("warranty"));
 			product.setPercentPromo(result.getInt("percent_promo"));
 			product.setDateAdded(LocalDate.parse(result.getString("date_added")));
 			product.setProductNumber(result.getString("product_number"));
-			product.setProductId(result.getLong("product_id"));
 			product.setImageUrl(result.getString("image_url"));
 			product.setTradeMark(productDAO.getTradeMark(product.getProductId()));
 			products.add(product);
