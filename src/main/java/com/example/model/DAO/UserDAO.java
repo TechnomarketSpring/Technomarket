@@ -293,4 +293,21 @@ private long getUserIdByEmail(String email) throws SQLException {
 		statement.executeUpdate();
 	}
 
+	//user subscribes for news:
+	
+	public void createNewAbonat(long userId) throws SQLException {
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.users SET isAbonat = ? WHERE user_id = ?;",
+				Statement.RETURN_GENERATED_KEYS);
+		ps.setBoolean(1, true);
+		ps.setLong(2, userId);
+		ps.executeUpdate();
+		ps.close();
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
+
 }

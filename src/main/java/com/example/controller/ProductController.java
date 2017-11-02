@@ -228,9 +228,7 @@ public class ProductController {
 		}
 		return "filtred_products";
 	}
-	
-	
-	
+
 	
 	
 	

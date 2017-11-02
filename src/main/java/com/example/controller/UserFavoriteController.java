@@ -24,7 +24,8 @@ public class UserFavoriteController {
 	
 	
 	@RequestMapping(value = "/infoUserFavourites", method = RequestMethod.GET)
-	public String infoUserFavourites(HttpSession session ,Model model){
+	public String infoUserFavourites(HttpSession session,
+			Model model){
 		User user = (User) session.getAttribute("user");
 		try {
 			LinkedHashSet<Product> product = userDAO.viewFavourite(user);
@@ -39,7 +40,9 @@ public class UserFavoriteController {
 		return "user_favourites";
 	}
 	@RequestMapping(value = "/addInFavorite", method = RequestMethod.GET)
-	public String addInFavorite(@RequestParam("value") long productId, Model model , HttpSession session){
+	public String addInFavorite(@RequestParam("value") long productId,
+			Model model,
+			HttpSession session){
 		if(session.getAttribute("user") == null){
 			return "login";
 		}
@@ -54,7 +57,9 @@ public class UserFavoriteController {
 		return "forward:/favourite/infoUserFavourites";
 	}
 	@RequestMapping(value = "/removeFromFavorite", method = RequestMethod.POST)
-	public String removeFromFavorite(@RequestParam(value = "value") long productId, Model model, HttpSession session){
+	public String removeFromFavorite(@RequestParam(value = "value") long productId,
+			Model model,
+			HttpSession session){
 		User user = (User) session.getAttribute("user");
 		try {
      		userDAO.removeFavouriteProduct(user.getUserId(), productId);

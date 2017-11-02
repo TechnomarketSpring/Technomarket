@@ -46,7 +46,9 @@ public class InfoController {
 	// product info gets:
 
 	@RequestMapping(value = "/infoForProduct", method = RequestMethod.GET)
-	public String infoForProduct(@RequestParam(value = "value") String productId, HttpSession session, Model model) {
+	public String infoForProduct(@RequestParam(value = "value") String productId,
+			HttpSession session,
+			Model model) {
 		try {
 			// gets the product itself:
 			Product product = productDAO.searchProductById(productId);
@@ -140,7 +142,8 @@ public class InfoController {
 	}
 
 	@RequestMapping(value = "/infoUserOrders", method = RequestMethod.GET)
-	public String infoUserOrders(HttpSession sesion, Model model) {
+	public String infoUserOrders(HttpSession sesion,
+			Model model) {
 
 		User user = (User) sesion.getAttribute("user");
 		try {

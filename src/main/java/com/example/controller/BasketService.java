@@ -38,6 +38,7 @@ public class BasketService {
 			basket.put(product, (quantity - 1));
 //			resp.sendRedirect("basket");
 		} catch (SQLException e) {
+			resp.setStatus(401);
 			e.printStackTrace();
 		}
 	}

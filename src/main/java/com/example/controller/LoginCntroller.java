@@ -34,7 +34,8 @@ public class LoginCntroller {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+	public String login(@RequestParam("username") String username,
+			@RequestParam("password") String password,
 			HttpSession session, Model model) {
 		try {
 			boolean exiting = userDAO.existingUser(username.trim(), password.trim());

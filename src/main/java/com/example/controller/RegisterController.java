@@ -36,7 +36,8 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerNewUser(Model model, HttpSession session, @RequestParam("firstName") String firstName,
+	public String registerNewUser(Model model, HttpSession session,
+			@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,

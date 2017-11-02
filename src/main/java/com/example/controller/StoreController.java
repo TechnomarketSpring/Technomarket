@@ -19,7 +19,8 @@ public class StoreController {
 	StoreDAO storeDAO;
 	
 	@RequestMapping(value = "/showInTheMap", method = RequestMethod.GET)
-	public String showInTheMap(@RequestParam("value") long orderId, Model model){
+	public String showInTheMap(@RequestParam("value") long orderId,
+			Model model){
 		try {
 			Store store = storeDAO.seachStoreById(orderId);
 			String [] gps = store.getGps().split(",");
