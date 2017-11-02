@@ -90,7 +90,7 @@ public class UserDAO {
 	// Метода exitsUser проверява и ако каже че има се връща потребителя от този
 	// метод!
 	public User getUser(String userName)
-			throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
+			throws SQLException, InvalidCategoryDataException {
 		this.connection = DBManager.getConnections();
 		User user = new User();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.users WHERE email = ?");
@@ -291,6 +291,23 @@ private long getUserIdByEmail(String email) throws SQLException {
 		PreparedStatement statement = this.connection.prepareStatement("UPDATE  technomarket.users SET users.isAdmin = false WHERE user_id = ?;");
 		statement.setString(1, id);
 		statement.executeUpdate();
+	}
+
+	//user subscribes for news:
+	
+	public void createNewAbonat(long userId) throws SQLException {
+		this.connection = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.users SET isAbonat = ? WHERE user_id = ?;",
+				Statement.RETURN_GENERATED_KEYS);
+		ps.setBoolean(1, true);
+		ps.setLong(2, userId);
+		ps.executeUpdate();
+		ps.close();
+		
+		
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 }

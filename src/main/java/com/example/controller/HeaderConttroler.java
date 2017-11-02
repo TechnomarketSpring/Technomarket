@@ -93,9 +93,10 @@ public class HeaderConttroler {
 	}
 	
 	@RequestMapping(value = "/cities", method = RequestMethod.GET)
-	public String cities(@RequestParam(value = "value") String cityName, Model model){
+	public String cities(@RequestParam(value = "value") String cityName,
+			Model model){
 		try {
-			Set<Store> stores = storeDAO.getStoresPerCity(cityName);
+			Set<Store> stores = storeDAO.getStoresPerCity(cityName.trim());
 			model.addAttribute("stores", stores);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,9 +110,10 @@ public class HeaderConttroler {
 	}
 	
 	@RequestMapping(value = "/search" , method = RequestMethod.GET)
-	public String searchProduct(@RequestParam("searched_text") String searched_text, Model model){
+	public String searchProduct(@RequestParam("searched_text") String searched_text,
+			Model model){
 		try {
-			Set<Product> products = productDAO.searchProductByName(searched_text);
+			Set<Product> products = productDAO.searchProductByName(searched_text.trim());
 			model.addAttribute("filtredProducts", products);
 		} catch (SQLException e) {
 			e.printStackTrace();

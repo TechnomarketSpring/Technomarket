@@ -33,19 +33,18 @@ import com.example.model.exceptions.InvalidCharacteristicsDataException;
 @Controller
 @RequestMapping("/buyController")
 public class BuyController {
-@Autowired
-private ProductDAO productDAO;
-@Autowired
-private OrderDAO orderDAO;
-@Autowired
-private UserDAO userDAO;
-@Autowired
-private StoreDAO storeDAO;
-
+	@Autowired
+	private ProductDAO productDAO;
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private UserDAO userDAO;
+	@Autowired
+	private StoreDAO storeDAO;
 
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
 	public String addInTheBasket(@RequestParam(value = "value") String productId, HttpSession session) {
-		
+
 		boolean isProductInStock = false;
 		try {
 			isProductInStock = storeDAO.isProductInStock(productId);
@@ -53,23 +52,22 @@ private StoreDAO storeDAO;
 			e1.printStackTrace();
 			return "errorPage";
 		}
-		if(!isProductInStock){
+		if (!isProductInStock) {
 			return "redirect:/info/infoForProduct?value=" + productId;
 		}
-		
-		if(session.getAttribute("basket") == null){
+
+		if (session.getAttribute("basket") == null) {
 			HashMap<Product, Integer> basket = new HashMap<>();
-			session.setAttribute("basket",basket);
+			session.setAttribute("basket", basket);
 		}
-		
-		
+
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
-		
+
 		try {
 			Product product = productDAO.searchProductById(productId);
-			if(!basket.containsKey(product)){
-			   basket.put(product, 1);
-			}else{
+			if (!basket.containsKey(product)) {
+				basket.put(product, 1);
+			} else {
 				Integer number = basket.get(product) + 1;
 				basket.put(product, number);
 			}
@@ -77,32 +75,61 @@ private StoreDAO storeDAO;
 			e.printStackTrace();
 			return "errorPage";
 		}
-		
-			return "basket";
-	}
-	
-	
-	@RequestMapping(value = "/basket", method = RequestMethod.GET)
-	public String goToBasket(){
+
 		return "basket";
 	}
-	     
+
+	@RequestMapping(value = "/basket", method = RequestMethod.GET)
+	public String goToBasket() {
+		return "basket";
+	}
+
+	@RequestMapping(value = "/removeProduct", method = RequestMethod.POST)
+	public String removeProduct(@RequestParam(value = "value") long id, HttpSession session) {
+		HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
+		Product pro = null;
+		try {
+			pro = productDAO.getProduct(id);
+
+		} catch (SQLException e) {
+			System.out.println("SQL exception in buyController/removeProduct");
+			e.printStackTrace();
+			return "errorPage";
+		} catch (InvalidCategoryDataException e) {
+			System.out.println(
+					"InvalidCharacteristicsDataException or InvalidCategoryDataException in buyController/removeProduct");
+			e.printStackTrace();
+			return "errorPage";
+		}
+		for (Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();) {
+			Entry<Product, Integer> entry = it.next();
+			if (entry.getKey().getProductId() == id) {
+				it.remove();
+			}
+		}
+		return "basket";
+	}
+
 	@RequestMapping(value = "/makeOrder", method = RequestMethod.GET)
-	public String makeOrder(HttpSession session, Model model){
-		if(session.getAttribute("user") == null){
+	public String makeOrder(HttpSession session, Model model) {
+		if (session.getAttribute("user") == null) {
 			session.setAttribute("inBasket", true);
+			model.addAttribute("logInPls", true);
 			return "login";
 		}
 		model.addAttribute("date", LocalDate.now());
 		HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
 		double price = 0.0;
-		for(Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();){
+		for (Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();) {
 			Entry<Product, Integer> entry = it.next();
-			price+= (entry.getKey().getPrice().doubleValue() * entry.getValue()) - (((entry.getKey().getPrice().doubleValue() * entry.getValue())*entry.getKey().getPercentPromo())/100);
+			price += (entry.getKey().getPrice().doubleValue() * entry.getValue())
+					- (((entry.getKey().getPrice().doubleValue() * entry.getValue()) * entry.getKey().getPercentPromo())
+							/ 100);
 		}
 		model.addAttribute("price", price);
 		return "makeOrder";
 	}
+
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String addOrder(@RequestParam("firstAndLastName") String name,
 			@RequestParam("telNumber") String telNumber,
@@ -117,36 +144,46 @@ private StoreDAO storeDAO;
 			@RequestParam("notes") String notes,
 			@RequestParam("price") String price,
 			@RequestParam("payment") String payment,
-			HttpSession session
-			){
+			HttpSession session) {
 		Order order = new Order();
-		order.setAddress(""+street+","+number+", "+(block == null? "":block)+", "+(entrace == null ? "":entrace)+", "+(floor == null? "":floor)+", "+(aparment == null ?"":aparment)+"");
-		order.setUserNames(name);
-		order.setUserPhoneNumber(telNumber);
-		order.setZip(postCode);
-		order.setNotes(notes);
-		order.setPrice(price);
-		
+		StringBuffer sb = new StringBuffer();
+		sb.append(street.trim());
+		sb.append(", ");
+		sb.append(number.trim());
+		sb.append(", ");
+		sb.append((block == null ? "" : block.trim()));
+		sb.append(", ");
+		sb.append((entrace == null ? "" : entrace.trim()));
+		sb.append(", ");
+		sb.append((floor == null ? "" : floor.trim()));
+		sb.append(", ");
+		sb.append((aparment == null ? "" : aparment.trim()));
+		sb.append(".");
+		order.setAddress(sb.toString());
+		order.setUserNames(name.trim());
+		order.setUserPhoneNumber(telNumber.trim());
+		order.setZip(postCode.trim());
+		order.setNotes(notes.trim());
+		order.setPrice(price.trim());
+
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());
 		order.setConfirmed(false);
-		order.setPayment(payment);
+		order.setPayment(payment.trim());
 		order.setPaid(false);
 		try {
 			User user = (User) session.getAttribute("user");
 			orderDAO.insertNewOrder(user, order);
-			
+
 		} catch (SQLException e) {
 			System.out.println("SQL Exception in BuyController");
 			e.printStackTrace();
 			return "errorPage";
 		}
-		
-		((HashMap<Product, Integer>)session.getAttribute("basket")).clear();
+
+		((HashMap<Product, Integer>) session.getAttribute("basket")).clear();
 		return "confurt";
 	}
-	
-	
 
 }

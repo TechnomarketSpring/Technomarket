@@ -114,11 +114,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/createAdmin", method = RequestMethod.POST)
-	public String infoAdminCreateAdmin(@RequestParam("email") String email,HttpSession session, Model model) {
+	public String infoAdminCreateAdmin(@RequestParam("email") String email,
+			HttpSession session, Model model) {
 		User user = (User)session.getAttribute("user");
 		if(user != null && user.getIsAdmin()){
 			try {
-				userDAO.createAdmin(email);
+				userDAO.createAdmin(email.trim());
 			} catch (SQLException e) {
 				System.out.println("SQLException /createAdmin ");
 				e.printStackTrace();

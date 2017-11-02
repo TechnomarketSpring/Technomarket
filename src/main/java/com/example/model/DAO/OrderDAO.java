@@ -39,7 +39,7 @@ public class OrderDAO {
 	ProductDAO productDAO;
 	private Connection connection;
 	//-> select all orders per user_id, fill them in HashSet, select all products per Order, their quantity, and fields it in HashMap of every Order:
-	public LinkedHashSet<Order> getOrdersForUser(long long1) throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
+	public LinkedHashSet<Order> getOrdersForUser(long long1) throws SQLException, InvalidCategoryDataException {
 		LinkedHashSet<Order> orders = new LinkedHashSet<>();
 		String query = "SELECT * FROM technomarket.orders WHERE user_id = ?;";
 		this.connection = DBManager.getConnections();
@@ -61,7 +61,6 @@ public class OrderDAO {
 			o.setProducts(products);
 			orders.add(o);
 		}
-		System.out.println(orders.size()+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
 		return orders;
 	}
 	
@@ -70,7 +69,7 @@ public class OrderDAO {
 	
 
 
-	private LinkedHashMap<Product, Integer> fillAllProductsInOrder(Order o) throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
+	private LinkedHashMap<Product, Integer> fillAllProductsInOrder(Order o) throws SQLException, InvalidCategoryDataException {
 		LinkedHashMap<Product, Integer> products = new LinkedHashMap<>();
 		String query = "SELECT * FROM technomarket.order_has_product WHERE order_id = ?;";
 		this.connection = DBManager.getConnections();

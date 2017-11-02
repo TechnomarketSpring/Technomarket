@@ -65,11 +65,12 @@ public class CategoryDAO {
 				"SELECT category_name FROM technomarket.categories AS c JOIN technomarket.product_has_category AS h ON(c.category_id = h.category_id) JOIN technomarket.product AS p ON(h.product_id = p.product_id) WHERE h.product_id = ?;");
 		ps.setLong(1, productId);
 		ResultSet rs = ps.executeQuery();
-		String name = "";
+		String name = "ANDFSDHFRBFGIRSNFIERNFSLIENFESILNFIESNFIESNFILESNFIESFNESINFIESNFSEILNFESLFIESLFNSEIFESILNFSEILNFESIFNILESFNESILNF";
 		while(rs.next()){
 			name += rs.getString("category_name");
 		}
 		Category category = new Category(name);
+		System.out.println(category.getName());
 		return category;
 	}
 	

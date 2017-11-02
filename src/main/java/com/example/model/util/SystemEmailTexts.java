@@ -13,25 +13,45 @@ public final class SystemEmailTexts {
 	final static String PRODUCT_URL = "http://localhost:8080/MyProject/info/infoForProduct?value=";
 	
 	public static String forgottenPassEmail(String newPassword){
-		String message = "Здравей, любезни потребителю," +  System.lineSeparator()
-		+ "по твое искане ти изпращаме нова парола, която да замести старатата ти парола за сайта на Техномаркет."
-		+ "Можеш да си я запишеш: " + newPassword + System.lineSeparator()
-		+ "Ако тази информация не те засяга, моля игнорирай съобщението ни."
-		+ System.lineSeparator() + "Приятен ден," + System.lineSeparator()
-		+ "екипът на Техномаркет";
-		return message;
+		StringBuffer message = new StringBuffer();
+		message.append("Здравей, любезни потребителю,");
+		message.append(System.lineSeparator());
+		message.append("по твое искане ти изпращаме нова парола, която да замести старатата ти парола за сайта на Техномаркет.");
+		message.append("Можеш да си я запишеш: ");
+		message.append(newPassword);
+		message.append(System.lineSeparator());
+		message.append("Ако тази информация не те засяга, моля игнорирай съобщението ни.");
+		message.append(System.lineSeparator());
+		message.append("Приятен ден,");
+		message.append(System.lineSeparator());
+		message.append("екипът на Техномаркет!");
+		return message.toString();
 	}
 	
 	public static String favouriteOnPromo(String productName, long productId, int percentPromo, BigDecimal price){
-		String message = "Здравей, любезни потребителю," +  System.lineSeparator()
-		+ "с радост искаме да те уведомим, че един от твоите ЛЮБИМ продукци в нашите магазини е на промоция от днес!"
-		+ "Ако искаш да закупиш " + productName + " на специална цена от " + SystemEmailTexts.getPrice(percentPromo, price) +" лв." + System.lineSeparator()
-		+ "Това са ЦЕЛИ " + percentPromo + " процента намаление!" + System.lineSeparator()
-		+ "Възползвайте се докато е време като кликнете на линка по-долу!" + System.lineSeparator()
-		+ PRODUCT_URL + productId + System.lineSeparator()
-		+ "Приятен ден," + System.lineSeparator()
-		+ "екипът на Техномаркет";
-		return message;
+		StringBuffer message = new StringBuffer();
+		message.append("Здравей, любезни потребителю,");
+		message.append(System.lineSeparator());
+		message.append("с радост искаме да те уведомим, че един от твоите ЛЮБИМ продукци в нашите магазини е на промоция от днес!");
+		message.append("Ако искаш да закупиш ");
+		message.append(productName);
+		message.append(" на специална цена от ");
+		message.append(SystemEmailTexts.getPrice(percentPromo, price));
+		message.append(" лв.");
+		message.append(System.lineSeparator());
+		message.append("Това са ЦЕЛИ ");
+		message.append(percentPromo);
+		message.append(" процента намаление!");
+		message.append(System.lineSeparator());
+		message.append("Възползвайте се докато е време като кликнете на линка по-долу!");
+		message.append(System.lineSeparator());
+		message.append(PRODUCT_URL);
+		message.append(productId);
+		message.append(System.lineSeparator());
+		message.append("Приятен ден,");
+		message.append(System.lineSeparator());
+		message.append("екипът на Техномаркет!");
+		return message.toString();
 	}
 	
 	private static String getPrice(int percentPromo, BigDecimal price) {

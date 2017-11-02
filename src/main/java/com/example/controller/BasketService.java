@@ -34,10 +34,11 @@ public class BasketService {
 			resp.setStatus(200);
 		try {
 			HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
-			Product product = productDAO.searchProductById(productId);
+			Product product = productDAO.searchProductById(productId.trim());
 			basket.put(product, (quantity - 1));
 //			resp.sendRedirect("basket");
 		} catch (SQLException e) {
+			resp.setStatus(401);
 			e.printStackTrace();
 		}
 	}

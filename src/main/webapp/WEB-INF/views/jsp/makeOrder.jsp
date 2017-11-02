@@ -9,6 +9,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
+	<c:if test="${sessionScope.user != null}">
     <div style="border:1px solid red";>
          <h3>Вашата поръчка все още не е потвърдена</h3>
     </div>
@@ -24,11 +25,7 @@
          <h3>Детайли на поръчката</h3>
     </div>
     <cs:forEach items="${ sessionScope.basket }" var="basket">
-        <div style="border:1px solid red";>
-
-        <h5>${basket.value} X ${basket.key.name} - <span>price:  ${basket.key.price} * ${basket.value}  промо: %${basket.key.percentPromo }</span></h5>
-
-        
+        <div style="border:1px solid red";> 
         <c:if test="${basket.key.percentPromo == 0 }">
           <h5>${basket.value} X ${basket.key.name} - <span> цена: ${basket.key.price} * ${basket.value}</span></h5>
         </c:if>
@@ -37,7 +34,6 @@
         	<c:set var="promoPrice" value="${promoPrice + basket.key.price - (basket.key.price * basket.key.percentPromo/100)}" />
           <h5>${basket.value} X ${basket.key.name} - <span> цена: <del>${basket.key.price}</del> ${promoPrice} * ${basket.value}</span></h5>
         </c:if>
-
         <h5>Доставка -</h5>
        </div>
     </cs:forEach>
@@ -68,6 +64,10 @@
 					<input type="submit" value="Изпрати">
 		</form>
      </div>
+     	</c:if>
+     	<c:if test="${sessionScope.user == null}">
+				<p>Само потребителите, влезли в сметката си, имат достъп до тази страница!</p>
+	</c:if>
     <jsp:include page="footer.jsp" />
 </body>
 </html>

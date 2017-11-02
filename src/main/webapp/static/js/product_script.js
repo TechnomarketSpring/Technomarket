@@ -18,3 +18,12 @@ function submitQuery(index) {
 		request.open("post", "../store/quantity" + params, true);
 		request.send();
 	}
+
+
+function empty() {
+    var searchedText;
+    searchedText = document.getElementById("searched-text").value;
+    if (!searchedText || 0 === searchedText) {
+        return false;
+    };
+}

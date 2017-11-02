@@ -43,7 +43,7 @@ public class ProductDAO {
 
 	
 	public Product getProduct(long productID)
-			throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
+			throws SQLException, InvalidCategoryDataException {
 		String query = "SELECT * FROM technomarket.product WHERE product_id = ?;";
 		this.connection = DBManager.getConnections();
 			PreparedStatement statement = this.connection.prepareStatement(query);
@@ -60,9 +60,7 @@ public class ProductDAO {
 			pro.setProductId(result.getLong("product_id"));
 			pro.setTradeMark(getTradeMark(pro.getProductId()));
 			pro.setImageUrl(WebInitializer.LOCATION + result.getString("image_url"));
-			ArrayList<Characteristics> characteristics = characterisicsDAO
-					.getProducsCharacteristics(pro.getProductId());
-			pro.setCharacteristics(characteristics);
+			System.out.println("=========================12435346567");
 			pro.setCategory(categoryDAO.getProductsCategory(pro.getProductId()));
 			result.close();
 			statement.close();
@@ -201,26 +199,31 @@ public class ProductDAO {
 		this.connection = DBManager.getConnections();
 		this.connection.setAutoCommit(false);
 		try {
-			PreparedStatement ps1 = this.connection.prepareStatement("DELETE FROM technomarket.product WHERE product_id = ?",
-					Statement.RETURN_GENERATED_KEYS);
-			ps1.setLong(1, productId);
-			ps1.executeUpdate();
-
-			PreparedStatement ps2 = this.connection.prepareStatement(
-					"DELETE FROM technomarket.order_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
-			ps2.setLong(1, productId);
-			ps2.executeUpdate();
-
+			System.out.println("========================================");
 			PreparedStatement ps3 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.product_has_category WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			ps3.setLong(1, productId);
 			ps3.executeUpdate();
-
+			
 			PreparedStatement ps4 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.store_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
 			ps4.setLong(1, productId);
 			ps4.executeUpdate();
+			
+			PreparedStatement ps1 = this.connection.prepareStatement("DELETE FROM technomarket.product WHERE product_id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			ps1.setLong(1, productId);
+			ps1.executeUpdate();
+			PreparedStatement ps2 = this.connection.prepareStatement(
+					"DELETE FROM technomarket.order_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
+			ps2.setLong(1, productId);
+			ps2.executeUpdate();
+			
+			PreparedStatement ps6 = this.connection.prepareStatement(
+					"DELETE FROM technomarket.characteristics WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
+			ps6.setLong(1, productId);
+			ps6.executeUpdate();
 
 			PreparedStatement ps5 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.user_has_favourite WHERE product_id = ?",
@@ -228,10 +231,6 @@ public class ProductDAO {
 			ps5.setLong(1, productId);
 			ps5.executeUpdate();
 
-			PreparedStatement ps6 = this.connection.prepareStatement(
-					"DELETE FROM technomarket.characteristics WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
-			ps6.setLong(1, productId);
-			ps6.executeUpdate();
 			this.connection.commit();
 			ps1.close();
 			ps2.close();

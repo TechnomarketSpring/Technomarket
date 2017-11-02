@@ -8,7 +8,7 @@
 		<title>Продукти на промоция¸</title>
 	</head>
 	<body>
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="header.jsp" />
 		
 		<!--<form <c:url value='/header/search'/>" method="get">-->
 		<form action="<c:url value='/product/compareProduct?compare=${mark}'/> " method="get">
@@ -21,8 +21,7 @@
         <input type = "submit">
         
         </form>
-         
-		<c:if test="${filtredProducts != null}">
+
 			<c:forEach items="${filtredProducts}" var="filtredProduct">
 				<div id="product-box" style="border:1px solid black;">
 					<div>
@@ -48,7 +47,7 @@
 				  <input type = "submit" value = "Купи сега"/>
 				</form>		
 			</c:forEach>
-		</c:if>
+
 		<!--</form>-->
 		<c:if test = "${filtredProducts.size() == 0}">
 		      <div style = "border:1px solid red">

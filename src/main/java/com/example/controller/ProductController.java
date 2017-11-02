@@ -81,21 +81,21 @@ public class ProductController {
 			@RequestParam("image") MultipartFile image) {
 		String imageName = null;
 		try {
-			if(!tradeMarkDAO.tradeMarkExist(tradeMark)){
-				tradeMarkDAO.insertTradeMark(tradeMark);
+			if(!tradeMarkDAO.tradeMarkExist(tradeMark.trim())){
+				tradeMarkDAO.insertTradeMark(tradeMark.trim());
 			}
-			if(!categoryDAO.categoryExist(categoryName)){
-				categoryDAO.insertCategory(categoryName);
+			if(!categoryDAO.categoryExist(categoryName.trim())){
+				categoryDAO.insertCategory(categoryName.trim());
 			}
 		MimeTypes allTypes = MimeTypes.getDefaultMimeTypes();
 		MimeType type = allTypes.forName(image.getContentType());
 		String extention = type.getExtension(); // .extention (dot included)
 		String productNumber = productDAO.generateProductNumber();
-		imageName = "product" + "-" + productNumber + extention;
+		imageName = "product" + "-" + productNumber.trim() + extention;
 		File imageFile = new File(imageName);
 		image.transferTo(imageFile);
-		Category category = new Category(categoryName);
-		Product newProduct = new Product(productName, tradeMark, price, null, category, warranty,
+		Category category = new Category(categoryName.trim());
+		Product newProduct = new Product(productName.trim(), tradeMark.trim(), price, null, category, warranty,
 				promoPercent, LocalDate.now(), imageName);
 		adminDAO.insertNewProduct(newProduct, (User) session.getAttribute("user"));
 		model.addAttribute("added", "New product added");
@@ -111,7 +111,7 @@ public class ProductController {
 	public void productPic(HttpServletResponse resp, @RequestParam(value = "value") String productId){
 		Product p;
 		try {
-			p = productDAO.searchProductById(productId);
+			p = productDAO.searchProductById(productId.trim());
 		String url = p.getImageUrl();
 		File pic = new File(WebInitializer.LOCATION + url);
 		Files.copy(pic.toPath(), resp.getOutputStream());
@@ -139,6 +139,9 @@ public class ProductController {
 	public String setPromo(Model model, HttpSession session,
 			@RequestParam(value = "productId") int productId,
 			@RequestParam(value = "promoPercent") int percentPromo){
+		
+		Product promoProduct = null;
+		HashSet<String> emails = null;
 		try {
 			
 			User user = (User) session.getAttribute("user");
@@ -147,15 +150,18 @@ public class ProductController {
 			adminDAO.setPromoPercent(user, productId, percentPromo);
 			
 			//gets the product for email purposes:
-			Product promoProduct = productDAO.getProduct((int) productId);
+			promoProduct = productDAO.getProduct((int) productId);
 			
 			//gets all the needed emails: 
-			HashSet<String> emails = productDAO.getEmailsPerFavourites(user.getUserId());
+			emails = productDAO.getEmailsPerFavourites(user.getUserId());
 			
 			//sends mail data to Postman class to construct and send email to recipients:
+
+			if(percentPromo > 0){
+				Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
+			}
+		} catch (NotAnAdminException | SQLException | InvalidCategoryDataException e) {
 			Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
-			
-		} catch (NotAnAdminException | SQLException | InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
 			e.printStackTrace();
 			return "errorPage";
 		}
@@ -167,9 +173,9 @@ public class ProductController {
 	@RequestMapping(value = "/productsByCategory" , method = RequestMethod.GET)
 	public String searchProduct(@RequestParam("categoryName") String categoryName, Model model){
 		try {
-			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
+			Set<Product> products = productDAO.searchProductByCategoryName(categoryName.trim());
 			model.addAttribute("filtredProducts", products);
-			model.addAttribute("categoryName", categoryName);
+			model.addAttribute("categoryName", categoryName.trim());
 		} catch (SQLException | InvalidCategoryDataException e) {
 			e.printStackTrace();
 			System.out.println("Error for SQL");
@@ -178,10 +184,11 @@ public class ProductController {
 		return "filtred_products";
 	}
 	@RequestMapping(value = "/compareProduct" , method = RequestMethod.GET)
-	public String compare(@RequestParam("compare") String compare,@RequestParam("categoryName")String categoryName, Model model){
+	public String compare(@RequestParam("compare") String comp,
+			@RequestParam("categoryName") String categoryName, Model model){
 		try {
-			
-			Set<Product> products = productDAO.searchProductByCategoryName(categoryName);
+			String compare = new String(comp.trim());
+			Set<Product> products = productDAO.searchProductByCategoryName(categoryName.trim());
 			TreeSet<Product> sortProduct = null;
 			if(compare.equals("price")){
 			  sortProduct = new TreeSet<Product>((o1 , o2) -> {
@@ -213,7 +220,7 @@ public class ProductController {
 			}
 			sortProduct.addAll(products);
 			model.addAttribute("filtredProducts", sortProduct);
-			model.addAttribute("categoryName", categoryName);
+			model.addAttribute("categoryName", categoryName.trim());
 		} catch (SQLException | InvalidCategoryDataException e) {
 			e.printStackTrace();
 			System.out.println("Error for SQL");
@@ -221,9 +228,7 @@ public class ProductController {
 		}
 		return "filtred_products";
 	}
-	
-	
-	
+
 	
 	
 	

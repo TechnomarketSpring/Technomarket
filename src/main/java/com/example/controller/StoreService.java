@@ -33,6 +33,7 @@ public class StoreService {
 		try {
 			adminDAO.changeQuantityInStore(storeId, productId, amount, (User) session.getAttribute("user"));
 		} catch (SQLException | NotAnAdminException e) {
+			resp.setStatus(401);
 			e.printStackTrace();
 		}
 	}

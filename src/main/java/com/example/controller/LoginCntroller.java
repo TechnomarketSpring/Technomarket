@@ -34,17 +34,21 @@ public class LoginCntroller {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+	public String login(@RequestParam("username") String username,
+			@RequestParam("password") String password,
 			HttpSession session, Model model) {
 		try {
-			boolean exiting = userDAO.existingUser(username, password);
+			boolean exiting = userDAO.existingUser(username.trim(), password.trim());
 			if (exiting) {
 				User user = null;
 				try {
-					user = userDAO.getUser(username);
+					user = userDAO.getUser(username.trim());
 
-				} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
-					System.out.println("Invalid date exceptions");
+				} catch (InvalidCategoryDataException e) {
+					System.out.println("Invalid data exceptions");
+				}
+				if(user == null){
+					System.out.println("NQMAAA MEEEEE");
 				}
 				user.setAdmin(true);
 				session.setAttribute("user", user);
@@ -90,17 +94,17 @@ public class LoginCntroller {
 		try {
 
 			// checks for same email
-			boolean exist = userDAO.checkIfUserWithSameEmailExist(email);
+			boolean exist = userDAO.checkIfUserWithSameEmailExist(email.trim());
 			if (exist) {
 				// Builds new password:
 				PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
 						.useLower(true).useUpper(true).build();
 				String newPassword = passwordGenerator.generate(8);
 
-				Postman.forgottenPassEmail(email, newPassword);
+				Postman.forgottenPassEmail(email.trim(), newPassword);
 				// inserts new password in DB after hashing in the method of
 				// UserDAO:
-				if (userDAO.isertNewlyGeneratedPassword(email, newPassword)) {
+				if (userDAO.isertNewlyGeneratedPassword(email.trim(), newPassword)) {
 					return "email_sent";
 				} else {
 					model.addAttribute("systemProblem", "System cant insert the new password");
