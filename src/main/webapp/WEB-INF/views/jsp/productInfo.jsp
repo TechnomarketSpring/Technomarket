@@ -7,19 +7,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="<c:url value="/js/product_script.js" />"></script>
-	<script type="text/javascript">
-		
-	
-	
-	
-	</script>
+	<link href="<c:url value="/css/product_styles.css" />" rel="stylesheet">
 </head>
 	<body>
 		<jsp:include page="header.jsp" />
 		<div id="product-pic-and-title">
 			<h3>${product.name}</h3>
 			<h6>${product.productNumber}</h6>
-			<img src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="120" height="auto">
+			<a target="_blank" href="<c:url value='/product/product_pic?value=${product.productId}'/>">
+				<img id="picture-nail" src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="150" height="auto">
+			</a>
 		</div>
 		
 		<c:if test="${sessionScope.user.isAdmin == true}">
@@ -27,7 +24,7 @@
 				<li class="admin-btn">
 					<form id="search" action="<c:url value='/product/setPromo'/>" method="post">
 						<input type="hidden" name="productId" id="product" value="${product.productId}">
-						<input type="number" id="promo-box" name="promoPercent" size="40" maxlength="35" min="0" value="0">
+						<input type="number" id="promo-box" name="promoPercent" size="40" maxlength="35" min="0" max="100" value="0" onclick="return empty();" required>
 						<input type="image" id="grant-promo" alt="set-promo" src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>"><br>
 					</form>
 				</li>
@@ -120,7 +117,7 @@
 									<label for="quantity">Смени количество: </label>
 									<input type="hidden" name="productId" id="product" value="${product.productId}">
 									<input type="hidden" name="storeId" id="store${entry.key.storeId}" value="${entry.key.storeId}">
-									<input type="number" class="quantity" id="amount${entry.key.storeId}" name="quantity" min="0" required>
+									<input type="number" class="quantity" id="amount${entry.key.storeId}" name="quantity" min="0" onclick="return empty();" required>
 									<input type="submit" id="ajax-submit" onclick="submitQuery(${entry.key.storeId})" value="Запиши">
 							<!-- </form> --><br>
 							</c:if>

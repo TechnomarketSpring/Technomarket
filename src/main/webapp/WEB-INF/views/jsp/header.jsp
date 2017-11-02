@@ -47,7 +47,7 @@
 		
 		<div id="contaner">
 		<div id="logo-search">
-		<a href="<cs:url value='/header/goIndex'/>">     
+		<a id="index-a" href="<cs:url value='/header/goIndex'/>">     
 			<img id="logo" alt="technomarket_logo" src="<cs:url value='/img/logo/tm-logo.png'/>">
 		</a>
 		<div id="search-menu">
@@ -61,7 +61,7 @@
 		<div id="menu-basket">
 		<div id="menu-container">
 		<div class="user_dropdown">
-  			<button onclick="myFunction()" class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
+  			<button onclick="dropFunction()" class="drop_head_button"><c:out value = "${sessionScope.user != null ? user.firstName : 'Вход'}"/></button>
   			<div id="dropdown-inner" class="dropdown_content">
    				<c:if test="${sessionScope.user == null}">
 					<a href="<cs:url value='/header/login'/>">Вход</a>
@@ -102,21 +102,26 @@
  <!-- Dropdown menu with base categories on top -->
 		<div id="dropdown-category-menu">			 
 			<nav id="primary_nav_wrap">
-					<ul>
+					<ul id="drop-line">
+					<li class="upper-li-drop"><span class="head-category-span">${headCategory.key}</span></li>
 					<c:forEach items="${applicationScope['menuCategories']}" var="headCategory">
 						<c:if test="${not (headCategory.key eq 'Apple')}">
-							<li><span>${headCategory.key}</span>
+							<li class="upper-li-drop"><span class="head-category-span">${headCategory.key}</span>
 						</c:if>
-					<ul>	
+					<ul class="down-btn">	
 						<c:forEach items="${headCategory.value}" var="innerCategory">
-      					<li><a href="<c:url value='/product/productsByCategory?categoryName=${innerCategory}'/>">${innerCategory}</a></li>
+      					<li class="down-btn"><a class="down-btn" href="<c:url value='/product/productsByCategory?categoryName=${innerCategory}'/>">${innerCategory}</a></li>
       					</c:forEach>
       				</ul>
   					</li>
 					</c:forEach>
 					</ul>
 			</nav>
- 		</div>	 
+ 		</div>	
+
+
+ 		
+ 		 
 	</body>
 </html>
 			

@@ -11,13 +11,10 @@
 <jsp:include page="header.jsp"></jsp:include>
 <hr>
   <form action="<c:url value="/css/header_styles.css" />" method  = "post">
-    Име и Фамилия* <input type="text" name="firstAndLastName" required><br>
+    Име и Фамилия* <input type="text" name="names" required><br>
     Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
-    Телефон* <input type="number" name="telNumber" pattern="/^08[7-9][0-9]{7}$/" required><br>
- 
-  Съобщение*
-  <textarea rows="4" cols="50" required>
-               </textarea>
+    Телефон* <input type="number" name="phone" pattern="/^08[7-9][0-9]{7}$/" required><br>
+    Съобщение*<textarea rows="4" cols="50" required></textarea>
    <input type = "submit" value = "Изпрати">
    </form>
  </hr>

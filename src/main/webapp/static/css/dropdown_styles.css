@@ -7,6 +7,7 @@
 	margin-left: 200px;
 	position: relative;
 	top: -200px;
+	background-color: #333333
 }
 
 #primary_nav_wrap ul
@@ -21,7 +22,7 @@
 #primary_nav_wrap ul a
 {
 	display:block;
-	color:#333;
+	color:#333333;
 	text-decoration:none;
 	font-weight:700;
 	font-size:12px;
@@ -33,7 +34,7 @@
 #primary_nav_wrap ul span
 {
 	display:block;
-	color:#333;
+	color:#FFFFFF;
 	font-weight:700;
 	font-size:12px;
 	line-height:32px;
@@ -51,12 +52,53 @@
 
 #primary_nav_wrap ul li.current-menu-item
 {
-	background:#ddd
+	background:#333333;
 }
 
 #primary_nav_wrap ul li:hover
 {
-	background:#f6f6f6
+	background:#F6F6F6;
+}
+
+#primary_nav_wrap ul li:hover > span
+{
+	color:#333333;
+}
+
+#primary_nav_wrap li:hover
+{
+	border-top: 2px solid #E60000;
+	color: #333333;
+}
+
+.head-category-span:hover{
+	color: #333333;
+}
+
+#drop-line:first-child span:hover{
+	color: #333333;
+}
+
+.down-btn:hover #head-category-span{
+	color: #333333;
+}
+.upper-li-drop{
+	background: #333333;
+}
+
+.upper-li-drop:hover{
+	background: #FFFFFF;
+	
+}
+
+.upper-li-drop:hover
+
+#primary_nav_wrap ul span {
+	padding: 20px;
+}
+
+#primary_nav_wrap ul li span:hover {
+	color: #FFFFFF;
 }
 
 #primary_nav_wrap ul ul
@@ -65,7 +107,7 @@
 	position:absolute;
 	top:100%;
 	left:0;
-	background:#fff;
+	background:#FFFFFF;
 	padding:0
 }
 

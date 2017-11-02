@@ -56,7 +56,6 @@ public class UserFavoriteController {
 	@RequestMapping(value = "/removeFromFavorite", method = RequestMethod.POST)
 	public String removeFromFavorite(@RequestParam(value = "value") long productId, Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		try {
      		userDAO.removeFavouriteProduct(user.getUserId(), productId);
 			LinkedHashSet<Product> product = userDAO.viewFavourite(user);

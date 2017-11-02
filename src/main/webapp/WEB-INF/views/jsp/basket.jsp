@@ -52,8 +52,9 @@
 				   	</a>
 			  </li>
 			</div>
-				<button><a class="btn-links" href="<c:url value='/header/goIndex'/>">Добаване на още продукти</a></button>
-				
+				<button>
+					<a class="btn-links" href="<c:url value='/header/goIndex'/>">Добаване на още продукти</a>
+				</button>
 				</div>	
            </c:if> 
            <c:set var="total" value="${0}"/>

@@ -1,4 +1,4 @@
-function myFunction() {
+function dropFunction() {
     document.getElementById("dropdown-innert").classList.toggle("show");
 }
 
@@ -20,7 +20,6 @@ function isEmpty() {
     var searchedText;
     searchedText = document.getElementById("searched-text").value;
     if (!searchedText || 0 === searchedText) {
-        alert("Моля въведете текст в полето!");
         return false;
     };
 }

@@ -14,7 +14,8 @@
 
 <jsp:include page="user_menu.jsp" />
   
-       <c:if test = "${orders.size() == 0 }">
+  <c:if test="${sessionScope.user != null}">
+       <c:if test = "${orders.size() != 0 }">
            <div style = "border:1px solid green">
               <h3>"${user.firstName}" няма направени поръчки!</h3>
            </div >
@@ -42,6 +43,10 @@
            				
 </c:forEach>
   </c:if>
+  			</c:if>
+  <c:if test="${sessionScope.user == null}">
+				<p>Само потребителите, влезли в сметката си, имат достъп до тази страница!</p>
+			</c:if>
 <jsp:include page="footer.jsp" />
 </body>
 </html>

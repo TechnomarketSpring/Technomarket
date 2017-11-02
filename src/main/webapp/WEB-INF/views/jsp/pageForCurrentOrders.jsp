@@ -9,6 +9,9 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
+
+
+<c:if test="${sessionScope.user != null}">
  <c:if test="${order!= null}">
 	 
 	 	<h4>Номер на поръчка* ${order.orderId}</h4>
@@ -33,11 +36,12 @@
          				
 
   </c:if>
+	</c:if>
 
 
-
-
-
+	<c:if test="${sessionScope.user == null}">
+				<p>Само потребителите, влезли в сметката си, имат достъп до тази страница!</p>
+	</c:if>
 <jsp:include page="footer.jsp" />
 
 </body>

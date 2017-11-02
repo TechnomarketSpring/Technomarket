@@ -90,7 +90,7 @@ public class UserDAO {
 	// Метода exitsUser проверява и ако каже че има се връща потребителя от този
 	// метод!
 	public User getUser(String userName)
-			throws SQLException, InvalidCharacteristicsDataException, InvalidCategoryDataException {
+			throws SQLException, InvalidCategoryDataException {
 		this.connection = DBManager.getConnections();
 		User user = new User();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.users WHERE email = ?");

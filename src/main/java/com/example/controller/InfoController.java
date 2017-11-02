@@ -150,7 +150,7 @@ public class InfoController {
 		} catch (SQLException e) {
 			System.out.println("SQL Exception into /info/infoUserOrders ");
 			e.printStackTrace();
-		} catch (InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
+		} catch (InvalidCategoryDataException e) {
 			System.out.println("Ivalid data into /info/infoUserOrders");
 			e.printStackTrace();
 		}
