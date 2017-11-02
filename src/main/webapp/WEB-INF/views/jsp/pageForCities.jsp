@@ -5,10 +5,6 @@
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
 <body>
 <jsp:include page="header.jsp" />
 <c:if test="${ stores != null}">
@@ -21,6 +17,10 @@
 				<h5>Работно време* ${store.workingTime}</h5>
 				<h5>GPS* ${store.gps}</h5>
 				<img src="${ store.storeImageUrl} "  width="120" height="auto">
+				<form action = "<c:url value='/store/showInTheMap'/>" method = "get">
+				  <input type = "hidden" name = "value" value = "${store.storeId}"/>
+				  <input type = "submit" value = "Google map"/>
+				</form>
 				</div>			
 			</c:forEach>
 		</c:if>
