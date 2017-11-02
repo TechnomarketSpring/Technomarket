@@ -118,6 +118,7 @@ public class ProductController {
 		resp.getOutputStream().flush();
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
+			
 		}
 	}
 	
@@ -127,8 +128,8 @@ public class ProductController {
 		try {
 			adminDAO.removeProduct(productId, (User) session.getAttribute("user"));
 		} catch (NotAnAdminException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "errorPage";
 		}
 		
 		return "product_removed";
@@ -155,8 +156,8 @@ public class ProductController {
 			Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
 			
 		} catch (NotAnAdminException | SQLException | InvalidCharacteristicsDataException | InvalidCategoryDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "errorPage";
 		}
 		
 		model.addAttribute("promoSet", true);

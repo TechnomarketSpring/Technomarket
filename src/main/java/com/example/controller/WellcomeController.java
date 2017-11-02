@@ -36,6 +36,7 @@ public class WellcomeController {
 			menuCategories = categoryDAO.getCategoriesWithParentKeys();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "errorPage";
 			
 		}
 		

@@ -70,9 +70,11 @@ public class LoginCntroller {
 				return "login";
 			}
 		} catch (SQLException e) {
-			System.out.println("SQL Exceptions");
-			e.printStackTrace();
-		}
+			  System.out.println("SQL Exceptions");
+			  e.printStackTrace();
+			   
+	    	 }  
+		
 		return "login";
 	}
 
@@ -109,10 +111,9 @@ public class LoginCntroller {
 				return "forgotten";
 			}
 		} catch (SQLException e) {
-			// TODO send to errorPage
 			e.printStackTrace();
 			System.out.println("Ops SQL Exceptions");
-			return "error";
+			return "errorPage";
 		}
 	}
 

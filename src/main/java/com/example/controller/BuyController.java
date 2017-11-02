@@ -51,6 +51,7 @@ private StoreDAO storeDAO;
 			isProductInStock = storeDAO.isProductInStock(productId);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			return "errorPage";
 		}
 		if(!isProductInStock){
 			return "redirect:/info/infoForProduct?value=" + productId;

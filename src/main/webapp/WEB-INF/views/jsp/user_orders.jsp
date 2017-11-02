@@ -38,8 +38,7 @@
             </i></a></td>
         </tr><br>
 
-           </tbody>
-           				
+           </tbody>			
 </c:forEach>
   </c:if>
 <jsp:include page="footer.jsp" />
