@@ -118,6 +118,7 @@ public class ProductController {
 		resp.getOutputStream().flush();
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
+			
 		}
 	}
 	
@@ -127,8 +128,8 @@ public class ProductController {
 		try {
 			adminDAO.removeProduct(productId, (User) session.getAttribute("user"));
 		} catch (NotAnAdminException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "errorPage";
 		}
 		
 		return "product_removed";
@@ -138,6 +139,9 @@ public class ProductController {
 	public String setPromo(Model model, HttpSession session,
 			@RequestParam(value = "productId") int productId,
 			@RequestParam(value = "promoPercent") int percentPromo){
+		
+		Product promoProduct = null;
+		HashSet<String> emails = null;
 		try {
 			
 			User user = (User) session.getAttribute("user");
@@ -146,18 +150,20 @@ public class ProductController {
 			adminDAO.setPromoPercent(user, productId, percentPromo);
 			
 			//gets the product for email purposes:
-			Product promoProduct = productDAO.getProduct((int) productId);
+			promoProduct = productDAO.getProduct((int) productId);
 			
 			//gets all the needed emails: 
-			HashSet<String> emails = productDAO.getEmailsPerFavourites(user.getUserId());
+			emails = productDAO.getEmailsPerFavourites(user.getUserId());
 			
 			//sends mail data to Postman class to construct and send email to recipients:
+
 			if(percentPromo > 0){
 				Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
 			}
 		} catch (NotAnAdminException | SQLException | InvalidCategoryDataException e) {
-			// TODO Auto-generated catch block
+			Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
 			e.printStackTrace();
+			return "errorPage";
 		}
 		
 		model.addAttribute("promoSet", true);

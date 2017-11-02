@@ -39,8 +39,7 @@
             </i></a></td>
         </tr><br>
 
-           </tbody>
-           				
+           </tbody>			
 </c:forEach>
   </c:if>
   			</c:if>

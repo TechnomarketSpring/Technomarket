@@ -32,6 +32,11 @@
                 <img src="<c:url value='/product/product_pic?value=${product.productId}'/>" alt="product-image" width="120" height="auto">
         	    <hr>
   	 	   </c:forEach>
+  	 	   <c:set var="total" value="${0}"/>
+  	 	   <c:forEach items = "${order.products}" var = "product" >
+  	 	     <c:set var="total" value="${(total + ((product.key.price * product.value)) - ((product.key.price*product.key.percentPromo)/100))}" />
+  	 	   </c:forEach>
+  	 	   <h4>Сумата за плащане е: <span id="priceSum">${total}</span> лв.</h4>
   	 	      
          				
 

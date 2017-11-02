@@ -10,10 +10,13 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
+
+<jsp:include page="maping.jsp" />
  <div style="border:1px solid red;">
       <c:forEach items="${ allNameOfStores }" var="allNameOfStores">
-      <a href = "<cs:url value='/header/cities?value=${allNameOfStores}'/>">${allNameOfStores}</a>
+     Магазини във * <a href = "<cs:url value='/header/cities?value=${allNameOfStores}'/>">${allNameOfStores}</a><br><br>
  </c:forEach>
+ 
  </div>
 <jsp:include page="footer.jsp" />
 </body>

@@ -203,4 +203,24 @@ public class StoreDAO {
 		rs.close();
 		
 	}
+	public Store seachStoreById(long storeId) throws SQLException{
+		Store store = new Store();
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM technomarket.stores WHERE store_id = ?;");
+		statement.setString(1, ""+storeId);
+		ResultSet result = statement.executeQuery();
+		while(result.next()){
+			store.setStoreId(result.getLong("store_id"));
+			store.setCity(result.getString("city"));
+			store.setAddress(result.getString("address"));
+			store.setPhoneNumber(result.getString("phone"));
+			store.setWorkingTime(result.getString("working_time"));
+			store.setEmail(result.getString("email"));
+			store.setGps(result.getString("gps"));
+			store.setStoreImageUrl("store_image_url");
+		}
+		
+		return store;
+		
+	}
 }

@@ -153,6 +153,7 @@ public class InfoController {
 		} catch (InvalidCategoryDataException e) {
 			System.out.println("Ivalid data into /info/infoUserOrders");
 			e.printStackTrace();
+			return "errorPage";
 		}
 		return "user_orders";
 	}
