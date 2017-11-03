@@ -234,7 +234,7 @@ public class BuyController {
 		if(notes != null){
 			order.setNotes(notes.trim());
 		}
-		order.setPrice(price.trim());
+		order.setPrice(price);
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());

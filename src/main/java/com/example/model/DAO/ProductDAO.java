@@ -60,7 +60,6 @@ public class ProductDAO {
 			pro.setProductId(result.getLong("product_id"));
 			pro.setTradeMark(getTradeMark(pro.getProductId()));
 			pro.setImageUrl(WebInitializer.LOCATION + result.getString("image_url"));
-			System.out.println("=========================12435346567");
 			pro.setCategory(categoryDAO.getProductsCategory(pro.getProductId()));
 			result.close();
 			statement.close();

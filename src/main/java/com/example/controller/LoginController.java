@@ -51,13 +51,16 @@ public class LoginController {
 		try {
 			boolean exiting = userDAO.existingUser(username.trim(), password.trim());
 			if (exiting) {
+				
 				User user = null;
 				try {
 					user = userDAO.getUser(username.trim());
 
 				} catch (InvalidCategoryDataException e) {
 					System.out.println("Invalid data exceptions");
+					return "login";
 				}
+				System.out.println(user+"!!!!!!!!!!!!!!!!!!!!!!!$$$$$$$$$$$$$$$$$$$$$$$$$$!!!!!!!!!!!!!!!!!");
 				user.setAdmin(true);
 				session.setAttribute("user", user);
 				session.setAttribute("log", true);
