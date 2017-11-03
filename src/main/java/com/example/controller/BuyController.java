@@ -259,7 +259,7 @@ public class BuyController {
 		//clearing the basket after order is made:
 		
 		((HashMap<Product, Integer>) session.getAttribute("basket")).clear();
-		return "confurt";
+		return "confirm";
 	}
 
 }

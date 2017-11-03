@@ -195,6 +195,7 @@ public class ProductController {
 		}
 		return "filtred_products";
 	}
+	
 	@RequestMapping(value = "/compareProduct" , method = RequestMethod.GET)
 	public String compare(@RequestParam("compare") String comp,
 			@RequestParam("categoryName") String categoryName,
