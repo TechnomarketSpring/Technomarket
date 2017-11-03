@@ -30,7 +30,7 @@
   <form action="<c:url value="/css/header_styles.css" />" method  = "post">
     Име и Фамилия* <input type="text" name="names" maxlength="35" required><br>
     Имайл* <input type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
-    Телефон* <input type="number" name="phone" pattern="[+]?[0-9]{1,10}" required><br>
+    Телефон* <input type="text" name="phone" maxlength="10" minlength="10" pattern="^[0-9]*$" required><br>
     Съобщение*<textarea rows="4" cols="50" required></textarea>
    <input type = "submit" value = "Изпрати">
    </form>

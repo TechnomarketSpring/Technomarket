@@ -17,7 +17,7 @@
 				<div id="admin-btns">	
 					<a class="btn" href="<cs:url value='/info/infoAdminInsertProduct'/>"><span class="btn-text"><strong>Нов продукт</strong></span></a>
 					<a class="btn" href="<cs:url value='/admin/adminCreateAdmin'/>"><span class="btn-text"><strong>Нов админ</strong></span></a>
-					<a class="btn" href="<cs:url value='/info/infoUserBan'/>"><span class="btn-text"><strong>Бан секира</strong></span></a>
+					<%-- <a class="btn" href="<cs:url value='/info/infoUserBan'/>"><span class="btn-text"><strong>Бан секира</strong></span></a> --%>
 					<a class="btn" href="<cs:url value='/info/infoAdminOrders'/>"><span class="btn-text"><strong>Поръчки</strong></span></a>
 				</div>
 			</c:if>
