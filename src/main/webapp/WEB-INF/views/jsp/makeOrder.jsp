@@ -46,7 +46,7 @@
      <div>
      <form action="<cs:url value='/buyController/addOrder'/>" method="post">
 				Име и Фамилия* <input type="text" name="firstAndLastName" maxlength="35" required><br>
-				Телефон* <input type="number" name="telNumber"  pattern="[+]?[0-9]{1,10}" required><br>
+				Моб.Телефон* <input type="text" name="telNumber" maxlength="10" minlength="10" pattern="^[0-9]*$" required><br>
 				Град* <input type="text" name="town" maxlength="10" required></input><br>
 				Пощенски код* <input type="number" name="postCode" min = "1000"  max="9999" pattern= "[0-9]" required></input><br>
 				Улица/Квартал* <input type="text" name="street" maxlength="60" required>  Номер*
