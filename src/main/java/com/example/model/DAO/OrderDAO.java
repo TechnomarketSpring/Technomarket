@@ -61,6 +61,7 @@ public class OrderDAO {
 			o.setProducts(products);
 			orders.add(o);
 		}
+		statment.close();
 		return orders;
 	}
 	
@@ -79,6 +80,7 @@ public class OrderDAO {
 		while (result.next()) {
 			products.put(productDAO.getProduct(result.getLong("product_id")), result.getInt("quantity"));
 		}
+		statment.close();
 		return products;
 	}
 
@@ -119,11 +121,12 @@ public class OrderDAO {
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
 		o.setOrderId(rs.getLong(1));
+		ps.close();
 		addOrderedProductsToTable(o);
 	}
-	public HashSet<Order> getOrderWhereIsNotConfirmedAndIsNotPaid() throws SQLException{
+	public LinkedHashSet<Order> getOrderWhereIsNotConfirmedAndIsNotPaid() throws SQLException{
 		this.connection = DBManager.getConnections();
-		HashSet<Order> orders = new HashSet<>();
+		LinkedHashSet<Order> orders = new LinkedHashSet<>();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT order_id, users.first_name, users.last_name, date_time, address, payment,notes, isConfirmed, isPaid, zip, user_phone  FROM technomarket.orders JOIN technomarket.users ON(orders.user_id = users.user_id)  WHERE orders.isConfirmed = false OR ispaid = false;");
 		ResultSet result = statement.executeQuery();
 		while(result.next()){
@@ -143,6 +146,7 @@ public class OrderDAO {
 			   orders.add(order);
 			}
 		}
+		statement.close();
 		return orders;
 	}
 	private void addOrderedProductsToTable(Order o) throws SQLException{
@@ -154,19 +158,28 @@ public class OrderDAO {
 			ps.setLong(2, entry.getKey().getProductId());
 			ps.setInt(3, entry.getValue());
 			ps.executeUpdate();
+			ps.close();
 		}
 	}
 	
-	public void setOrderAsConfirmed(long orderId ,boolean isConfirmed) throws SQLException, IlligalUserActionException {
+	public void setOrderAsConfirmed(long orderId) throws SQLException, IlligalUserActionException {
 			this.connection  = DBManager.getConnections();
-			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = ? WHERE order_id = ?",
+			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = true WHERE order_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			ps.setBoolean(1, isConfirmed);
-			ps.setLong(2, orderId);
+			System.out.println("YESSSS @@@@@@@@@@@@@@@@@@@@22&&&&&&&&&");
+			ps.setLong(1, orderId);
 			ps.executeUpdate();
-		
-		
+			ps.close();
 	}
+	public void setOrderAsNotConfirmed(long orderId) throws SQLException, IlligalUserActionException {
+		this.connection  = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = false WHERE order_id = ?",
+				Statement.RETURN_GENERATED_KEYS);
+		ps.setLong(1, orderId);
+		System.out.println("NOOOOOO @@@@@@@@@@@@@@@@@@@@22&&&&&&&&&");
+		ps.executeUpdate();
+		ps.close();
+}
 	
 	//admin panel in Orders:
 
@@ -176,6 +189,7 @@ public class OrderDAO {
 			Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, orderId);
 			ps.executeUpdate();
+			ps.close();
 		
 		
 	}
@@ -200,25 +214,16 @@ public class OrderDAO {
 		statement.close();
 		return order;
 	}
-	public HashSet<Product> getProductFromOrder(String id) throws SQLException{
-		HashSet<Product> products = new HashSet<>();
-		PreparedStatement st = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name,product.product_name, product.price, product.warranty,product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) JOIN technomarket.order_has_product ON(order_has_product.order_id = ?) ");
+	public LinkedHashMap<Long, Integer> getProductFromOrder(String id) throws SQLException{
+		LinkedHashMap<Long, Integer> products = new LinkedHashMap<>();
+		PreparedStatement st = this.connection.prepareStatement("select product_id , quantity from technomarket.order_has_product where order_id = ?;");
 		st.setString(1, id);
 		ResultSet rs = st.executeQuery();
 		Product pr = null;
 		while(rs.next()){
-			pr = new Product();
-			pr.setProductId(rs.getLong("product_id"));
-			pr.setTradeMark(rs.getString("trade_marks.trade_mark_name"));
-			pr.setName(rs.getString("product.product_name"));
-			pr.setPrice(rs.getString("price"));
-			pr.setWorranty(rs.getInt("warranty"));
-			pr.setPercentPromo(rs.getInt("percent_promo"));
-			pr.setDateAdded(LocalDate.parse(rs.getString("date_added")));
-			pr.setProductNumber("product_number");
-			pr.setImageUrl("image_url");
-			products.add(pr);
+			products.put(rs.getLong("product_id"), rs.getInt("quantity"));
 		}
+		st.close();
 		return products;
 	}
 	public void deleteOrder(long orderId) throws SQLException{
@@ -226,6 +231,7 @@ public class OrderDAO {
 		PreparedStatement statement = this.connection.prepareStatement("DELETE FROM technomarket.orders WHERE order_id = ?;");
 		statement.setLong(1, orderId);
 		statement.executeUpdate();
+		statement.close();
 	}
 
 }

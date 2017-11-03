@@ -60,9 +60,10 @@ public class UserDAO {
 			while (resutSet.next()) {
 				user.setId(resutSet.getInt(1));
 			}
+			statement.close();
 		}
 	}
-
+  
 	// log in of user:
 	public boolean existingUser(String userName, String password) throws SQLException {
 		String checkQuery = "SELECT * FROM technomarket.users WHERE email = ? and password = ?";
@@ -72,8 +73,10 @@ public class UserDAO {
 		statement.setString(2, Encrypter.encrypt(password));
 		ResultSet resultSet = statement.executeQuery();
 		if (resultSet.next()) {
+			statement.close();
 			return true;
 		}
+		statement.close();
 		return false;
 	}
 	/*
@@ -207,7 +210,7 @@ private long getUserIdByEmail(String email) throws SQLException {
 		statement.close();
 		
 	}
-
+//TUKA TUKA TUKA
 	// Remove favourite product:
 	public void removeFavouriteProduct(long userId, long  productId) throws SQLException {
 		this.connection = DBManager.getConnections();

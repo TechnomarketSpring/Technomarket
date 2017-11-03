@@ -26,12 +26,13 @@ public class TradeMarkDAO {
 		ps.setString(1, tradeMark);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()){
-			rs.close();
+			ps.close();
 			return true;
 		}else{
-			rs.close();
+			ps.close();
 			return false;
 		}
+		
 	}
 	
 	public void insertTradeMark(String tradeMark) throws SQLException {
@@ -39,6 +40,7 @@ public class TradeMarkDAO {
 		PreparedStatement ps = this.connection.prepareStatement("INSERT INTO technomarket.trade_marks (trade_mark_name) VALUES (?)");
 		ps.setString(1, tradeMark);
 		ps.executeUpdate();
+		ps.close();
 	}
 	
 	public TreeSet<String> getAllTradeMarks() throws SQLException{

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -45,6 +46,7 @@ public class InfoController {
 	private OrderDAO orderDAO;
 	@Autowired
 	private UserDAO userDAO;
+	
 
 	// product info gets:
 
@@ -92,8 +94,8 @@ public class InfoController {
 			}
 			
 		} catch (SQLException | InvalidStoreDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "errorPage";
 		}
 
 		return "productInfo";
@@ -204,9 +206,22 @@ public class InfoController {
 	public String infoForCurrentOrder(@RequestParam(value = "value") String orderId, Model model) {
 		try {
 			Order order = orderDAO.searchOrderById(orderId);
-			HashSet<Product> product = orderDAO.getProductFromOrder(orderId);
+			LinkedHashMap<Long, Integer> product = orderDAO.getProductFromOrder(orderId);
+			
+			LinkedHashMap<Product, Integer> readyProduct = new LinkedHashMap<>();
+			for(Iterator<Entry<Long, Integer>> it = product.entrySet().iterator(); it.hasNext();){
+				Entry<Long, Integer> entry = it.next();
+				try {
+					Product pr = productDAO.getProduct(entry.getKey());
+					readyProduct.put(pr, entry.getValue());
+				} catch (InvalidCategoryDataException e) {
+					e.printStackTrace();
+					return "errorPage";
+				}
+			}
+			
 			model.addAttribute("order", order);
-			model.addAttribute("products", product);
+			model.addAttribute("products", readyProduct);
 		} catch (SQLException e) {
 			System.out.println("SQL EXception is InfoControlle/inForCurrenrOrder");
 			e.printStackTrace();
@@ -227,7 +242,7 @@ public class InfoController {
 
 	public String infoAdminOrders(Model model, HttpSession session){
 		try {
-			HashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
+			LinkedHashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
 			model.addAttribute("orders", orders);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -24,18 +24,20 @@
                       <form action = "<cs:url value='/admin/confirmed'/>" method="post">
                       <input type = "submit" value = "Потвърди поръчка">
                       <input type="hidden" name="value" value = "${order.orderId}">
+                       </form>
                   </c:if>
-                   </form>
+                  
                       <c:if test="${order.isConfirmed == true}">
                          <form action = "<cs:url value='/admin/setPaid'/>" method="post">
                          <input type = "submit" value = "Заплащане">
                          <input type="hidden" name="value" value = "${order.orderId}">
-                      </form>
+                         </form>
                      </c:if>
                        <c:if test="${order.isConfirmed == true}">
                            <form action = "<cs:url value='/admin/removeOrder'/>" method="post">
                            <input type = "submit" value = "Премахване от потвърдени">
                            <input type="hidden" name="value" value = "${order.orderId}">
+                           </form>
                        </c:if>
                     </div>
                  

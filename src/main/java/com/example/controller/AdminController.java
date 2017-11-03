@@ -43,7 +43,7 @@ public class AdminController {
 		try {
 			User user = (User) session.getAttribute("user");
 		    try {
-				adminDAO.setOrderAsConfirmed(user, orderId, true);
+				adminDAO.setOrderAsConfirmed(user, orderId);
 			} catch (NotAnAdminException e) {
 				e.printStackTrace();
 				return "index";
@@ -90,7 +90,7 @@ public class AdminController {
 		try {
 			User user = (User) session.getAttribute("user");
 		    try {
-				adminDAO.setOrderAsConfirmed(user, orderId, false);
+				adminDAO.setOrderAsNotConfirmed(user, orderId);
 			} catch (NotAnAdminException e) {
 				e.printStackTrace();
 				return "index";

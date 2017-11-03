@@ -41,6 +41,7 @@ public class StoreDAO {
 			cityNames.add(result.getString("stores.city"));
 		}
 		result.close();
+		statement.close();
 		return cityNames;
 	}
 	

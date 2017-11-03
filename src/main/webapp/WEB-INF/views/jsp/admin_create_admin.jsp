@@ -19,7 +19,7 @@
 			<p>Въведете имейла на потребителя, който ще получи администраторки права:</p>
 			<form action="<cs:url value='/admin/createAdmin'/>" method="post" enctype="multipart/form-data">
 				<label for="name">Имейл</label>
-				<input type="email" name="email" value="name" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+				<input type="email" name="email" value="name" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 				<input type="submit" value="Въведи">
 			</form>
 		</c:if>

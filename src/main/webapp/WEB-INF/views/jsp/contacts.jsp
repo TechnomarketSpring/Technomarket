@@ -11,7 +11,6 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <hr>
-
 	<c:if test="${emptyEmail == true}">
 			<p>Не сте въвели имейл! Моля променете полето преди да изпратите имейл!</p>
 	</c:if>			
@@ -28,12 +27,12 @@
 			<p>Съобщението е въведено спешно!</p>
 	</c:if>	
 
-  <form action="<c:url value="/info/contactsEmail" />" method  = "post">
-    Име и Фамилия* <input type="text" name="names" required><br>
-    Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+  <form action="<c:url value="/css/header_styles.css" />" method  = "post">
+    Име и Фамилия* <input type="text" name="names" maxlength="35" required><br>
+    Имайл* <input type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
     Телефон* <input type="number" name="phone" pattern="[+]?[0-9]{1,10}" required><br>
-    Съобщение*<textarea id="message" name="message" rows="4" cols="50" required></textarea>
-   <input type = "submit" value = "Изпрати" onclick="isEmpty();">
+    Съобщение*<textarea rows="4" cols="50" required></textarea>
+   <input type = "submit" value = "Изпрати">
    </form>
  </hr>
  <hr>

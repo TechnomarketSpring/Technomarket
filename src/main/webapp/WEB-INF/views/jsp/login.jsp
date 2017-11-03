@@ -26,9 +26,9 @@
 		</c:if>
 		<form action="<cs:url value='/login'/>" method="post">
 			<label id="first-label" .class="lagel-log" for="email"><strong>Имейл</strong></label>
-			<input id="field-1" class="txt-log" id="email" type="email" name="username" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
-			<label  id="second-label" .class="lagel-log" for="password"><strong>Парола</strong></label>
-			<input id="field-2" class="txt-log" id="password" type="password" name="password" required><br>
+			<input id="field-1" class="txt-log" id="email" type="email" name="username" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+			<label  id="second-label" .class="lagel-log" for="password" ><strong>Парола</strong></label>
+			<input id="field-2" class="txt-log" id="password" type="password" minlength = "8" maxlength="35" name="password" required><br>
 			<div id="rem-forg">
 			<label for="checkbox"><strong>Запомни ме</strong></label>
 			<input id="checkbox" type = "checkbox" name = "remember"> 
