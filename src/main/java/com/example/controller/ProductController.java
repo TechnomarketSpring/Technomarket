@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -69,6 +70,23 @@ public class ProductController {
 	@RequestMapping(value = "/insert_product", method = RequestMethod.GET)
 	public String prepareRegistarion() {
 		return "admin_insert_product";
+	}
+	@RequestMapping(value = "/productByPrice", method = RequestMethod.GET)
+	public String searchProductByPrice(@RequestParam("price1") double price1  ,@RequestParam("price2") double price2, Model model){
+		try {
+			if(price1 > price2){
+				model.addAttribute("errorPrice", "invalidData");
+			}else{
+			  LinkedHashSet<Product> products = productDAO.searchProductByPrice(price1, price2);
+			  model.addAttribute("filtredProducts", products);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL Exception in /product/productByPrice");
+			e.printStackTrace();
+			return "errorPage";
+		}
+		return "filtred_products";
+		
 	}
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")

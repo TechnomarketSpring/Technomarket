@@ -10,6 +10,20 @@
 	<body>
 		<jsp:include page="header.jsp" />
 		
+		<c:if test="${ errorPrice != null}">
+		  <h4>Невалидни данни за търсене по цена</h4>
+		</c:if>
+		
+		<div>
+		<h4>Търси продукти с цена между:</h4>
+		<form action="<c:url value='/product/productByPrice'/> " method="get">
+		от* <input type="text" id="number" name="price1" min = "0" max="99999" required >
+		 до*<input type="text" id="number" name="price2" min="0" max="99999" required >
+		 <input type = "submit">
+		</form>
+		</div>  
+		
+		
 		<!--<form <c:url value='/header/search'/>" method="get">-->
 		<form action="<c:url value='/product/compareProduct?compare=${mark}'/> " method="get">
 		Сортирай по *<select name  = "compare" >

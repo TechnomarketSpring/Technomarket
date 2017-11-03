@@ -82,6 +82,32 @@ public class ProductDAO {
 		
 		return tradeMark;
 	}
+	public LinkedHashSet<Product> searchProductByPrice(double price1 , double price2) throws SQLException{
+		LinkedHashSet<Product> products = new LinkedHashSet<>();
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT product.product_id,trade_marks.trade_mark_name, product.product_name,product.price,product.warranty,product.percent_promo,product.date_added,product.product_number,product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id)  WHERE product.price between ? and ?"); 
+		statement.setDouble(1, price1);
+		statement.setDouble(2, price2);
+		ResultSet resultSet = statement.executeQuery();
+		
+		while(resultSet.next()){
+			Product product = new Product();
+			product.setProductId(resultSet.getLong("product_id"));
+			product.setTradeMark(resultSet.getString("trade_mark_name"));
+			product.setName(resultSet.getString("product_name"));
+			product.setPrice(resultSet.getString("price"));
+			product.setWorranty(resultSet.getInt("warranty"));
+			product.setPercentPromo(resultSet.getInt("percent_promo"));
+			product.setDateAdded(LocalDate.parse(resultSet.getString("date_added")));
+			product.setProductNumber(resultSet.getString("product_number"));
+			product.setImageUrl(resultSet.getString("image_url"));
+			products.add(product);
+		}
+		
+		return products;
+		
+		
+	}
 	
 	public Product searchProductById(String productId) throws SQLException{
 		this.connection = DBManager.getConnections();
