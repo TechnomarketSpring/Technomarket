@@ -24,7 +24,7 @@
 				<li class="admin-btn">
 					<form id="search" action="<c:url value='/product/setPromo'/>" method="post">
 						<input type="hidden" name="productId" id="product" value="${product.productId}">
-						<input type="number" id="promo-box" name="promoPercent" size="40" maxlength="35" min="0" max="100" value="0" onclick="return empty();" required>
+						<input type="number" id="promo-box" name="promoPercent" size="40" min="0" max="99" value="0" onclick="return empty();" required>
 						<input type="image" id="grant-promo" alt="set-promo" src="<c:url value='/img/buttons/admin-buttons/grant-promo.png'/>"><br>
 					</form>
 				</li>
@@ -117,7 +117,7 @@
 									<label for="quantity">Смени количество: </label>
 									<input type="hidden" name="productId" id="product" value="${product.productId}">
 									<input type="hidden" name="storeId" id="store${entry.key.storeId}" value="${entry.key.storeId}">
-									<input type="number" class="quantity" id="amount${entry.key.storeId}" name="quantity" min="0" onclick="return empty();" required>
+									<input type="number" class="quantity" id="amount${entry.key.storeId}" name="quantity" min="0" max = "1000" onclick="return empty();" required>
 									<input type="submit" id="ajax-submit" onclick="submitQuery(${entry.key.storeId})" value="Запиши">
 							<!-- </form> --><br>
 							</c:if>

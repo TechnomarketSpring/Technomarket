@@ -23,17 +23,17 @@
 		</cs:if>
 			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
 				<label for="name">Име на продукт</label>
-				<input type="text" id="name" name="productName" required ><br>
+				<input type="text" id="name" name="productName" minlength="2" maxlength="35" required ><br>
 				<label for="trade-mark">Марка</label>
-				<input type="text" id="trade-mark" name="tradeMark" required><br>
+				<input type="text" id="trade-mark" name="tradeMark" minlength="2" maxlength="35" required><br>
 				<label for="category">Категория</label>
-				<input type="text" id="category" name="categoryName" required><br>
+				<input type="text" id="category" name="categoryName" minlength = "2" maxlength="35" required><br>
 				<label for="price" >Цена</label>
-				<input type="number" id="price" name="price" value="price" maxlength  = "6" min="0" step="any" required><br>
+				<input type="number" id="price" name="price" value="price" max  = "99999" min="1" step="any" required><br>
 				<label for="warranty">Гаранция в месеци</label>
-				<input type="number" id="warranty" name="warranty" value="warranty" maxlenght = "2" min="0" pattern= "[0-9]" required><br>
+				<input type="number" id="warranty" name="warranty" value="warranty" max="99" min="0" pattern= "[0-9]" required><br>
 				<label for="promo">Промоционален процент</label>
-				<input type="number" id="promo" name="promoPercent" value="promo" min="0" pattern= "[0-9]" required><br>
+				<input type="number" id="promo" name="promoPercent" value="promo" min="0" max="99" pattern= "[0-9]" required><br>
 				<label for="image">Снимка на продукта<sup><a href="#fn1" id="ref1">*</a></sup></label>
 				<input type="file" id="image" name="image" value="image" accept=".jpg,.png,.gif,.bmp,.jpeg" required>
 				<input type="submit" value="Добави">

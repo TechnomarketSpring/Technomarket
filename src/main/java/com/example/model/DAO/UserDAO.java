@@ -62,7 +62,7 @@ public class UserDAO {
 			statement.close();
 		}
 	}
-
+  
 	// log in of user:
 	public boolean existingUser(String userName, String password) throws SQLException {
 		String checkQuery = "SELECT * FROM technomarket.users WHERE email = ? and password = ?";
@@ -209,7 +209,7 @@ private long getUserIdByEmail(String email) throws SQLException {
 		statement.close();
 		
 	}
-
+//TUKA TUKA TUKA
 	// Remove favourite product:
 	public void removeFavouriteProduct(long userId, long  productId) throws SQLException {
 		this.connection = DBManager.getConnections();

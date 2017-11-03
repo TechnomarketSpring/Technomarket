@@ -17,7 +17,7 @@
 			</div>
 		</c:if>
 		<form action="forgotten" method="post">
-		Е-мейл <input type="email" name="email"><br>
+		Е-мейл <input type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 		<input type="submit" value="Изпрати"><br>
 		</form>
 		<jsp:include page="footer.jsp" />

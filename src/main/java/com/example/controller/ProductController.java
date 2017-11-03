@@ -106,7 +106,7 @@ public class ProductController {
 		} 
 		return "admin_insert_product";
 	}
-	
+	//TUKAA NE E DOBREEEE
 	@RequestMapping(value="/product_pic", method = RequestMethod.GET)
 	public void productPic(HttpServletResponse resp, @RequestParam(value = "value") String productId){
 		Product p;
@@ -118,7 +118,6 @@ public class ProductController {
 		resp.getOutputStream().flush();
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
-			
 		}
 	}
 	

@@ -45,20 +45,20 @@
      </div>
      <div>
      <form action="<cs:url value='/buyController/addOrder'/>" method="post">
-				Име и Фамилия* <input type="text" name="firstAndLastName" required><br>
-				Телефон* <input type="number" name="telNumber" pattern="/^08[7-9][0-9]{7}$/" required><br>
-				Град* <input type="text" name="town" required></input><br>
-				Пощенски код* <input type="number" name="postCode" min = 4 pattern= "[0-9]" required></input><br>
-				Улица/Квартал* <input type="text" name="street" required>  Номер*
-				<input type="number" name="number" required><br>
-				Блок*<input type="text" name="block">  
-                Вход*<input type="text" name="entrace"> 
-                Етаж*<input type="text" name="floor"> 
-                Апартамент*<input type="text" name="aparment"><br>
-                Уточнения за адрес*<input type="text" name="notes"><br>
+				Име и Фамилия* <input type="text" name="firstAndLastName" maxlength="35" required><br>
+				Телефон* <input type="number" name="telNumber"  pattern="/^08[7-9][0-9]{7}$/" required><br>
+				Град* <input type="text" name="town" maxlength="10" required></input><br>
+				Пощенски код* <input type="number" name="postCode" min = "1000"  max="9999" pattern= "[0-9]" required></input><br>
+				Улица/Квартал* <input type="text" name="street" maxlength="60" required>  Номер*
+				<input type="number" name="number" min = "1" max = "999" required><br>
+				Блок*<input type="text" name="block" maxlength="35">  
+                Вход*<input type="text" name="entrace" maxlength="10"> 
+                Етаж*<input type="number" name="floor" max="99" min = "0"> 
+                Апартамент*<input type="number" name="aparment" max="999"><br>
+                Уточнения за адрес*<input type="text" name="notes" maxlength="60"><br>
                 Начин на плащане*<select name = "payment">
                     <option value = "buy-shipping">При получаване</option>
-                    <option value="banckCard">Банкова карта</option>
+                    <option value="bankCard">Банкова карта</option>
                 </select>
 					<input type="hidden" name="price" value = "${price}">
 					<input type="submit" value="Изпрати">

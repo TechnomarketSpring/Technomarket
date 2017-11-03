@@ -42,14 +42,14 @@
 		</div>
 	</c:if>
 		<form action="register" method="post">
-				Име* <input type="text" name="firstName" required><br>
-				Фамилия* <input type="text" name="lastName" required><br>
-				Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
-				Парола* <input type="password" name="password" required></input><br>
-				Парола(отново)* <input type="password" name="password1" required></input><br>
+				Име* <input type="text" name="firstName" maxlength="35" required><br>
+				Фамилия* <input type="text" name="lastName" maxlength="35" required><br>
+				Имайл* <input type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
+				Парола* <input type="password" name="password" maxlength="35" required></input><br>
+				Парола(отново)* <input type="password" maxlength="35" name="password1" required></input><br>
 				Пол* <input type="radio" name="gender" value="male">Мъж <input
 				type="radio" name="gender" value="female">Жена<br>
-				Датa на раждане* <input type="date" name="bday" required><br>
+				Датa на раждане* <input type="date" name="bday" max="2017-11-03" required><br>
 				<input type="checkbox" name="abonat" value="1">Искам да получавам ингормация за промоционални и нови продукти.<br> 
 				<input type="checkbox" name="submit" value="1">Приемам условията за позлване<br> 
 				<input type="submit" value="Регистация">
