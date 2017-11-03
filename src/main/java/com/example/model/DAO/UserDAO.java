@@ -20,6 +20,7 @@ import com.example.model.exceptions.IlligalAdminActionException;
 import com.example.model.exceptions.IlligalUserActionException;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
+import com.example.model.exceptions.InvalidUserDataException;
 import com.example.model.util.Encrypter;
 
 
@@ -278,9 +279,9 @@ private long getUserIdByEmail(String email) throws SQLException {
 			ps.close();
 		}
 	}
-	public void createAdmin(String email) throws SQLException{
+	public void createAdmin(String email) throws SQLException, InvalidUserDataException{
 		this.connection = DBManager.getConnections();
-		PreparedStatement st = this.connection.prepareStatement("select users.user_id from technomarket.users where email = ?");
+		PreparedStatement st = this.connection.prepareStatement("SELECT users.user_id FROM technomarket.users WHERE email = ?");
 		st.setString(1, email);
 		ResultSet result = st.executeQuery();
 		String id = "";
@@ -288,6 +289,9 @@ private long getUserIdByEmail(String email) throws SQLException {
 			id+=result.getString(1);
 		}
 		st.close();
+		if(id.isEmpty()){
+			throw new InvalidUserDataException();
+		}
 		PreparedStatement statement = this.connection.prepareStatement("UPDATE  technomarket.users SET users.isAdmin = false WHERE user_id = ?;");
 		statement.setString(1, id);
 		statement.executeUpdate();

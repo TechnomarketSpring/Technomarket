@@ -15,9 +15,6 @@ public class Equalizer {
 	}
 	
 	public Map<Category, ArrayList<Product>> getEqualizer() {
-		//�� ��� ������ DAO ������ ������ �� ���������� 
-		//���������� ����� ������ ���������� �������� � ��� JSP �� � ��������� 
-		//� � ������� ���;
 		return Collections.unmodifiableMap(this.equalizer);
 	}
 

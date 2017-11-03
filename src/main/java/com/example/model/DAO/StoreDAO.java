@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.example.model.Order;
 import com.example.model.Product;
 import com.example.model.Store;
+import com.example.model.DAO.StoreDAO.Status;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.InvalidStoreDataException;
 
@@ -219,8 +220,20 @@ public class StoreDAO {
 			store.setGps(result.getString("gps"));
 			store.setStoreImageUrl("store_image_url");
 		}
-		
+		statement.close();
 		return store;
-		
+	}
+	
+	public int getQuantity(Product p) throws SQLException{
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement("SELECT SUM(amount) AS sum FROM technomarket.store_has_product WHERE product_id = ?;");
+		statement.setString(1, String.valueOf(p.getProductId()));
+		ResultSet result = statement.executeQuery();
+		int quantity = 0;
+		while(result.next()){
+			quantity = result.getInt("sum");
+		}
+		statement.close();
+		return quantity;
 	}
 }

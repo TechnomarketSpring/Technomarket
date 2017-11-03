@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +18,18 @@
           
           <c:if test="${sessionScope.basket.size() == 0}">
               <h4>Няма продукти във вашата кошница!</h4>
+          </c:if>
+          
+          <c:if test="${productNames != null}">
+         		<c:if test="${fn:length(productNames) eq 1}">
+         			<p>Следният продукт не е в достатъчна наличност, моля намалете я:</p>
+         		</c:if>
+         		<c:if test="${fn:length(companies) gt 1}">
+         			<p>Следните продукти не са в достатъчна наличност, моля намалете я:</p>
+         		</c:if>
+          		<c:forEach items="${productNames}" var="name" varStatus="loop">
+          			<span>${name}</span>
+          		</c:forEach>
           </c:if>
           
           <c:if test="${sessionScope.basket.isEmpty() == false}">
@@ -46,6 +59,7 @@
 				      <input type = "submit" value = "Премахни продукта">
 				    </form>  
               </c:forEach>
+              
               <li class="btn-li">
 					 <a class="btn-links" href="<cs:url value='/buyController/makeOrder'/>">
 						<img src="<cs:url value='/img/buttons/deliver.png'/>" alt="contacts">

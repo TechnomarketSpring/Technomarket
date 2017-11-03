@@ -20,6 +20,9 @@
 		</div>
 		
 		<c:if test="${sessionScope.user.isAdmin == true}">
+		<c:if test="${invalidPercent == false }">
+			<p>Невалиден запис! Позволените проценти са от 0 до 99!</p>
+		</c:if>
 		<ul id="admin-buttons">
 				<li class="admin-btn">
 					<form id="search" action="<c:url value='/product/setPromo'/>" method="post">

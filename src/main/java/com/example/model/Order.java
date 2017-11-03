@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.example.model.exceptions.InvalidOrderDataException;
@@ -175,8 +176,8 @@ public class Order {
 
 
 
-	public HashMap<Product, Integer> getProducts() {
-      return this.products;
+	public Map<Product, Integer> getProducts() {
+      return Collections.unmodifiableMap(this.products);
 	}
 
 
@@ -225,6 +226,9 @@ public class Order {
 		this.payment = payment;
 	}
 
+	
+	//hashCode and equals overrided for collections:
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

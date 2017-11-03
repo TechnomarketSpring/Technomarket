@@ -7,6 +7,7 @@ public final class SystemEmailTexts {
 
 	final static String SUBJECT_FORGOTTEN = "Техномаркет - Забравена парола";
 	final static String SUBJECT_FAVOURITE_PROMO = "Техномаркет - Промоция на любим продукт!";
+	public final static String SUBJECT_USER_EMAIL = "Потребителско съобщение от ";
 	
 	
 	

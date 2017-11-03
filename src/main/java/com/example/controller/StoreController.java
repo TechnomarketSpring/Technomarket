@@ -34,5 +34,11 @@ public class StoreController {
 		}
 		return "storeMaping";
 	}
+	
+	
+	
+	
+	
+	
 
 }

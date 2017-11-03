@@ -12,6 +12,9 @@
          <c:if test="${create != null}">
           <h4>Новият админ е създаден</h4>
          </c:if>
+         <c:if test="${invalidEmail == true }">
+         	<p>Невалиден имей адрес, моля въведете го отново!</p>
+         </c:if>
 		<c:if test="${sessionScope.user.isAdmin == true}">
 			<p>Въведете имейла на потребителя, който ще получи администраторки права:</p>
 			<form action="<cs:url value='/admin/createAdmin'/>" method="post" enctype="multipart/form-data">

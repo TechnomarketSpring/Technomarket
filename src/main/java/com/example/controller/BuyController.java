@@ -3,12 +3,16 @@ package com.example.controller;
 import static org.mockito.Matchers.doubleThat;
 import static org.mockito.Matchers.endsWith;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
@@ -22,13 +26,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.Order;
 import com.example.model.Product;
+import com.example.model.Store;
 import com.example.model.User;
 import com.example.model.DAO.OrderDAO;
 import com.example.model.DAO.ProductDAO;
 import com.example.model.DAO.StoreDAO;
 import com.example.model.DAO.UserDAO;
+import com.example.model.DAO.StoreDAO.Status;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
+import com.example.model.util.RegexValidator;
 
 @Controller
 @RequestMapping("/buyController")
@@ -43,7 +50,8 @@ public class BuyController {
 	private StoreDAO storeDAO;
 
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
-	public String addInTheBasket(@RequestParam(value = "value") String productId, HttpSession session) {
+	public String addInTheBasket(@RequestParam(value = "value") String productId,
+			HttpSession session) {
 
 		boolean isProductInStock = false;
 		try {
@@ -111,7 +119,8 @@ public class BuyController {
 	}
 
 	@RequestMapping(value = "/makeOrder", method = RequestMethod.GET)
-	public String makeOrder(HttpSession session, Model model) {
+	public String makeOrder(HttpSession session,
+			Model model) {
 		if (session.getAttribute("user") == null) {
 			session.setAttribute("inBasket", true);
 			model.addAttribute("logInPls", true);
@@ -119,6 +128,32 @@ public class BuyController {
 		}
 		model.addAttribute("date", LocalDate.now());
 		HashMap<Product, Integer> product = (HashMap<Product, Integer>) session.getAttribute("basket");
+
+		//checks if there is enought quantity in all stores before converting basket to order:
+		
+		boolean isEnoughQuantity = true;
+		LinkedHashSet<String> productNames = new LinkedHashSet<>();
+		
+			for (Iterator<Entry<Product, Integer>> iterator = product.entrySet().iterator(); iterator.hasNext();) {
+				Entry<Product, Integer> productUnit = iterator.next();
+				int quantityInAllStores = 0;
+				try {
+					quantityInAllStores = storeDAO.getQuantity(productUnit.getKey());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				if(quantityInAllStores < productUnit.getValue()){
+					productNames.add(productUnit.getKey().getName());
+					isEnoughQuantity = false;
+				}
+			}
+			
+			if(!isEnoughQuantity){
+				model.addAttribute("productNames", productNames);
+				return "basket";
+			}
+		
 		double price = 0.0;
 		for (Iterator<Entry<Product, Integer>> it = product.entrySet().iterator(); it.hasNext();) {
 			Entry<Product, Integer> entry = it.next();
@@ -132,7 +167,7 @@ public class BuyController {
 
 	@RequestMapping(value = "/addOrder", method = RequestMethod.POST)
 	public String addOrder(@RequestParam("firstAndLastName") String name,
-			@RequestParam("telNumber") String telNumber,
+			@RequestParam("telNumber") String phoneNumber,
 			@RequestParam("town") String town,
 			@RequestParam("postCode") String postCode,
 			@RequestParam("street") String street,
@@ -144,9 +179,39 @@ public class BuyController {
 			@RequestParam("notes") String notes,
 			@RequestParam("price") String price,
 			@RequestParam("payment") String payment,
-			HttpSession session) {
+			HttpSession session,
+			Model model) {
 		Order order = new Order();
+		
+		if(town == null || town.isEmpty() || town.length() > 10){
+			model.addAttribute("invalidOrder", "Order is invalid");
+			return "makeOrder";
+		}
+		
+		if(postCode == null || postCode.isEmpty() || postCode.length() != 4 ){
+			model.addAttribute("invalidOrder", "Order is invalid");
+			return "makeOrder";
+		}
+		
+		if(postCode == null || postCode.isEmpty() || postCode.length() > 60 ){
+			model.addAttribute("invalidOrder", "Order is invalid");
+			return "makeOrder";
+		}
+		
+		if(postCode == null || postCode.isEmpty() || postCode.length() > 35 ){
+			model.addAttribute("invalidOrder", "Order is invalid");
+			return "makeOrder";
+		}
+		
+		if(phoneNumber == null || phoneNumber.isEmpty() || !RegexValidator.validateMobilePhoneNumber(phoneNumber)){
+			model.addAttribute("invalidOrder", "Order is invalid");
+			return "makeOrder";
+		}
+		
+		//consructing full address:
 		StringBuffer sb = new StringBuffer();
+		sb.append(town.trim());
+		sb.append(", ");
 		sb.append(street.trim());
 		sb.append(", ");
 		sb.append(number.trim());
@@ -159,19 +224,28 @@ public class BuyController {
 		sb.append(", ");
 		sb.append((aparment == null ? "" : aparment.trim()));
 		sb.append(".");
+		
+		//setting order data:
+		
 		order.setAddress(sb.toString());
 		order.setUserNames(name.trim());
-		order.setUserPhoneNumber(telNumber.trim());
+		order.setUserPhoneNumber(phoneNumber.trim());
 		order.setZip(postCode.trim());
-		order.setNotes(notes.trim());
+		if(notes != null){
+			order.setNotes(notes.trim());
+		}
 		order.setPrice(price.trim());
-
 		HashMap<Product, Integer> basket = (HashMap<Product, Integer>) session.getAttribute("basket");
 		order.setProducts(basket);
 		order.setTime(LocalDate.now());
 		order.setConfirmed(false);
-		order.setPayment(payment.trim());
+		if(!payment.trim().equals("buy-shipping") || !payment.trim().equals("banckCard")){
+			order.setPayment(payment.trim());
+		}
 		order.setPaid(false);
+		
+		//inserting the new order in DB:
+		
 		try {
 			User user = (User) session.getAttribute("user");
 			orderDAO.insertNewOrder(user, order);
@@ -182,6 +256,8 @@ public class BuyController {
 			return "errorPage";
 		}
 
+		//clearing the basket after order is made:
+		
 		((HashMap<Product, Integer>) session.getAttribute("basket")).clear();
 		return "confurt";
 	}

@@ -11,6 +11,11 @@
 <body>
 <jsp:include page="header.jsp" />
 	<h1>Регистрация</h1>
+	<c:if test="${dataError != null }">
+			<div>
+			<p>Данните за регистрация не са валидни!</p>
+		</div>
+	</c:if>
 	<c:if test="${ date != null }">
 		<div>
 			<p>Данните за регистрация не са валидни!</p>

@@ -21,9 +21,10 @@ import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.util.PasswordGenerator;
 import com.example.model.util.Postman;
+import com.example.model.util.RegexValidator;
 
 @Controller
-public class LoginCntroller {
+public class LoginController {
 	@Autowired
 	private UserDAO userDAO;
 
@@ -37,6 +38,16 @@ public class LoginCntroller {
 	public String login(@RequestParam("username") String username,
 			@RequestParam("password") String password,
 			HttpSession session, Model model) {
+		
+			if(username == null || username.isEmpty() || !RegexValidator.validateEmail(username) || username.length() > 35){
+				model.addAttribute("invalidUser", "Invalid username or password");
+				return "login";
+			}
+			if(password == null || password.isEmpty() || !RegexValidator.validatePassword(password)){
+				model.addAttribute("invalidUser", "Invalid username or password");
+				return "login";
+			}
+		
 		try {
 			boolean exiting = userDAO.existingUser(username.trim(), password.trim());
 			if (exiting) {
@@ -46,9 +57,6 @@ public class LoginCntroller {
 
 				} catch (InvalidCategoryDataException e) {
 					System.out.println("Invalid data exceptions");
-				}
-				if(user == null){
-					System.out.println("NQMAAA MEEEEE");
 				}
 				user.setAdmin(true);
 				session.setAttribute("user", user);
@@ -90,9 +98,15 @@ public class LoginCntroller {
 	}
 
 	@RequestMapping(value = "/forgotten", method = RequestMethod.POST)
-	public String forgottenPassword(Model model, @RequestParam("email") String email) {
+	public String forgottenPassword(Model model,
+			@RequestParam("email") String email) {
 		try {
-
+			
+			if(!RegexValidator.validateEmail(email)){
+				model.addAttribute("emailError", "Email not valid");
+				return "forgotten";
+			}
+			
 			// checks for same email
 			boolean exist = userDAO.checkIfUserWithSameEmailExist(email.trim());
 			if (exist) {

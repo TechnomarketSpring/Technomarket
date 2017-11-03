@@ -72,7 +72,8 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/insert_product", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String insertNewProduct(Model model, HttpSession session, @RequestParam("productName") String productName,
+	public String insertNewProduct(Model model, HttpSession session,
+			@RequestParam("productName") String productName,
 			@RequestParam("tradeMark") String tradeMark,
 			@RequestParam("categoryName") String categoryName,
 			@RequestParam("price") BigDecimal price,
@@ -100,9 +101,13 @@ public class ProductController {
 		adminDAO.insertNewProduct(newProduct, (User) session.getAttribute("user"));
 		model.addAttribute("added", "New product added");
 		model.addAttribute("productId", newProduct.getProductId());
-		} catch (IllegalStateException | IOException | MimeTypeException | InvalidCategoryDataException | SQLException | NotAnAdminException | InvalidProductDataException e) {
+		} catch (IllegalStateException | IOException | MimeTypeException | InvalidCategoryDataException | NotAnAdminException | InvalidProductDataException e) {
 			e.printStackTrace();
+			model.addAttribute("invalidProductData", true);
 			return "admin_insert_product";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "errorPage";
 		} 
 		return "admin_insert_product";
 	}
@@ -136,9 +141,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/setPromo", method = RequestMethod.POST)
-	public String setPromo(Model model, HttpSession session,
+	public String setPromo(Model model,
+			HttpSession session,
 			@RequestParam(value = "productId") int productId,
 			@RequestParam(value = "promoPercent") int percentPromo){
+		
+		if(percentPromo < 0 || percentPromo > 99){
+			model.addAttribute("invalidPercent", true);
+			return "redirect:/info/infoForProduct?value=" + Integer.toString(productId);
+		}
 		
 		Product promoProduct = null;
 		HashSet<String> emails = null;
@@ -185,7 +196,13 @@ public class ProductController {
 	}
 	@RequestMapping(value = "/compareProduct" , method = RequestMethod.GET)
 	public String compare(@RequestParam("compare") String comp,
-			@RequestParam("categoryName") String categoryName, Model model){
+			@RequestParam("categoryName") String categoryName,
+			Model model){
+		
+			if(!comp.equals("price") || !comp.equals("mark") || !comp.equals("type")){
+				return "index";
+			}
+		
 		try {
 			String compare = new String(comp.trim());
 			Set<Product> products = productDAO.searchProductByCategoryName(categoryName.trim());

@@ -199,7 +199,6 @@ public class ProductDAO {
 		this.connection = DBManager.getConnections();
 		this.connection.setAutoCommit(false);
 		try {
-			System.out.println("========================================");
 			PreparedStatement ps3 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.product_has_category WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);

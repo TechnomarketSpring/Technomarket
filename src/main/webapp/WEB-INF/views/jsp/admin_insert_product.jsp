@@ -21,6 +21,9 @@
 				
 			</div>
 		</cs:if>
+		<cs:if test="${invalidProductData == true }">
+			<p>Невалидни данни на продукт, моля въведете отново!</p>
+		</cs:if>
 			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
 				<label for="name">Име на продукт</label>
 				<input type="text" id="name" name="productName" required ><br>

@@ -26,7 +26,7 @@ import com.example.model.exceptions.InvalidStoreDataException;
 
 @Controller
 @RequestMapping("/header")
-public class HeaderConttroler {
+public class HeaderController {
 	@Autowired
 	private ProductDAO productDAO;
 	@Autowired
@@ -110,10 +110,15 @@ public class HeaderConttroler {
 	}
 	
 	@RequestMapping(value = "/search" , method = RequestMethod.GET)
-	public String searchProduct(@RequestParam("searched_text") String searched_text,
+	public String searchProduct(@RequestParam("searched_text") String searchedText,
 			Model model){
+		
+			if(searchedText == null || searchedText.isEmpty() || searchedText.length() > 35){
+				return "index";
+			}
+		
 		try {
-			Set<Product> products = productDAO.searchProductByName(searched_text.trim());
+			Set<Product> products = productDAO.searchProductByName(searchedText.trim());
 			model.addAttribute("filtredProducts", products);
 		} catch (SQLException e) {
 			e.printStackTrace();

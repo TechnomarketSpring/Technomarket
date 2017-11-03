@@ -19,7 +19,9 @@ import com.example.model.DAO.StoreDAO;
 import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.IlligalAdminActionException;
 import com.example.model.exceptions.IlligalUserActionException;
+import com.example.model.exceptions.InvalidUserDataException;
 import com.example.model.exceptions.NotAnAdminException;
+import com.example.model.util.RegexValidator;
 
 @Controller
 @RequestMapping("/admin")
@@ -116,6 +118,10 @@ public class AdminController {
 	@RequestMapping(value = "/createAdmin", method = RequestMethod.POST)
 	public String infoAdminCreateAdmin(@RequestParam("email") String email,
 			HttpSession session, Model model) {
+		if(!RegexValidator.validateEmail(email)){
+			model.addAttribute("invalidEmail", true);
+			return "admin_create_admin";
+		}
 		User user = (User)session.getAttribute("user");
 		if(user != null && user.getIsAdmin()){
 			try {
@@ -124,6 +130,10 @@ public class AdminController {
 				System.out.println("SQLException /createAdmin ");
 				e.printStackTrace();
 				return "errorPage";
+			} catch (InvalidUserDataException e) {
+				e.printStackTrace();
+				model.addAttribute("invalidEmail", true);
+				return "admin_create_admin";
 			}
 		}
 		model.addAttribute("create", "Admin is create");

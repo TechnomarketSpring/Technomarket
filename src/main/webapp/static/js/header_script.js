@@ -18,7 +18,7 @@ window.onclick = function(event) {
 
 function isEmpty() {
     var searchedText;
-    searchedText = document.getElementById("searched-text").value;
+    searchedText = document.getElementById("message").value;
     if (!searchedText || 0 === searchedText) {
         return false;
     };

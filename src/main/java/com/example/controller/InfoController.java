@@ -29,6 +29,9 @@ import com.example.model.DAO.UserDAO;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.exceptions.InvalidStoreDataException;
+import com.example.model.util.Postman;
+import com.example.model.util.RegexValidator;
+import com.example.model.util.SystemEmailTexts;
 
 @Controller
 @RequestMapping(value = "/info")
@@ -69,8 +72,8 @@ public class InfoController {
 			if (isProductInStock || (user != null && user.getIsAdmin())) {
 				// gets the product stock status per store:
 				LinkedHashMap<Store, String> statusPerStore = new LinkedHashMap<>();
-				HashSet<Store> cities = storeDAO.getAllStores();
-				for (Iterator<Store> iterator = cities.iterator(); iterator.hasNext();) {
+				HashSet<Store> stores = storeDAO.getAllStores();
+				for (Iterator<Store> iterator = stores.iterator(); iterator.hasNext();) {
 					Store store = iterator.next();
 					StoreDAO.Status status = storeDAO.checkQuantity(store, product);
 					String statusImgLink = null;
@@ -94,6 +97,42 @@ public class InfoController {
 		}
 
 		return "productInfo";
+	}
+	
+	@RequestMapping(value = "/contactsEmail", method = RequestMethod.POST)
+	public String contactsMail(@RequestParam(value = "names") String names,
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "phone") String phone,
+			@RequestParam(value = "message") String message,
+			Model model) {
+		
+		boolean validateEmail = RegexValidator.validateEmail(email.trim());
+		boolean validatePhone = RegexValidator.validateMobilePhoneNumber(phone.trim());
+		
+		if((email.trim() == null || email.isEmpty())){
+			model.addAttribute("emptyEmail", true);
+			return "contacts";
+		}
+		
+		if((message.trim() == null || message.isEmpty())){
+			model.addAttribute("emptyMessage", true);
+			return "contacts";
+		}
+		
+		if(!validateEmail){
+			model.addAttribute("invalidEmail", true);
+			return "contacts";
+		}
+		
+		if((phone.trim() == null || phone.trim().isEmpty()) || !validatePhone){
+			model.addAttribute("invalidPhone", true);
+			return "contacts";
+		}
+		
+		Postman.sendSimpleEmail(Postman.EMAIL, SystemEmailTexts.SUBJECT_USER_EMAIL + " " + names, message.trim());
+		model.addAttribute("emailSend", true);
+		
+		return "contacts";
 	}
 
 	// site conditions info gets:

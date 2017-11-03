@@ -10,7 +10,7 @@ public class Category {
 	
 	public Category(String name) throws InvalidCategoryDataException{
 	
-		if(name != null && !name.isEmpty()){
+		if(name != null && !name.isEmpty() && name.length() >= 2 && name.length() <= 35){
 			this.name = name;
 		}else{
 			throw new InvalidCategoryDataException();
@@ -33,6 +33,8 @@ public class Category {
 	public String getName() {
 		return name;
 	}
+	
+	//hashCode adn equals overrided for collections:
 
 	@Override
 	public int hashCode() {

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.example.model.exceptions.InvalidProductDataException;
 import com.example.model.util.RegexValidator;
@@ -19,7 +20,7 @@ public class Product {
 	private Credit credit;
 	private Category category;
 	private LocalDate dateAdded;
-	private ArrayList<Characteristics> characteristics;
+	private ArrayList<Characteristics> characteristics = new ArrayList<>();
 	private int worranty;
 	private int percentPromo;
 	private boolean isNewProduct;
@@ -42,17 +43,17 @@ public class Product {
 		
 	//	BigDecimal big = new BigDecimal(price);
 		
-		if (price.compareTo(new BigDecimal("0")) < 0) {
+		if (price.compareTo(new BigDecimal("0")) < 0 && price.compareTo(new BigDecimal("99999")) > 1) {
 			throw new InvalidProductDataException();
 		} else {
 			this.price = price;
 		}
-		if(worranty >= 0){
+		if(worranty >= 0 && worranty <= 99){
 			this.worranty = worranty;
 		}else{
 			throw new InvalidProductDataException();
 		}
-		if(percentPromo >= 0){
+		if(percentPromo >= 0 && percentPromo <= 99){
 			this.percentPromo = percentPromo;
 		}else{
 			throw new InvalidProductDataException();
@@ -84,7 +85,7 @@ public class Product {
 	}
 
 	private boolean correctName(String name) {
-		if (name != null && !name.isEmpty() && name.length() >= 2) {
+		if (name != null && !name.isEmpty() && name.length() >= 2 && name.length() <= 35) {
 			return true;
 		}
 		return false;
@@ -126,8 +127,8 @@ public class Product {
 		return category;
 	}
 
-	public ArrayList<Characteristics> getCharacteristics() {
-		return characteristics;
+	public List<Characteristics> getCharacteristics() {
+		return Collections.unmodifiableList(characteristics);
 	}
 
 		public void setName(String name) {
@@ -171,6 +172,8 @@ public class Product {
 			return isNewProduct;
 		}
 
+		//hashCode and equals overrided for collections:
+		
 		@Override
 		public int hashCode() {
 			final int prime = 31;

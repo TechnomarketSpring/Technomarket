@@ -126,6 +126,9 @@ public class Store {
 		this.address = address;
 	}
 
+	
+	//hashCode and equals overrides for collections:
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

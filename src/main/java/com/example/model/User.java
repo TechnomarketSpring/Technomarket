@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 import org.springframework.format.datetime.joda.LocalDateParser;
@@ -37,7 +39,7 @@ public class User {
 	}
 
 	public User(String firstName, String lastName, String email, String password, String gender, LocalDate birthDate, boolean isAbonat, boolean isAdmin, boolean isBanned) throws InvalidUserDataException {
-		if (!correctDateForNameOfUser(firstName, lastName)) {
+		if (!correctDataForNameOfUser(firstName, lastName)) {
 			throw new InvalidUserDataException();
 		} else {
 			this.firstName = firstName;
@@ -61,7 +63,14 @@ public class User {
 			throw new InvalidUserDataException();
 		}
 
-		this.birthDate = birthDate;
+		if(validateBirthDay(birthDate)){
+			this.birthDate = birthDate;
+		}else{
+			throw new InvalidUserDataException();
+		}
+		
+		
+	
 		this.isAdmin = isAdmin;
 		this.isAbonat = isAbonat;
 		this.isBanned = isBanned;
@@ -71,7 +80,16 @@ public class User {
 	}
 	
 
-	private boolean correctDateForNameOfUser(String firstName, String lastName) {
+	private boolean validateBirthDay(LocalDate birthDate) {
+
+		if(birthDate.isAfter(LocalDate.now())){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	private boolean correctDataForNameOfUser(String firstName, String lastName) {
 		if (firstName == null || firstName.isEmpty() || firstName.length() < 2) {
 			return false;
 		}
@@ -93,16 +111,16 @@ public class User {
 		
 		return sum;
 	}
-	public LinkedHashMap<Product, Integer> getBasket() {
-		return this.basket;
+	public Map<Product, Integer> getBasket() {
+		return Collections.unmodifiableMap(this.basket);
 	}
 
 	public void setId(long id) {
 		this.userId = id;
 
 	}
-	public LinkedHashSet<Product> getFavourites() {
-		return favourites;
+	public Set<Product> getFavourites() {
+		return Collections.unmodifiableSet(this.favourites);
 	}
 	public void setFavourites(LinkedHashSet<Product> favourites) {
 		this.favourites = favourites;
@@ -186,8 +204,8 @@ public class User {
 	public long getUserId() {
 		return userId;
 	}
-	public LinkedHashSet<Order> getOrders() {
-		return orders;
+	public Set<Order> getOrders() {
+		return Collections.unmodifiableSet(this.orders);
 	}
 
 }

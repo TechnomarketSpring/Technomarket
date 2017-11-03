@@ -4,18 +4,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Insert title here</title>
+	<script src="<c:url value="/js/contacts_script.js" />"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <hr>
-  <form action="<c:url value="/css/header_styles.css" />" method  = "post">
+
+	<c:if test="${emptyEmail == true}">
+			<p>Не сте въвели имейл! Моля променете полето преди да изпратите имейл!</p>
+	</c:if>			
+	<c:if test="${emptyMessage == true}">
+			<p>Невалидно съобщение! Моля променете полето преди да изпратите имейл!</p>
+	</c:if>	
+	<c:if test="${invalidEmail == true}">
+			<p>Невалиден имейл! Моля променете полето преди да изпратите имейл!</p>
+	</c:if>	
+	<c:if test="${invalidPhone == true}">
+			<p>Невалиден телефонен номер! Моля променете полето преди да изпратите имейл!</p>
+	</c:if>
+	<c:if test="${emailSend == true}">
+			<p>Съобщението е въведено спешно!</p>
+	</c:if>	
+
+  <form action="<c:url value="/info/contactsEmail" />" method  = "post">
     Име и Фамилия* <input type="text" name="names" required><br>
     Имайл* <input type="email" name="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
-    Телефон* <input type="number" name="phone" pattern="/^08[7-9][0-9]{7}$/" required><br>
-    Съобщение*<textarea rows="4" cols="50" required></textarea>
-   <input type = "submit" value = "Изпрати">
+    Телефон* <input type="number" name="phone" pattern="[+]?[0-9]{1,10}" required><br>
+    Съобщение*<textarea id="message" name="message" rows="4" cols="50" required></textarea>
+   <input type = "submit" value = "Изпрати" onclick="isEmpty();">
    </form>
  </hr>
  <hr>

@@ -84,7 +84,7 @@ public class RegisterController {
 				return "register";
 			}
 		} catch (InvalidUserDataException e) {
-			model.addAttribute("dateError", "Passwords are not the same");
+			model.addAttribute("dataError", "Passwords are not the same");
 			return "register";
 		}
 

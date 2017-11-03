@@ -16,6 +16,7 @@
 			<p>Невалиден потребител</p>
 			</div>
 		</c:if>
+		
 		<form action="forgotten" method="post">
 		Е-мейл <input type="email" name="email"><br>
 		<input type="submit" value="Изпрати"><br>
