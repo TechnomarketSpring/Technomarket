@@ -40,6 +40,7 @@ public class StoreDAO {
 			cityNames.add(result.getString("stores.city"));
 		}
 		result.close();
+		statement.close();
 		return cityNames;
 	}
 	
@@ -219,7 +220,7 @@ public class StoreDAO {
 			store.setGps(result.getString("gps"));
 			store.setStoreImageUrl("store_image_url");
 		}
-		
+		statement.close();
 		return store;
 		
 	}

@@ -101,6 +101,7 @@ public class ProductDAO {
 			product.setProductNumber(result.getString(8));
 			product.setImageUrl(result.getString(9));
 		}
+		statement.close();
 		return product;
 		
 	}

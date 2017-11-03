@@ -203,7 +203,7 @@ public class InfoController {
 
 	public String infoAdminOrders(Model model, HttpSession session){
 		try {
-			HashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
+			LinkedHashSet<Order> orders = orderDAO.getOrderWhereIsNotConfirmedAndIsNotPaid();
 			model.addAttribute("orders", orders);
 		} catch (SQLException e) {
 			e.printStackTrace();

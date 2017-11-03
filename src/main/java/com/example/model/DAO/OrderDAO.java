@@ -61,6 +61,7 @@ public class OrderDAO {
 			o.setProducts(products);
 			orders.add(o);
 		}
+		statment.close();
 		return orders;
 	}
 	
@@ -79,6 +80,7 @@ public class OrderDAO {
 		while (result.next()) {
 			products.put(productDAO.getProduct(result.getLong("product_id")), result.getInt("quantity"));
 		}
+		statment.close();
 		return products;
 	}
 
@@ -119,11 +121,12 @@ public class OrderDAO {
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
 		o.setOrderId(rs.getLong(1));
+		ps.close();
 		addOrderedProductsToTable(o);
 	}
-	public HashSet<Order> getOrderWhereIsNotConfirmedAndIsNotPaid() throws SQLException{
+	public LinkedHashSet<Order> getOrderWhereIsNotConfirmedAndIsNotPaid() throws SQLException{
 		this.connection = DBManager.getConnections();
-		HashSet<Order> orders = new HashSet<>();
+		LinkedHashSet<Order> orders = new LinkedHashSet<>();
 		PreparedStatement statement = this.connection.prepareStatement("SELECT order_id, users.first_name, users.last_name, date_time, address, payment,notes, isConfirmed, isPaid, zip, user_phone  FROM technomarket.orders JOIN technomarket.users ON(orders.user_id = users.user_id)  WHERE orders.isConfirmed = false OR ispaid = false;");
 		ResultSet result = statement.executeQuery();
 		while(result.next()){
@@ -143,6 +146,7 @@ public class OrderDAO {
 			   orders.add(order);
 			}
 		}
+		statement.close();
 		return orders;
 	}
 	private void addOrderedProductsToTable(Order o) throws SQLException{
@@ -154,6 +158,7 @@ public class OrderDAO {
 			ps.setLong(2, entry.getKey().getProductId());
 			ps.setInt(3, entry.getValue());
 			ps.executeUpdate();
+			ps.close();
 		}
 	}
 	
@@ -164,6 +169,7 @@ public class OrderDAO {
 			ps.setBoolean(1, isConfirmed);
 			ps.setLong(2, orderId);
 			ps.executeUpdate();
+			ps.close();
 		
 		
 	}
@@ -176,6 +182,7 @@ public class OrderDAO {
 			Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, orderId);
 			ps.executeUpdate();
+			ps.close();
 		
 		
 	}
@@ -209,6 +216,7 @@ public class OrderDAO {
 		while(rs.next()){
 			products.put(rs.getLong("product_id"), rs.getInt("quantity"));
 		}
+		st.close();
 		return products;
 	}
 	public void deleteOrder(long orderId) throws SQLException{
@@ -216,6 +224,7 @@ public class OrderDAO {
 		PreparedStatement statement = this.connection.prepareStatement("DELETE FROM technomarket.orders WHERE order_id = ?;");
 		statement.setLong(1, orderId);
 		statement.executeUpdate();
+		statement.close();
 	}
 
 }

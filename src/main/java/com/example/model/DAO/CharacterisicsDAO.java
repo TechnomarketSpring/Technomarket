@@ -44,11 +44,13 @@ public class CharacterisicsDAO {
 				rs.next();
 				characteristic.setCharacteristicsId(rs.getLong(1));
 				con.commit();
+				ps.close();
 			} catch (SQLException e) {
 				con.rollback();
 				throw new SQLException();
 			} finally {
 				con.setAutoCommit(true);
+				
 			}
 		}
 	}
@@ -60,7 +62,9 @@ public class CharacterisicsDAO {
 		ps.setString(1, characteristic.getTypeCharacteristics());
 		ResultSet rs = ps.executeQuery();
 		rs.next();
-		return rs.getLong("characteristics_type_id");
+		long characteristics_type_id = rs.getLong("characteristics_type_id");
+		ps.close();
+		return characteristics_type_id;
 	}
 
 	public ArrayList<Characteristics> getProducsCharacteristics(long long1)
@@ -76,6 +80,7 @@ public class CharacterisicsDAO {
 					result.getString("characteristics_type_name"));
 			characteristics.add(characteristic);
 		}
+		ps.close();
 		return characteristics;
 	}
 
