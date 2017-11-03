@@ -175,9 +175,6 @@ public class InfoController {
 				try {
 					Product pr = productDAO.getProduct(entry.getKey());
 					readyProduct.put(pr, entry.getValue());
-				} catch (InvalidCharacteristicsDataException e) {
-					e.printStackTrace();
-					return "errorPage";
 				} catch (InvalidCategoryDataException e) {
 					e.printStackTrace();
 					return "errorPage";
