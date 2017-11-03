@@ -107,9 +107,16 @@ public class AdminDAO {
 			throw new NotAnAdminException();
 		}
 	}
-	public void setOrderAsConfirmed(User admin, long orderId, boolean isConfirmend) throws NotAnAdminException, SQLException, IlligalAdminActionException, IlligalUserActionException{
+	public void setOrderAsNotConfirmed(User admin, long orderId) throws NotAnAdminException, SQLException, IlligalAdminActionException, IlligalUserActionException{
 		if(admin.getIsAdmin()){
-			orderDAO.setOrderAsConfirmed(orderId, isConfirmend);
+			orderDAO.setOrderAsNotConfirmed(orderId);
+		}else{
+			throw new NotAnAdminException();
+		}
+	}
+	public void setOrderAsConfirmed(User admin, long orderId) throws NotAnAdminException, SQLException, IlligalAdminActionException, IlligalUserActionException{
+		if(admin.getIsAdmin()){
+			orderDAO.setOrderAsConfirmed(orderId);
 		}else{
 			throw new NotAnAdminException();
 		}

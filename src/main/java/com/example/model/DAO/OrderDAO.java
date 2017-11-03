@@ -162,17 +162,24 @@ public class OrderDAO {
 		}
 	}
 	
-	public void setOrderAsConfirmed(long orderId ,boolean isConfirmed) throws SQLException, IlligalUserActionException {
+	public void setOrderAsConfirmed(long orderId) throws SQLException, IlligalUserActionException {
 			this.connection  = DBManager.getConnections();
-			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = ? WHERE order_id = ?",
+			PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = true WHERE order_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			ps.setBoolean(1, isConfirmed);
-			ps.setLong(2, orderId);
+			System.out.println("YESSSS @@@@@@@@@@@@@@@@@@@@22&&&&&&&&&");
+			ps.setLong(1, orderId);
 			ps.executeUpdate();
 			ps.close();
-		
-		
 	}
+	public void setOrderAsNotConfirmed(long orderId) throws SQLException, IlligalUserActionException {
+		this.connection  = DBManager.getConnections();
+		PreparedStatement ps = this.connection.prepareStatement("UPDATE technomarket.orders SET isConfirmed = false WHERE order_id = ?",
+				Statement.RETURN_GENERATED_KEYS);
+		ps.setLong(1, orderId);
+		System.out.println("NOOOOOO @@@@@@@@@@@@@@@@@@@@22&&&&&&&&&");
+		ps.executeUpdate();
+		ps.close();
+}
 	
 	//admin panel in Orders:
 
