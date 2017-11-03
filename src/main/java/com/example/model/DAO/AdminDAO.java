@@ -20,6 +20,7 @@ import com.example.model.User;
 import com.example.model.DBM.DBManager;
 import com.example.model.exceptions.IlligalAdminActionException;
 import com.example.model.exceptions.IlligalUserActionException;
+import com.example.model.exceptions.InvalidUserDataException;
 import com.example.model.exceptions.NotAnAdminException;
 
 
@@ -82,9 +83,9 @@ public class AdminDAO {
 	}
 	
 	//makes user admin:
-	public void changeUserIsAdminStatus(User admin, User u, boolean isAdmin) throws NotAnAdminException, SQLException, IlligalAdminActionException{
+	public void changeUserIsAdminStatus(User admin, String email) throws NotAnAdminException, SQLException, InvalidUserDataException{
 		if(admin.getIsAdmin()){
-			userDAO.changeUserIsAdminStatus(u, isAdmin);
+			userDAO.createAdmin(email.trim());
 		}else{
 			throw new NotAnAdminException();
 		}

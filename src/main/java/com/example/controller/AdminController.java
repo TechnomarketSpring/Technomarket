@@ -125,7 +125,7 @@ public class AdminController {
 		User user = (User)session.getAttribute("user");
 		if(user != null && user.getIsAdmin()){
 			try {
-				userDAO.createAdmin(email.trim());
+				adminDAO.changeUserIsAdminStatus(user, email.trim());
 			} catch (SQLException e) {
 				System.out.println("SQLException /createAdmin ");
 				e.printStackTrace();
@@ -134,7 +134,11 @@ public class AdminController {
 				e.printStackTrace();
 				model.addAttribute("invalidEmail", true);
 				return "admin_create_admin";
-			}
+			} catch (NotAnAdminException e) {
+				model.addAttribute("notAdmin", true);
+				e.printStackTrace();
+				return "errorPage";
+			} 
 		}
 		model.addAttribute("create", "Admin is create");
 		return "admin_create_admin";

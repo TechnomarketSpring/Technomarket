@@ -284,20 +284,22 @@ private long getUserIdByEmail(String email) throws SQLException {
 	}
 	public void createAdmin(String email) throws SQLException, InvalidUserDataException{
 		this.connection = DBManager.getConnections();
-		PreparedStatement st = this.connection.prepareStatement("SELECT users.user_id FROM technomarket.users WHERE email = ?");
+		PreparedStatement st = this.connection.prepareStatement("SELECT users.user_id FROM technomarket.users WHERE email = ? AND isAdmin = false;");
 		st.setString(1, email);
 		ResultSet result = st.executeQuery();
-		String id = "";
+		String userId = "";
 		while(result.next()){
-			id+=result.getString(1);
+			userId+=result.getString(1);
 		}
 		st.close();
-		if(id.isEmpty()){
+		if(userId.isEmpty()){
 			throw new InvalidUserDataException();
 		}
-		PreparedStatement statement = this.connection.prepareStatement("UPDATE  technomarket.users SET users.isAdmin = false WHERE user_id = ?;");
-		statement.setString(1, id);
+		PreparedStatement statement = this.connection.prepareStatement("UPDATE  technomarket.users SET users.isAdmin = true WHERE user_id = ?;");
+		statement.setString(1, userId);
 		statement.executeUpdate();
+		statement.close();
+		
 	}
 
 	//user subscribes for news:

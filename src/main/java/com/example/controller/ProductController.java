@@ -171,6 +171,8 @@ public class ProductController {
 				Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
 			}
 		} catch (NotAnAdminException | SQLException | InvalidCategoryDataException e) {
+			if(promoProduct.getName() == null){
+			}
 			Postman.promoProductEmail(promoProduct.getName(), productId, percentPromo, promoProduct.getPrice(), emails);
 			e.printStackTrace();
 			return "errorPage";
@@ -197,10 +199,6 @@ public class ProductController {
 	public String compare(@RequestParam("compare") String comp,
 			@RequestParam("categoryName") String categoryName,
 			Model model){
-		
-			if(!comp.equals("price") || !comp.equals("mark") || !comp.equals("type")){
-				return "index";
-			}
 		
 		try {
 			String compare = new String(comp.trim());
