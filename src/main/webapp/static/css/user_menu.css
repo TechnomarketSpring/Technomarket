@@ -1,18 +1,18 @@
 @CHARSET "UTF-8";
-ul {
+#menu-head-user {
 	display: inline-block;
    list-style: none;
    margin-left: 0;
    padding-left: 1em;
    text-indent: -1em;
    width: 10px;
- 	padding-left: 0;
+   padding-left: 0;
 }
-		br {
-   		 	display: hidden;
-		}
+br {
+   	display: hidden;
+}
 
-li {
+.meanu-el {
 	display: inline-block
 	height: 60px;
 	width: 281px;
@@ -38,13 +38,13 @@ li {
 	background-color: #F9F9F9;
 }
 
-.menu-button a:hover {
+.menu-button .user-menu-link:hover {
 	color: #EA0000;
 	backgound-color: #FFFFFF;
 	border-left: 2px solid #E60000;
 }
 
-a {
+.user-menu-link {
 	 text-decoration: none;
 	 color: #000000;
 }

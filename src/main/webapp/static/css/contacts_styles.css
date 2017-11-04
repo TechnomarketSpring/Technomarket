@@ -1,11 +1,10 @@
 @CHARSET "UTF-8";
-@CHARSET "UTF-8";
 		.log-head {
 			margin: 0px;
 			padding: 0px;
 			z-index: -1;		
 		}
-				br {
+		br {
    		 	display: hidden;
 		}
 		#common-container {

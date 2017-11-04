@@ -44,6 +44,7 @@ public class AdminController {
 			User user = (User) session.getAttribute("user");
 		    try {
 				adminDAO.setOrderAsConfirmed(user, orderId);
+				
 			} catch (NotAnAdminException e) {
 				e.printStackTrace();
 				return "index";

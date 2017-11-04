@@ -10,10 +10,10 @@
 	<body>
 		<div>
 		<jsp:include page="header.jsp" />
+		<jsp:include page="user_menu.jsp" />
 			<c:if test="${sessionScope.user != null}">
 				<strong>Имейл:</strong> <span>"${ sessionScope.user.email }"</span> </br>
 				<strong>Имейл:</strong> <span>"${ sessionScope.user.email }"</span> 
-				<jsp:include page="user_menu.jsp" />
 			</c:if>
 			<c:if test="${sessionScope.user == null}">
 				<p>Само потребителите, влезли в сметката си, имат достъп до тази страница!</p>

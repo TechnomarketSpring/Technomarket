@@ -8,7 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="<c:url value="/css/login_styles.css" />" rel="stylesheet">
 		<script type="text/javascript" src="<cs:url value='/js/common_scripts.js'/>"></script>
-		<title>Insert title here</title>
+		<title>Техномаркет - вход</title>
 	</head>
 	<body class="log-head">
 	<jsp:include page="header.jsp" />

@@ -36,6 +36,9 @@ import com.example.model.DAO.StoreDAO.Status;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.util.RegexValidator;
+import com.example.model.util.SMSSender;
+
+import esendex.sdk.java.EsendexException;
 
 @Controller
 @RequestMapping("/buyController")
@@ -249,12 +252,18 @@ public class BuyController {
 		try {
 			User user = (User) session.getAttribute("user");
 			orderDAO.insertNewOrder(user, order);
-
+			
+			//sending sms notification to admin to check the new order:
+			//SMSSender.sendSMS(name, price, phoneNumber);
 		} catch (SQLException e) {
 			System.out.println("SQL Exception in BuyController");
 			e.printStackTrace();
 			return "errorPage";
 		}
+//		} catch (EsendexException e) {
+//			e.printStackTrace();
+//			return "index";
+//		}
 
 		//clearing the basket after order is made:
 		
