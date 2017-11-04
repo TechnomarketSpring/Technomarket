@@ -12,7 +12,6 @@
 <body class="log-head">
 <jsp:include page="header.jsp"></jsp:include>
 
-
 	<div class="log-head" id="common-container">
 		<div class="log-head" id="left-div">
 			<c:if test="${emptyEmail == true}">
@@ -33,13 +32,13 @@
 			
 			<h2>Изпратете ни съобщение</h2>
 
- 			<form action="<c:url value="/css/header_styles.css" />" method  = "post">
+ 			<form action="<c:url value="/info/contactsEmail" />" method  = "post">
     		<label for="field-1"><strong>Име и Фамилия<span class="asteriks">*</span></strong></label>
     		<input id="field-1" type="text" name="names" maxlength="35" required><br>
     		<label for="field-2"><strong>Имайл<span class="asteriks">*</span></strong></label>
     		<input id="field-2" type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
    			<label for="field-3"><strong>Телефон<span class="asteriks">*</span></strong></label>
-    		<input id="field-3" type="number" name="phone" pattern="[+]?[0-9]{1,10}" required><br>
+    		<input id="field-3" type="number" name="phone" maxlength="10" minlength="10" pattern="^[0-9]*$" required><br>
     		<label if="label-4" for="field-4"><strong>Съобщение<span class="asteriks">*</span></strong></label>
     		<textarea id="field-4" rows="4" cols="50" required></textarea>
    			<input id="button-red" type = "submit" value = "Изпрати">
