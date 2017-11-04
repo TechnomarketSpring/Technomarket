@@ -351,14 +351,17 @@ body, div, nav {
 
 #searched-text {
 	width: 250px;
-	margin-left: 450px;
+	margin-left: 400px;
 	height: 50px;
 	margin-botton: 0px;
+}
+br {
+   	display: hidden;
 }
 
 #search {
 	display: inline;
-	margin-left: 100px;
+	margin-left: 50px;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-botton: 0px;
@@ -371,7 +374,7 @@ body, div, nav {
 
 #menu-container {
 	float: right;
-	margin-left: 220px;
+	margin-left: 170px;
 	margin-top: 70px;
 	height: 300px;
 	margin-botton: 0px;

@@ -17,7 +17,7 @@
 	<div class="log-head" id="left-div">
 	  <h2 class="login-titles">Вход в сайта</h2>	
 	  <c:if test="${logInPls == true}">
-	    <h5>Моля влезте в своя профил!<h5>
+	    <p>Моля влезте в своя профил!</p>
 	  </c:if>
 		<c:if test="${ invalidUser != null}">
 			<div>

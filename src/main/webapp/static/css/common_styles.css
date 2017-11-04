@@ -4,6 +4,9 @@
 			padding: 0px;
 			z-index: -1;		
 		}
+				br {
+   		 	display: hidden;
+		}
     	#field {
     		height: 40px;
     		width: 300px;

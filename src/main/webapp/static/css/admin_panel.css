@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+		br {
+   		 	display: hidden;
+		}
+
 .btn {
   display:block;
   height: 100px;

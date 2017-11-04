@@ -4,6 +4,9 @@
 			padding: 0px;
 			z-index: -1;		
 		}
+				br {
+   		 	display: hidden;
+		}
 		#common-container {
 			padding-right: .5em;
 			display: flex;
@@ -93,7 +96,7 @@
 			margin-top: 20px;
 			margin-left: 50px;
 		 	background-color: #E60000;
-		 	color: white;
+		 	color: #FFFFFF;
     		border: none;
     		padding: 15px 32px;
     		text-align: center;

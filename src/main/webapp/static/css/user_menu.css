@@ -8,6 +8,9 @@ ul {
    width: 10px;
  	padding-left: 0;
 }
+		br {
+   		 	display: hidden;
+		}
 
 li {
 	display: inline-block

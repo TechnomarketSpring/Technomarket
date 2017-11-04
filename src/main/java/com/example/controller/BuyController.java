@@ -175,7 +175,7 @@ public class BuyController {
 			@RequestParam("block") String block,
 			@RequestParam("entrace") String entrace,
 			@RequestParam("floor") String floor,
-			@RequestParam("aparment") String aparment,
+			@RequestParam("apartment") String apartment,
 			@RequestParam("notes") String notes,
 			@RequestParam("price") String price,
 			@RequestParam("payment") String payment,
@@ -222,7 +222,7 @@ public class BuyController {
 		sb.append(", ");
 		sb.append((floor == null ? "" : floor.trim()));
 		sb.append(", ");
-		sb.append((aparment == null ? "" : aparment.trim()));
+		sb.append((apartment == null ? "" : apartment.trim()));
 		sb.append(".");
 		
 		//setting order data:

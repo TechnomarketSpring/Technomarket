@@ -3,6 +3,9 @@
 li {
     list-style-type: none;
 }
+		br {
+   		 	display: hidden;
+		}
 
 body, div {
 	margin:0;
