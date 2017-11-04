@@ -97,6 +97,7 @@ public class ProductController {
 			@RequestParam("price") BigDecimal price,
 			@RequestParam("warranty") int warranty,
 			@RequestParam("promoPercent") int promoPercent,
+			@RequestParam("description") String description,
 			@RequestParam("image") MultipartFile image) {
 		String imageName = null;
 		try {
@@ -105,6 +106,10 @@ public class ProductController {
 			}
 			if(!categoryDAO.categoryExist(categoryName.trim())){
 				categoryDAO.insertCategory(categoryName.trim());
+			}
+			if(description == null && description.isEmpty() && description.length() < 30){
+				model.addAttribute("invalidDescription", true);
+				return "admin_insert_product";
 			}
 		MimeTypes allTypes = MimeTypes.getDefaultMimeTypes();
 		MimeType type = allTypes.forName(image.getContentType());
@@ -116,6 +121,7 @@ public class ProductController {
 		Category category = new Category(categoryName.trim());
 		Product newProduct = new Product(productName.trim(), tradeMark.trim(), price, null, category, warranty,
 				promoPercent, LocalDate.now(), imageName);
+		newProduct.setDescription(description);
 		adminDAO.insertNewProduct(newProduct, (User) session.getAttribute("user"));
 		model.addAttribute("added", "New product added");
 		model.addAttribute("productId", newProduct.getProductId());

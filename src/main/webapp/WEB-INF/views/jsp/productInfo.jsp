@@ -56,7 +56,9 @@
 		</form> 
 		</c:if>
 		</c:if>
-		<!-- TODO add description of product here!!! -->
+		<div>
+			<span>${product.description}</span>
+		</div>
 		</div>
 		
 		

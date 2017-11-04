@@ -29,7 +29,7 @@
 		Сортирай по *<select name  = "compare" >
             <option value = "price">По ценa</option>
             <option value = "mark"  >По марка</option>
-            <option value = "type">Промоциий</option>
+            <option value = "type">Промоции</option>
         </select>
         <input type = "hidden" value = "${categoryName}" name = "categoryName">
         <input type = "submit">

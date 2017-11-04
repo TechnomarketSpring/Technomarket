@@ -111,7 +111,7 @@ public class ProductDAO {
 	
 	public Product searchProductById(String productId) throws SQLException{
 		this.connection = DBManager.getConnections();
-		PreparedStatement statement = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_id = ?");
+		PreparedStatement statement = this.connection.prepareStatement("SELECT product.product_id, trade_marks.trade_mark_name, product.product_name, product.price, product.warranty, product.percent_promo, product.date_added, product.product_number, product.image_url, product.description FROM technomarket.product JOIN technomarket.trade_marks ON(product.trade_mark_id = trade_marks.trade_mark_id) WHERE product.product_id = ?");
 		statement.setString(1, productId);
 		ResultSet result = statement.executeQuery();
 		Product product = new Product();
@@ -125,6 +125,7 @@ public class ProductDAO {
 			product.setDateAdded(LocalDate.parse(result.getString(7)));
 			product.setProductNumber(result.getString(8));
 			product.setImageUrl(result.getString(9));
+			product.setDescription(result.getString(10));
 		}
 		statement.close();
 		return product;
@@ -151,7 +152,7 @@ public class ProductDAO {
 		this.connection = DBManager.getConnections();
 			int tradeMarkId = getTradeMarkId(p.getTradeMark());
 			PreparedStatement ps = this.connection.prepareStatement(
-					"INSERT INTO technomarket.product (trade_mark_id, credit_id, product_name, price, warranty, percent_promo, date_added, product_number, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+					"INSERT INTO technomarket.product (trade_mark_id, credit_id, product_name, price, warranty, percent_promo, date_added, product_number, image_url, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, tradeMarkId);
 			ps.setString(2, null);
@@ -162,6 +163,7 @@ public class ProductDAO {
 			ps.setString(7, LocalDate.now().toString());
 			ps.setString(8, generateProductNumber());
 			ps.setString(9, p.getImageUrl());
+			ps.setString(10, p.getDescription());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();

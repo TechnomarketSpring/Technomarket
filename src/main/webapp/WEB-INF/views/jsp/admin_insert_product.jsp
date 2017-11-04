@@ -24,6 +24,9 @@
 		<cs:if test="${invalidProductData == true }">
 			<p>Невалидни данни на продукт, моля въведете отново!</p>
 		</cs:if>
+		<cs:if test="${invalidDescription == true}">
+			<p>Невалидно описание, моля въведете отново!</p>
+		</cs:if>
 			<form action="<cs:url value='/product/insert_product'/>" method="post" enctype="multipart/form-data">
 				<label for="name">Име на продукт</label>
 				<input type="text" id="name" name="productName" minlength="2" maxlength="35" required ><br>
@@ -37,6 +40,8 @@
 				<input type="number" id="warranty" name="warranty" value="warranty" max="99" min="0" pattern= "[0-9]" required><br>
 				<label for="promo">Промоционален процент</label>
 				<input type="number" id="promo" name="promoPercent" value="promo" min="0" max="99" pattern= "[0-9]" required><br>
+				<label for="description">Описание на продукта</label>
+				<textarea id="description" name="description" rows="4" cols="50" required></textarea>
 				<label for="image">Снимка на продукта<sup><a href="#fn1" id="ref1">*</a></sup></label>
 				<input type="file" id="image" name="image" value="image" accept=".jpg,.png,.gif,.bmp,.jpeg" required>
 				<input type="submit" value="Добави">

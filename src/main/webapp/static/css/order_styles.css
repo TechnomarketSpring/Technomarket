@@ -79,10 +79,16 @@
 		padding: 25px;
 		margin-left: 130px;
 	}
-	.top-field, #payment {
+	.top-field {
 		height: 40px;
     	width: 300px;
-    	margin-left: 0.5em;
+	}
+	#payment {
+		height: 45px;
+    	width: 305px;
+	}
+	.top-field, #payment {
+		margin-left: 0.5em;
     	margin-top: 20px;
        	margin-right: 0px;
 	}

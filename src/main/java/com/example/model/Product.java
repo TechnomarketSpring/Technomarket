@@ -25,6 +25,7 @@ public class Product {
 	private int percentPromo;
 	private boolean isNewProduct;
 	private String imageUrl;
+	private String description;
 	public enum campareEnum{ defaultt,price,markName };
 	
 	public Product(String name, String tradeMark, BigDecimal price, Credit credit, Category category, int worranty,
@@ -171,9 +172,17 @@ public class Product {
 		public boolean getIsNewProduct() {
 			return isNewProduct;
 		}
+		
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
 
 		//hashCode and equals overrided for collections:
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
