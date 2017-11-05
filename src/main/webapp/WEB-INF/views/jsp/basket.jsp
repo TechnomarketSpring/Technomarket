@@ -110,39 +110,3 @@
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
-          	
-          	
-          
-          
-          
-          <!-- 
-          
-          
-              <c:forEach items="${sessionScope.basket}" var="entry">
-              		<a class="btn-links" href="<c:url value='/info/infoForProduct?value=${entry.key.productId}'/>">
-							<img src="<c:url value='/product/product_pic?value=${entry.key.productId}'/>" alt="product-image" width="120" height="auto">
-					</a>
-                    <h5>Модел: ${entry.key.name}</h5>
-                    <h5>Марка: ${entry.key.tradeMark}</h5>
-                    <c:if test="${entry.key.percentPromo == 0}">
-                   		<h5>Цена: ${entry.key.price}</h5>
-                    </c:if>
-                    <c:set var="counting" value="${entry.key.price}"/>
-                    <c:if test="${entry.key.percentPromo > 0}">
-						<c:set var="counting" value="${(counting + ((entry.key.price * pro.value)) - ((entry.key.price*entry.key.percentPromo)/100))}" />
-                   		<h5>Стара цена: <del>${entry.key.price}</del></h5>
-                   		<h5>Промо цена: ${counting}</h5>
-                    </c:if>
-                    
-                    
-                    </h5>
-                    <h5>Артикул номер: ${entry.key.productNumber}</h5>
-                    <h5>Гаранция: ${entry.key.worranty}</h5>
-                    <h5>Отстъпка: ${entry.key.percentPromo}</h5>
-                    <h5>Количесво:<input type="number" id="product${entry.key.productId}" min="0" value="${entry.value}" onchange="handleBasket(${entry.key.productId});" onbeforeunload ="return false;"></h5><br> 
-                    <form id="remove${entry.key.productId}" action = "<c:url value='/buyController/removeProduct?value=${entry.key.productId}'/>" method="post">
-				      <input type = "submit" value = "Премахни продукта">
-				    </form>  
-              </c:forEach>
-              
-              -->
