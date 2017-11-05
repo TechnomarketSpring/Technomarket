@@ -12,7 +12,7 @@
 	<div>
 	<c:if test="${sessionScope.user != null}">
 		<ul id="menu-head-user">
-			<li id="head"><stong><span id="glyphicons-parents"></span>Профил</stong></li>
+			<li id="head-li"><stong><span id="glyphicons-parents"></span>Профил</stong></li>
 			<li class="menu-button-user"><a class="user-menu-link" href="<cs:url value='/info/infoUserProfile'/>"> Моят профил</a></li>
 			<li class="menu-button-user"><a class="user-menu-link" href="<cs:url value='/info/infoUserOrders'/>">> Моите поръчки</a></li>
 			<li class="menu-button-user"><a class="user-menu-link" href="<cs:url value='/favourite/infoUserFavourites'/>">> Любими продукти</a></li>
