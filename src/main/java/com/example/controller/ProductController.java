@@ -135,7 +135,7 @@ public class ProductController {
 		} 
 		return "admin_insert_product";
 	}
-	//TUKAA NE E DOBREEEE
+
 	@RequestMapping(value="/product_pic", method = RequestMethod.GET)
 	public void productPic(HttpServletResponse resp, @RequestParam(value = "value") String productId){
 		Product p;
@@ -152,7 +152,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/remove", method = RequestMethod.GET)
 	public String removeProduct(HttpSession session,
-			@RequestParam(value = "value") int productId){
+			@RequestParam(value = "value") long productId){
 		try {
 			adminDAO.removeProduct(productId, (User) session.getAttribute("user"));
 		} catch (NotAnAdminException | SQLException e) {

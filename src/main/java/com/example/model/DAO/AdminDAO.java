@@ -49,7 +49,7 @@ public class AdminDAO {
 		
 	}
 	
-	public void removeProduct(int productId, User admin) throws NotAnAdminException, SQLException{
+	public void removeProduct(long productId, User admin) throws NotAnAdminException, SQLException{
 		if(admin.getIsAdmin()){
 			productDAO.removeProduct(productId);
 		}else{

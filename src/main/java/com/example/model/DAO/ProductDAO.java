@@ -1,5 +1,6 @@
 package com.example.model.DAO;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,16 +32,16 @@ import com.sun.org.apache.regexp.internal.REUtil;
 @Component
 public class ProductDAO {
 	@Autowired
-	DBManager DBManager;
+	private DBManager DBManager;
 	@Autowired
-	CharacterisicsDAO characterisicsDAO;
+	private CharacterisicsDAO characterisicsDAO;
 	@Autowired
 	CategoryDAO categoryDAO;
 	private Connection connection;
     
 	
 	
-
+//getting product and its fields:
 	
 	public Product getProduct(long productID)
 			throws SQLException, InvalidCategoryDataException {
@@ -105,8 +106,6 @@ public class ProductDAO {
 		}
 		
 		return products;
-		
-		
 	}
 	
 	public Product searchProductById(String productId) throws SQLException{
@@ -131,7 +130,9 @@ public class ProductDAO {
 		return product;
 		
 	}
-
+	
+//admin panel in products:
+	
 	// admin is able to set specific product on promo by adding promo percent:
 	
 	public void setPromoPercent(int productId, int promoPersent) throws SQLException {
@@ -183,7 +184,6 @@ public class ProductDAO {
 	}
 
 	public String generateProductNumber() throws SQLException {
-		
 		String query = "SELECT product_id FROM technomarket.product ORDER BY product_id DESC LIMIT 1;";
 		this.connection = DBManager.getConnections();
 		PreparedStatement statement = this.connection.prepareStatement(query);
@@ -223,8 +223,10 @@ public class ProductDAO {
 
 	// remove product module:
 
-	public void removeProduct(int productId) throws SQLException {
+	public void removeProduct(long productId) throws SQLException {
 		this.connection = DBManager.getConnections();
+		String imageUrl = getProductUrl(productId);
+		System.out.println("================================1");
 		this.connection.setAutoCommit(false);
 		try {
 			PreparedStatement ps3 = this.connection.prepareStatement(
@@ -232,39 +234,47 @@ public class ProductDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			ps3.setLong(1, productId);
 			ps3.executeUpdate();
-			
+			System.out.println("================================2");
 			PreparedStatement ps4 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.store_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
 			ps4.setLong(1, productId);
 			ps4.executeUpdate();
-			
+			System.out.println("================================3");
 			PreparedStatement ps1 = this.connection.prepareStatement("DELETE FROM technomarket.product WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			ps1.setLong(1, productId);
 			ps1.executeUpdate();
+			System.out.println("================================4");
 			PreparedStatement ps2 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.order_has_product WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
 			ps2.setLong(1, productId);
 			ps2.executeUpdate();
-			
+			System.out.println("================================5");
 			PreparedStatement ps6 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.characteristics WHERE product_id = ?", Statement.RETURN_GENERATED_KEYS);
 			ps6.setLong(1, productId);
 			ps6.executeUpdate();
-
+			System.out.println("================================6");
 			PreparedStatement ps5 = this.connection.prepareStatement(
 					"DELETE FROM technomarket.user_has_favourite WHERE product_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			ps5.setLong(1, productId);
 			ps5.executeUpdate();
-
 			this.connection.commit();
+			System.out.println("================================7");
 			ps1.close();
 			ps2.close();
 			ps3.close();
 			ps4.close();
 			ps5.close();
 			ps6.close();
+			
+			//removing the products image after deletion from the DB table:
+			
+			File image = new File(WebInitializer.LOCATION + imageUrl);
+			if(image.exists()){
+				image.delete();
+			}
 		} catch (SQLException e) {
 			this.connection.rollback();
 			throw new SQLException();
@@ -272,7 +282,21 @@ public class ProductDAO {
 			this.connection.setAutoCommit(true);
 			
 		}
+	}
 
+	private String getProductUrl(long productId) throws SQLException {
+		this.connection = DBManager.getConnections();
+		PreparedStatement statement = this.connection.prepareStatement(
+				"SELECT product.image_url FROM technomarket.product WHERE product_id = ?");
+		statement.setLong(1, productId);
+		ResultSet result = statement.executeQuery();
+		String imageUrl = "";
+		while(result.next()){
+			imageUrl = result.getString(1);
+		}
+		result.close();
+		statement.close();
+		return imageUrl;
 	}
 
 	// Search product by name;
