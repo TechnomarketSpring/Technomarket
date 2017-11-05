@@ -22,9 +22,11 @@
  
 
   		<c:if test="${orders != null}">
-  		<div class="page-title">
-  			<h3>Всички поръчки на ${user.firstName}</h3>
-  		</div>
+  		<c:if test = "${orders.size() > 0 }">
+  			<div class="page-title">
+  				<h3>Всички поръчки на ${user.firstName}</h3>
+  			</div>
+  		</c:if>
   		<div class="log-head" id="common-container">
 	 	<table class="order-table">	  
 	 		<tr>
