@@ -87,7 +87,7 @@
 				<label for="phone" class="field-label"><strong>Мобилен Телефон<span class="asterisk">*</span></strong></label>
 				<input type="text" class="top-field" id="phone" name="telNumber" maxlength="10" minlength="10" pattern="^[0-9]*$" required><br>
 				<label for="city" class="field-label"><strong>Град<span class="asterisk">*</span></strong></label>
-				<input type="text" class="top-field" id="city" name="town" maxlength="10" required></input>
+				<input type="text" class="top-field" id="city" name="town" maxlength="30" required></input>
 				<label for="zip" class="row-label"><strong>Пощенски код<span class="asterisk">*</span></strong></label>
 				<input type="number" id="zip" name="postCode" min = "1000"  max="9999" pattern= "[0-9]" required></input><br>
 				<label for="street" class="field-label"><strong>Улица/Квартал<span class="asterisk">*</span></strong></label>

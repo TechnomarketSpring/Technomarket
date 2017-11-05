@@ -32,7 +32,7 @@
 			<div id="rem-forg">
 			<label for="checkbox"><strong>Запомни ме</strong></label>
 			<input id="checkbox" type = "checkbox" name = "remember"> 
-			<a id="forgotten" href="../forgotten">Забравена парола?</a>
+				<a id="forgotten" href="<cs:url value='../forgotten'/>">Забравена парола?</a>
 			</div>
 			<input id="btn-log" type="submit" value="Вход"><br>
 		</form>

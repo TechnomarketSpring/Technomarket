@@ -55,7 +55,7 @@
 					<input id="field-1" type="text" name="firstName" maxlength="35" required><br>
 					<label for="field-2" class="field-label"><strong>Фамилия<span class="asterisk">*</span></strong></label>
 					<input id="field-2" type="text" name="lastName" maxlength="35" required><br>
-					<label for="field-3" class="field-label"><strong>Имайл<span class="asterisk">*</span></strong></label>
+					<label for="field-3" class="field-label"><strong>Имейл<span class="asterisk">*</span></strong></label>
 					<input id="field-3" type="email" name="email" maxlength="35" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required><br>
 					<label for="field-4" class="field-label"><strong>Парола<span class="asterisk">*</span></strong></label>
 					<input id="field-4" type="password" name="password" maxlength="35" required></input><br>

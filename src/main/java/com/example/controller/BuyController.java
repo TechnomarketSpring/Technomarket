@@ -186,7 +186,7 @@ public class BuyController {
 			Model model) {
 		Order order = new Order();
 		
-		if(town == null || town.isEmpty() || town.length() > 10){
+		if(town == null || town.isEmpty() || town.length() > 30){
 			model.addAttribute("invalidOrder", "Order is invalid");
 			return "makeOrder";
 		}

@@ -12,7 +12,7 @@
 		<jsp:include page="header.jsp" />
 		<div class="log-head" id="common-container">
 			<div id="left-div">
-			<h2 class="loin-titles">Възтоновяване на парола</h2>
+			<h2 class="loin-titles">Възстановяване на парола</h2>
         	<c:if test="${ emailError != null }">
 				<div class="log-head">
 					<p>Невалиден потребител</p>

@@ -28,6 +28,7 @@
   				</div>
   			</c:if>
   		</c:if>
+  		
   		<div class="log-head" id="common-container">
 	 		<table class="order-table">	  
 	 			<tr>
@@ -81,71 +82,3 @@
 		    <jsp:include page="footer.jsp" />
 	</body>
 </html>
-       	
-       	
-      <!-- 			
-       			
-       			
-       			 <cs:forEach items="${ orders }" var="order">
-		    
-               <h4> Дата* ${order.time}|</h4>
-               <h4> Статус* ${order.isConfirmed == false ? "Непотвърдена" : "Потвърдена"}|<h4> 
-               <h4> Име на Потребител* ${order.userNames}|</h4>
-               <h4> Тел. на Потребител* ${order.userPhoneNumber}|</h4>
-                 <c:if test="${order.isConfirmed == false}">
-                      <form action = "<cs:url value='/admin/confirmed'/>" method="post">
-                      <input type = "submit" value = "Потвърди поръчка">
-                      <input type="hidden" name="value" value = "${order.orderId}">
-                       </form>
-                  </c:if>
-                  <c:if test="${order.isConfirmed == true}">
-                           <form action = "<cs:url value='/admin/removeOrder'/>" method="post">
-                           <input type = "submit" value = "Премахване от потвърдени">
-                           <input type="hidden" name="value" value = "${order.orderId}">
-                           </form>
-                       </c:if>
-                      <c:if test="${order.isConfirmed == true}">
-                         <form action = "<cs:url value='/admin/setPaid'/>" method="post">
-                         <input type = "submit" value = "Заплащане">
-                         <input type="hidden" name="value" value = "${order.orderId}">
-                         </form>
-                     </c:if>
-                       
-                    </div>
-                 
-            </cs:forEach>
-
-	
-	
-	
-		  <div style="border:1px solid black";>
-		    <cs:forEach items="${ orders }" var="order">
-		    
-               <h4> Дата* ${order.time}|</h4>
-               <h4> Статус* ${order.isConfirmed == false ? "Непотвърдена" : "Потвърдена"}|<h4> 
-               <h4> Име на Потребител* ${order.userNames}|</h4>
-               <h4> Тел. на Потребител* ${order.userPhoneNumber}|</h4>
-                 <c:if test="${order.isConfirmed == false}">
-                      <form action = "<cs:url value='/admin/confirmed'/>" method="post">
-                      <input type = "submit" value = "Потвърди поръчка">
-                      <input type="hidden" name="value" value = "${order.orderId}">
-                       </form>
-                  </c:if>
-                  <c:if test="${order.isConfirmed == true}">
-                           <form action = "<cs:url value='/admin/removeOrder'/>" method="post">
-                           <input type = "submit" value = "Премахване от потвърдени">
-                           <input type="hidden" name="value" value = "${order.orderId}">
-                           </form>
-                       </c:if>
-                      <c:if test="${order.isConfirmed == true}">
-                         <form action = "<cs:url value='/admin/setPaid'/>" method="post">
-                         <input type = "submit" value = "Заплащане">
-                         <input type="hidden" name="value" value = "${order.orderId}">
-                         </form>
-                     </c:if>
-                       
-                    </div>
-                 
-            </cs:forEach>
- --> 
- 	
