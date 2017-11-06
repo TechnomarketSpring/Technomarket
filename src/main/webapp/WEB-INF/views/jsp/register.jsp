@@ -64,7 +64,7 @@
 					<label class="field-label" for="date-1"><strong>Датa на раждане<span class="asterisk">*</span></strong></label>
 					<input id="date-1" type="date" name="bday" min="18" max="2017-11-03" required></input><br>
 					<label for="radio-box" class="field-label"><strong>Пол<span class="asterisk">*</span></strong></label>
-						<input id="radio-1" type="radio" name="gender" value="male">
+						<input id="radio-1" type="radio" name="gender" checked="checked" value="male">
 						<label class="radio-label" for="radio-1">Мъж</label> 
 						<input id="radio-2" type="radio" name="gender" value="female">
 						<label for="radio-2">Жена</label><br>

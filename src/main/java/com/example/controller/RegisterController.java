@@ -46,13 +46,16 @@ public class RegisterController {
 			@RequestParam("bday") String bday,
 			@RequestParam(value = "abonat", defaultValue = "null") String abonat,
 			@RequestParam(value = "submit", defaultValue = "null") String submit) {
+		
 		try {
 			//validation for equal password samples:
 			if (!password.equals(password1)) {
 				model.addAttribute("passError", "Passwords are not the same");
 				return "register";
 			}
-			if (submit == null) {
+			
+			
+			if (submit.equals("null")) {
 				model.addAttribute("submitError", "Passwords are not the same");
 				return "register";
 			}
