@@ -72,13 +72,28 @@ public class ProductController {
 		return "admin_insert_product";
 	}
 	@RequestMapping(value = "/productByPrice", method = RequestMethod.GET)
-	public String searchProductByPrice(@RequestParam("price1") double price1  ,@RequestParam("price2") double price2, Model model){
+	public String searchProductByPrice(@RequestParam("price1") double price1  ,@RequestParam("price2") double price2,@RequestParam("categoryName") String categoryName, Model model){
+		
 		try {
 			if(price1 > price2){
 				model.addAttribute("errorPrice", "invalidData");
 			}else{
-			  LinkedHashSet<Product> products = productDAO.searchProductByPrice(price1, price2);
-			  model.addAttribute("filtredProducts", products);
+				Set<Product> products = null;
+				LinkedHashSet<Product> pro = new LinkedHashSet<>();
+				try {
+					products = productDAO.searchProductByCategoryName(categoryName.trim());
+					for(Product prod : products){
+						if(prod.getPrice().doubleValue() >= price1 && prod.getPrice().doubleValue() <= price2){
+							pro.add(prod);
+						}
+					}
+				} catch (InvalidCategoryDataException e) {
+					e.printStackTrace();
+					return "errorPage";
+				}
+				
+			 
+			  model.addAttribute("filtredProducts", pro);
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL Exception in /product/productByPrice");

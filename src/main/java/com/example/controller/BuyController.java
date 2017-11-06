@@ -36,7 +36,7 @@ import com.example.model.DAO.StoreDAO.Status;
 import com.example.model.exceptions.InvalidCategoryDataException;
 import com.example.model.exceptions.InvalidCharacteristicsDataException;
 import com.example.model.util.RegexValidator;
-import com.example.model.util.SMSSender;
+//import com.example.model.util.SMSSender;
 
 import esendex.sdk.java.EsendexException;
 
