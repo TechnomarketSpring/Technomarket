@@ -7,27 +7,38 @@
 <html class="log-head">
 <head>
 		<title>Техномаркет - магазини</title>
+		<link href="<cs:url value="/css/city_styles.css" />" rel="stylesheet">
 </head>
-<body>
+<body class="log-head">
 <jsp:include page="header.jsp" />
-<c:if test="${ stores != null}">
-<div style="border:1px solid green;">
+
+		<div class="log-head" id="common-container">
+		<c:if test="${ stores != null}">
 			<c:forEach items="${stores}" var="store">
-				<div>
-				<h5>Адрес* ${store.address}</h5>
-				<h5>Тел. номер* ${store.phoneNumber}</h5>
-				<h5>Имейл* ${store.email}</h5>
-				<h5>Работно време* ${store.workingTime}</h5>
-				<h5>GPS* ${store.gps}</h5>
-				<img src="${ store.storeImageUrl} "  width="120" height="auto">
-				<form action = "<c:url value='/store/showInTheMap'/>" method = "get">
-				  <input type = "hidden" name = "value" value = "${store.storeId}"/>
-				  <input type = "submit" value = "Google map"/>
-				</form>
-				</div>			
+				<div id="store-info">
+				<ul id="store-ul">
+					<li class="store-li"><strong>Адрес:</strong> ${store.address}</li>
+					<li class="store-li"><strong>Тел. номер:</strong> ${store.phoneNumber}</li>
+					<li class="store-li"><strong>Имейл:</strong> ${store.email}</li>
+					<li class="store-li"><strong>Работно време:</strong> ${store.workingTime}</li>
+					<li class="store-li"><strong>GPS:</strong> ${store.gps}</li>
+					<li class="store-li">
+						<form action = "<c:url value='/store/showInTheMap'/>" method = "get">
+				  			<input type = "hidden" name = "value" value = "${store.storeId}"/>
+				  			<input type = "submit" class="store-map-btn" value = "На карта"/>
+						</form>
+					</li>
+				</ul>
+				</div>	
+				<div id="store-pic">
+					<a target="_blank" href="<c:url value='/store/store_pic?value=${store.storeId}'/>">
+						<img id="picture-nail-store" src="<c:url value='/store/store_pic?value=${store.storeId}'/>" alt="product-image">
+					</a>
+				</div>		
 			</c:forEach>
 		</c:if>
-		</div>
+</div>
+<div class="push"></div>
 <jsp:include page="footer.jsp" />
 </body>
 </html>
