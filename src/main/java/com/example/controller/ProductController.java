@@ -94,6 +94,7 @@ public class ProductController {
 				
 			 
 			  model.addAttribute("filtredProducts", pro);
+			  model.addAttribute("categoryName", categoryName);
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL Exception in /product/productByPrice");

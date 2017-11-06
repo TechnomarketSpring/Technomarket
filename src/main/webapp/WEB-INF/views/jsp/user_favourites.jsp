@@ -63,7 +63,7 @@
 							</div>	
 							<form action = "<c:url value='/favourite/removeFromFavorite'/>" method="post">
 				      			<input type = "submit" class="product-btn"  value = "Премахни">
-				      			<input type = "hidden" name = "value" value = "${ favourite.productId }"/>
+				      			<input type = "hidden" name = "value" value = "${ filtredProduct.productId }"/>
 				    		</form>
        					</li>
        				</c:forEach>
