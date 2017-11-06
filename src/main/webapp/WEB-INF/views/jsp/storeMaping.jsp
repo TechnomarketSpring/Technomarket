@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="cs" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Техномаркет - магазин</title>
+	<link href="<cs:url value="/css/common_stores_styles.css" />" rel="stylesheet">
 </head>
 <body onload="getCityMap(${longitude}, ${latitude});">
 <jsp:include page="header.jsp" />
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkHN_gdiuaWXmHeLB8Fpe_pBc840VRgIk&callback=map"
         type="text/javascript"></script>
 </head>
-
-<div id="map" style="float: left; width: 1500px; height: 400px;"></div>
+		<div class="log-head" id="common-container">
+<div id="map" style="float: left; width: 1050px; height: 500px;"></div>
 
 <script type="text/javascript">
  function getCityMap(longitude,latitude){ 
@@ -41,6 +43,8 @@
     }
  }
 </script>
- 
+ </div>
+ <div class="push"></div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>

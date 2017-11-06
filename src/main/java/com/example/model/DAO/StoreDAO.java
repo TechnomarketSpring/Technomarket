@@ -219,7 +219,7 @@ public class StoreDAO {
 			store.setWorkingTime(result.getString("working_time"));
 			store.setEmail(result.getString("email"));
 			store.setGps(result.getString("gps"));
-			store.setStoreImageUrl("store_image_url");
+			store.setStoreImageUrl(result.getString("store_image_url"));
 		}
 		statement.close();
 		return store;

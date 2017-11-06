@@ -1,6 +1,11 @@
 package com.example.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.WebInitializer;
+import com.example.model.Product;
 import com.example.model.Store;
 import com.example.model.DAO.StoreDAO;
 
@@ -35,7 +42,20 @@ public class StoreController {
 		return "storeMaping";
 	}
 	
-	
+	@RequestMapping(value="/store_pic", method = RequestMethod.GET)
+	public void productPic(HttpServletResponse resp, @RequestParam(value = "value") long storeId){
+		Store s;
+		try {
+			s = storeDAO.seachStoreById(storeId);
+		String url = s.getStoreImageUrl();
+		File pic = new File(WebInitializer.STORE_LOCATION + url);
+		System.out.println(WebInitializer.STORE_LOCATION + url + "===================");
+		Files.copy(pic.toPath(), resp.getOutputStream());
+		resp.getOutputStream().flush();
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

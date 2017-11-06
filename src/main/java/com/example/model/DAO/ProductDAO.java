@@ -482,7 +482,7 @@ public class ProductDAO {
 		return products;
 	}
 
-	// Search produc where category is home
+	// Search product where category is home
 	public Set<Product> searchProductWithCategoryHome() throws SQLException, InvalidCategoryDataException {
 		LinkedHashSet<Product> products = new LinkedHashSet<>();
 		this.connection = DBManager.getConnections();

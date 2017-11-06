@@ -38,6 +38,8 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
  
     public static final String LOCATION = "D:" + File.separator + "technomarket_images" + File.separator + "products_image" + File.separator; // Temporary location where files will be stored
  
+    public static final String STORE_LOCATION = "D:" + File.separator + "technomarket_images" + File.separator + "store_image" + File.separator; // Temporary location where files will be stored
+    
     private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
                                                         // Beyond that size spring will throw exception.
     private static final long MAX_REQUEST_SIZE = 20971520; // 20MB : Total request size containing Multi part.
