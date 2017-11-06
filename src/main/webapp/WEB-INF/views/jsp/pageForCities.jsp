@@ -4,7 +4,10 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cs" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html class="log-head">
+<head>
+		<title>Техномаркет - магазини</title>
+</head>
 <body>
 <jsp:include page="header.jsp" />
 <c:if test="${ stores != null}">

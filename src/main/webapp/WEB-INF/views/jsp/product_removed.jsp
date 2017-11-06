@@ -5,7 +5,7 @@
 <html class="log-head">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
+	<title>Техномаркет - премахнат продукт</title>
 	<link href="<c:url value="/css/common_styles.css" />" rel="stylesheet">
 </head>
 	<body class="log-head">

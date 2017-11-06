@@ -7,7 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link href="<c:url value="/css/filtred_products_styles.css" />" rel="stylesheet">
 		<script src="<c:url value="/js/product_script.js" />"></script>
-		<title>Техномаркет - продукти¸</title>
+		<title>Техномаркет - продукти</title>
 	</head>
 	<body class="log-head" >
 		<jsp:include page="header.jsp" />
