@@ -74,7 +74,7 @@ br {
 }
 
 .push {
-	margin-top: 2000px;
+	margin-top: 50px;
 	height: 70px;
 }
 #admin-buttons {
@@ -162,4 +162,8 @@ td {
 
 #warranty-span {
 	padding: 10px;
+}
+
+#note-request {
+	width: 215px;
 }

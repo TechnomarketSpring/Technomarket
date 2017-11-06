@@ -97,8 +97,10 @@
 					<a class="btn-links" href="<c:url value='/info/infoContacts'/>">
 						<img src="<c:url value='/img/buttons/buy-buttons/request.png'/>" alt="request">
 					</a>
+					<div id="note-request">
 					<span>Продуктът не е в наличност!</span><br>
-					<span>В случай, че проявявате интерест, ще получите контакти за заявка.</span>
+					<span>Заявете го!</span>
+					</div>
 				</c:if>
 				
 		<!-- 	<button><a class="btn-links" href="<c:url value='/buyController/buy?value=${product.productId}'/>">Купи сега</a></button> -->
