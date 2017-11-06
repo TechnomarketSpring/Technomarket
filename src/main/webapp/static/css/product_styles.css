@@ -1,15 +1,59 @@
 @CHARSET "UTF-8";
+
 #picture-nail {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	padding: 5px;
-	width: 150px;
+	width: 400px;
+	height: auto;
 }
 
 #picture-nail :hover {
-   	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+	box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
 
-		br {
-   		 	display: hidden;
-		}
+br {
+	display: hidden;
+}
+
+.log-head {
+	margin: 0px;
+	padding: 0px;
+	z-index: -1;
+}
+
+br {
+	display: hidden;
+}
+
+#common-container {
+	padding-right: .5em;
+	display: flex;
+	margin-top: -140px;
+	margin-left: 240px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	position: relative;
+	float: left;
+	height: 500px;
+	z-index: -1;
+}
+.push {
+	margin-top: 2000px;
+	height: 70px;
+}
+#admin-buttons {
+	display: flex;
+	
+}
+
+#delete-btn {
+	margin-left: 0.5em;
+}
+#promo-box {
+	height: 56px;
+	width: 56px;
+	float: left;
+	margin-right: 0px;
+	margin-left: -37px;
+}
