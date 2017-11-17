@@ -38,21 +38,9 @@
 			<li id="second-menu-product" class="titles-menu"><span class="menu-word"><strong><center>> Цена</center></strong></span></li>
 			<li class="search-menu-function">
 				<form action="<c:url value='/product/productByPrice'/> " method="get">
-<<<<<<< HEAD
-
-					<%-- <div id="from"><span class="price-index-menu">от</span></div><input type="text" id="number" class="num-field" name="price1" min = "0" max="99999" required >
-					<span class="price-index-menu">до</span><input type="text" id="number" class="num-field" name="price2" min="0" max="99999" required ><br>
-					<input type = "hidden" value = "${categoryName}" name = "categoryName"> --%>
-
-				<div id="from"><span class="price-index-menu">от</span></div><input type="text" id="number" class="num-field" name="price1" min = "0" max="99999" required >
-				<span class="price-index-menu">до</span><input type="text" id="number" class="num-field" name="price2" min="0" max="99999" required ><br>
-				     <input type = "hidden" value = "${categoryName}" name = "categoryName">
-
-=======
-					<div id="from"><span class="price-index-menu">от</span></div><input type="text" id="number" class="num-field" name="price1" min = "0" max="99999" required >
-					<span class="price-index-menu">до</span><input type="text" id="number" class="num-field" name="price2" min="0" max="99999" required ><br>
-					<input type = "hidden" value = "${categoryName}" name = "categoryName">
->>>>>>> 2be386dadbdac1fff0bb424a4c6ed577e37d9e8c
+					<div id="from"><span class="price-index-menu">от</span></div><input type="number" id="number" class="num-field" name="price1" min = "0" max="99999" required >
+					<span class="price-index-menu">до</span><input type="number" id="number" class="num-field" name="price2" min="0" max="99999" required ><br>
+				    <input type = "hidden" value = "${categoryName}" name = "categoryName">
 					<input type = "submit" class="product-menu-btn" id="price-sub" value="OK">
 				</form>
 			</li>

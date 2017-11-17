@@ -40,7 +40,7 @@
    			<label for="field-3"><strong>Телефон<span class="asteriks">*</span></strong></label>
     		<input id="field-3" type="number" name="phone" maxlength="10" minlength="10" pattern="^[0-9]*$" required><br>
     		<label if="label-4" for="field-4"><strong>Съобщение<span class="asteriks">*</span></strong></label>
-    		<textarea id="field-4" rows="4" cols="50" required></textarea>
+    		<textarea id="field-4" name="message" rows="4" cols="50" required></textarea>
    			<input id="button-red" type = "submit" value = "Изпрати">
    			</form>
 		</div>
